@@ -84,12 +84,19 @@
 </template>
 
 <script>
+  import Axios from 'axios';
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      info: null
     }
+  },
+  mounted () {
+    Axios
+      .get('https://localhost:44397/test')
+      .then(response => (this.info = response))
   }
 }
 </script>
