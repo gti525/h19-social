@@ -2,16 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
+
+using ASPNETCoreHeroku.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ASPNETCoreHeroku.Controllers
 {
-    [Route("yolo")]
+    [Route("test")]
     [ApiController]
-    public class HomeController1 : Controller
+    public class TestController : ControllerBase
     {
+        //private readonly TodoContext _context;
+
+        public TestController(TodoContext context)
+        {
+            /*_context = context;
+            if (_context.bumb.Count() == 0)
+            {
+                _context.bumb.Add(new bumb { numb = 10 }); _context.SaveChanges();
+            }*/
+        }
+
         // GET: /<controller>/
         [HttpGet]
         public ActionResult<string> Get()

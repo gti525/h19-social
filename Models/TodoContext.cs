@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 using Microsoft.EntityFrameworkCore;
 
 namespace ASPNETCoreHeroku.Models
@@ -14,6 +10,6 @@ namespace ASPNETCoreHeroku.Models
 
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<bumb> bumb { get; set; }
     }
 }
