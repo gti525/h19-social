@@ -84,8 +84,6 @@
 </template>
 
 <script>
-  import Axios from 'axios';
-
 export default {
   name: 'HelloWorld',
   data () {
@@ -104,7 +102,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
-  font-weight: normal;
+  color: red;
 }
 ul {
   list-style-type: none;
@@ -115,6 +113,6 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: red;
 }
 </style>
