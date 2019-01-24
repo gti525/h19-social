@@ -15,10 +15,12 @@ namespace ASPNETCoreHeroku.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        private TestUser MyTestUser;
         //private readonly TodoContext _context;
 
         public TestController(TodoContext context)
         {
+            MyTestUser = new TestUser("username","password");
             /*_context = context;
             if (_context.bumb.Count() == 0)
             {
@@ -26,11 +28,20 @@ namespace ASPNETCoreHeroku.Controllers
             }*/
         }
 
-        // GET: /<controller>/
+        // GET: /<controller>/q
+        [Route("login")]
         [HttpGet]
-        public ActionResult<string> Get()
+        public ActionResult<string> Get(TestUser testUser)
         {
-            return "test";
+            if (MyTestUser.Username == testUser.Username && MyTestUser.Password == MyTestUser.Password)
+            {
+                return new ActionResult<string>("true");
+            }
+            else
+            {
+                return new ActionResult<string>("false");
+            }
+            
         }
     }
 }
