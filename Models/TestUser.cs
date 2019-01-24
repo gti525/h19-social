@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace ASPNETCoreHeroku.Models
 {
-    public class bumb
+    public class Testuser
     {
-        public int numb { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
     }
 }
