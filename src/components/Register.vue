@@ -56,6 +56,29 @@
       register () {
         //AJOUT DE L'USAGER (HTTP POST)
            // alert("Enregistrement réussi");
+
+        this.$http.post('http://httpbin.org/post', {
+          username: this.input.username,
+          password: this.input.password,
+          firsname: this.input.firsname,
+          lastname: this.input.lastname,
+          birth: this.input.birth,
+          number: this.input.number,
+          street: this.input.street,
+          city: this.input.city,
+          postal: this.input.postal,
+          state: this.input.state,
+          country: this.input.country
+
+          }).then(response => {
+
+          //this.someData = response.body;
+          alert("Enregistrement réussi! \n Bienvenue " + this.input.username);
+
+        }, response => {
+          // error callback
+          alert("Erreur d'enregistrement");
+        });
       }
     }
   }

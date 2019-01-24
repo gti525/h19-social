@@ -14,7 +14,7 @@
   export default {
     name: 'login',
     //components: { Login },
-    //template: '<Login/>',
+   // template: '<Login/>',
     data () {
       return {
         input: {
@@ -26,9 +26,24 @@
     methods: {
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
-        if (this.input.username == "username" && this.input.password == "password") {
+
+        this.$http.get('http://httpbin.org/get', {
+          username: this.input.username,
+          password: this.input.password
+        }).then(response => {
+
+          //this.someData = response.body;
+          alert(response.body);
+          console.log(response);
+
+        }, response => {
+          // error callback
+          alert('error');
+        });
+
+      /*  if (this.input.username == "username" && this.input.password == "password") {
             alert("Connection réussi");
-        }
+        }*/
       }
     }
   }
