@@ -29,7 +29,8 @@ namespace ASPNETCoreHeroku
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ClientContext>(options =>
+			services.AddCors();
+			services.AddDbContext<ClientContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -49,7 +50,11 @@ namespace ASPNETCoreHeroku
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+			app.UseCors(builder =>
+				builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
+
+
+			app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
