@@ -93,23 +93,21 @@
         };
 
         var data = {
-         /* client: {*/
-            //"client_id": 1,
-            "client": "bobby",
-            /*"password": this.input.password,
-            "first_name": this.input.firsname,
-            "last_name": this.input.lastname,
-            "birth_date": this.input.birth,
-            "address": this.input.number + ' ' + this.input.street,
-            "city": this.input.city,
-            "postal_code": this.input.postal,
-            "province": this.input.state,
-            "country": this.input.country*/
-        //  }
+          "client_id": 1,
+          "email": "bobby",
+          "password": this.input.password,
+           "first_name": this.input.firsname,
+           "last_name": this.input.lastname,
+           //"birth_date": this.input.birth,
+           "address": this.input.number + ' ' + this.input.street,
+           "city": this.input.city,
+           "postal_code": this.input.postal,
+           "province": this.input.state,
+           "country": this.input.country
       };
 
-        this.$http.post('https://localhost:44397/client',"bob" /*, {emulateJSON: true}, {headers: {
-          'Content-Type': 'application/json'}}*/
+        this.$http.post('https://localhost:44397/client', data , {headers: {
+          'Content-Type': 'application/json'}}
         ).then(response => {
 
           //this.someData = response.body;
