@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ASPNETCoreHeroku.Migrations
 {
     [DbContext(typeof(ClientContext))]
-    [Migration("20190124155452_initial")]
-    partial class initial
+    [Migration("20190125141821_ClientTable")]
+    partial class ClientTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,7 +50,7 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.HasKey("client_id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("client");
                 });
 #pragma warning restore 612, 618
         }

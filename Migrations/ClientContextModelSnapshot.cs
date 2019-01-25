@@ -48,7 +48,7 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.HasKey("client_id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("client");
                 });
 #pragma warning restore 612, 618
         }

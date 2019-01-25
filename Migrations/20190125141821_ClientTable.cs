@@ -4,12 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ASPNETCoreHeroku.Migrations
 {
-    public partial class initial : Migration
+    public partial class ClientTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clients",
+                name: "client",
                 columns: table => new
                 {
                     client_id = table.Column<int>(nullable: false)
@@ -28,14 +28,14 @@ namespace ASPNETCoreHeroku.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.client_id);
+                    table.PrimaryKey("PK_client", x => x.client_id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "client");
         }
     }
 }

@@ -17,11 +17,6 @@ namespace ASPNETCoreHeroku.Controllers
         public ClientController(ClientContext context)
         {
             _context = context;
-            if (_context.client.Count() == 0)
-            {
-                _context.client.Add(entity: new Client (1,"text@email.com","testpassword","Test","Test",DateTime.Now, "123","something","h9d0d0","whatever","pays") );
-                _context.SaveChanges();
-            }
         }
 
         // GET: api/Client
@@ -29,9 +24,9 @@ namespace ASPNETCoreHeroku.Controllers
         {
 			try
 			{
-				var item = _context.client.Where(client => client.email == username).Single();
-				return item;
-			}
+				var item = _context.client.Where(client => client.email == username && client.password == password).Single();
+                return item;
+  			}
 			catch (Exception)
 			{
 
@@ -45,9 +40,15 @@ namespace ASPNETCoreHeroku.Controllers
             return item;*/
         }
         /*
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetClient")]
+        public ActionResult<Client> GetById(int id)
         {
-            return "value";
+            var item = _context.client.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return item;
         }
         */
 
