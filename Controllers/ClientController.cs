@@ -27,13 +27,22 @@ namespace ASPNETCoreHeroku.Controllers
         // GET: api/Client
         public ActionResult<Client> GetById(string username, string password)
         {
+			try
+			{
+				var item = _context.client.Where(client => client.email == username).Single();
+				return item;
+			}
+			catch (Exception)
+			{
 
-            var item = _context.client.Where(client => client.email == username).Single();
-            if (item == null)
+				return NotFound();
+			}
+            
+            /*if (item == null)
             {
                 return NotFound();
             }
-            return item;
+            return item;*/
         }
         /*
         public string Get(int id)
