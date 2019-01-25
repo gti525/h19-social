@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <input type="text" v-model="input.username" placeholder="Nom d'utilisateur" />
+    <input type="text" v-model="input.username" placeholder="Nom d'utilisateur TEST" />
     <input type="password" v-model="input.password" placeholder="Mot de passe" />
     <button type="button" v-on:click="login()">Se connecter</button>
 
@@ -27,7 +27,7 @@
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
 
-        this.$http.get('https://localhost:44397/client', {
+        this.$http.get('https://localhost:5001/client', {
           params: {
             username: this.input.username,
             password: this.input.password

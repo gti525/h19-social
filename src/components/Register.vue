@@ -1,6 +1,6 @@
 <template>
   <div id="register">
-    <input type="text" v-model="input.username" placeholder="Nom d'utilisateur"/>
+    <input type="text" v-model="input.email" placeholder="Nom d'utilisateur TEST"/>
     <br/>
     <input type="password" v-model="input.password" placeholder="Mot de passe"/>
     <br/>
@@ -25,7 +25,7 @@
 
     <button type="button" v-on:click="register()">S'enregistrer</button>
 
-    <h1>{{input.username}}</h1>
+    <h1>{{input.email}}</h1>
   </div>
 </template>
 
@@ -37,7 +37,7 @@
     data () {
       return {
         input: {
-          username: "",
+          email: "",
           password: "",
           firsname: "",
           lastname: "",
@@ -59,10 +59,10 @@
 
 
         const formData = {
-          client_id: 1,
+          //client_id: 1,
           email
             :
-          this.input.username,
+          this.input.email,
           password
             :
           this.input.password,
@@ -93,8 +93,8 @@
         };
 
         var data = {
-          "client_id": 1,
-          "email": "bobby",
+          //"client_id": 1,
+          "email": this.input.email,
           "password": this.input.password,
            "first_name": this.input.firsname,
            "last_name": this.input.lastname,
@@ -106,12 +106,12 @@
            "country": this.input.country
       };
 
-        this.$http.post('https://localhost:44397/client', data , {headers: {
+        this.$http.post('https://localhost:5001/client', data , {headers: {
           'Content-Type': 'application/json'}}
         ).then(response => {
 
           //this.someData = response.body;
-          alert("Enregistrement réussi! \n Bienvenue " + this.input.username);
+          alert("Enregistrement réussi! \n Bienvenue " + this.input.email);
 
         }, response => {
           // error callback
