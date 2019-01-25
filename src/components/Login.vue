@@ -27,15 +27,24 @@
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
 
-        this.$http.get('https://localhost:44397/client/1', {
-         /* params: {
+        this.$http.get('https://localhost:44397/client', {
+          params: {
             username: this.input.username,
             password: this.input.password
-          }*/
+          }
         }).then(response => {
 
           //this.someData = response.body;
-          alert(response.body);
+          if(response.body)
+          {
+            alert("Bienvenue " + this.input.username);
+          }
+          else
+          {
+            alert("Le username ou le mot de passe est invalide")
+          }
+
+          /*alert(response.body);*/
           console.log(response);
 
         }, response => {
