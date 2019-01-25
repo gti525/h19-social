@@ -57,20 +57,60 @@
         //AJOUT DE L'USAGER (HTTP POST)
            // alert("Enregistrement réussi");
 
-        this.$http.post('http://httpbin.org/post', {
-          username: this.input.username,
-          password: this.input.password,
-          firsname: this.input.firsname,
-          lastname: this.input.lastname,
-          birth: this.input.birth,
-          number: this.input.number,
-          street: this.input.street,
-          city: this.input.city,
-          postal: this.input.postal,
-          state: this.input.state,
-          country: this.input.country
 
-          }).then(response => {
+        const formData = {
+          client_id: 1,
+          email
+            :
+          this.input.username,
+          password
+            :
+          this.input.password,
+          first_name
+            :
+          this.input.firsname,
+          last_name
+            :
+          this.input.lastname,
+          birth_date
+            :
+          this.input.birth,
+          address
+            :
+            this.input.number + ' ' + this.input.street,
+          city
+            :
+          this.input.city,
+          postal_code
+            :
+          this.input.postal,
+          province
+            :
+          this.input.state,
+          country
+            :
+          this.input.country
+        };
+
+        var data = {
+         /* client: {*/
+            //"client_id": 1,
+            "client": "bobby",
+            /*"password": this.input.password,
+            "first_name": this.input.firsname,
+            "last_name": this.input.lastname,
+            "birth_date": this.input.birth,
+            "address": this.input.number + ' ' + this.input.street,
+            "city": this.input.city,
+            "postal_code": this.input.postal,
+            "province": this.input.state,
+            "country": this.input.country*/
+        //  }
+      };
+
+        this.$http.post('https://localhost:44397/client',"bob" /*, {emulateJSON: true}, {headers: {
+          'Content-Type': 'application/json'}}*/
+        ).then(response => {
 
           //this.someData = response.body;
           alert("Enregistrement réussi! \n Bienvenue " + this.input.username);

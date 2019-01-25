@@ -27,9 +27,11 @@
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
 
-        this.$http.get('http://httpbin.org/get', {
-          username: this.input.username,
-          password: this.input.password
+        this.$http.get('https://localhost:44397/client/1', {
+         /* params: {
+            username: this.input.username,
+            password: this.input.password
+          }*/
         }).then(response => {
 
           //this.someData = response.body;
@@ -39,6 +41,7 @@
         }, response => {
           // error callback
           alert('error');
+          console.log(response);
         });
 
       /*  if (this.input.username == "username" && this.input.password == "password") {
