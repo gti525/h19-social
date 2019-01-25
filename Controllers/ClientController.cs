@@ -25,17 +25,10 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // GET: api/Client
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<Client> GetById(string username, string password)
         {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET: api/Client/5
-        [HttpGet("{id}", Name = "GetClient")]
-        public ActionResult<Client> GetById(int id)
-        {
-            var item = _context.client.Find(id);
+            var item = _context.client.Where(client => client.email == username).Single();
             if (item == null)
             {
                 return NotFound();
@@ -51,7 +44,7 @@ namespace ASPNETCoreHeroku.Controllers
 
         // POST: api/Client
         [HttpPost]
-        public void Post(Client client)
+        public void Post([FromBody] Client client)
         {
             _context.client.Add(entity: client);
             _context.SaveChanges();
