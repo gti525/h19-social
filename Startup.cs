@@ -17,7 +17,7 @@ using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.DAL;
 using ASPNETCoreHeroku.Helpers;
 using System.Text;
-using ASPNETCoreHeroku.BLL;
+using ASPNETCoreHeroku.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -64,6 +64,7 @@ namespace ASPNETCoreHeroku
                 });
 
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IClientDAL, ClientDAL>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

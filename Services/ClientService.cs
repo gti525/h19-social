@@ -12,26 +12,24 @@ using ASPNETCoreHeroku.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ASPNETCoreHeroku.BLL
+namespace ASPNETCoreHeroku.Services
 {
     public interface IClientService
     {
         Client Login(string username, string password);
-
         void Register(Client client);
     };
 
     public class ClientService : IClientService
     {
-        private readonly ClientDAL _clientDAL;
-
+        private readonly IClientDAL _clientDAL;
         private readonly AppSettings _appSettings;
 
-        public ClientService(IOptions<AppSettings> appSettings)
+        public ClientService(IOptions<AppSettings> appSettings, IClientDAL clientDAL)
         {
             _appSettings = appSettings.Value;
-            _clientDAL = new ClientDAL(clientContext);
-        }
+            _clientDAL = clientDAL;
+        }   
 
         public Client Login(string username, string password)
         {

@@ -5,18 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNETCoreHeroku.BLL
+namespace ASPNETCoreHeroku.Services 
 {
+    public interface ITicketService
+    {
+        IEnumerable<Ticket> GetTicketsByClientId(int id);
+        Ticket GetTicketByTicketId(int id);
+        void AddTicket(Ticket ticket);
+    }
+
     public class TicketService
     {
-        private readonly TicketDAL _ticketDAL;
+        private readonly ITicketDAL _ticketDAL;
 
-        public TicketService(ClientContext clientContext)
+        public TicketService(ITicketDAL ticketDAL)
         {
-            _ticketDAL = new TicketDAL(clientContext);
+            _ticketDAL = ticketDAL;
         }
 
-        public IEnumerable<Ticket> GetTicketsById(int id)
+        public IEnumerable<Ticket> GetTicketsByClientId(int id)
         {
             return _ticketDAL.GetTicketsByClientId(id);
         }

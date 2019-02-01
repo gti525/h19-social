@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
-using ASPNETCoreHeroku.BLL;
+using ASPNETCoreHeroku.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ASPNETCoreHeroku.Controllers
@@ -15,11 +15,11 @@ namespace ASPNETCoreHeroku.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly ClientBLL _clientBLL;
+        private readonly IClientService _clientService;
 
-        public ClientController (IClientBLL clientBLL)
+        public ClientController (IClientService clientService)
         {
-            _clientBLL = clientBLL;
+            _clientService = clientService;
         }
 
         // GET: api/Client
@@ -29,7 +29,7 @@ namespace ASPNETCoreHeroku.Controllers
         {
             try
             {
-                var client = _clientBLL.Login(username, password);
+                var client = _clientService.Login(username, password);
                 return client;
             }
             catch(Exception)
@@ -44,7 +44,7 @@ namespace ASPNETCoreHeroku.Controllers
         {
             try
             {
-                 _clientBLL.Register(client);
+                _clientService.Register(client);
             }
             catch (Exception)
             {

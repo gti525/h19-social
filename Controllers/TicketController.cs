@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using Microsoft.EntityFrameworkCore;
-using ASPNETCoreHeroku.BLL;
+using ASPNETCoreHeroku.Services;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -14,18 +14,18 @@ namespace ASPNETCoreHeroku.Controllers
     [ApiController]
     public class TicketController : Controller
     {
-        private readonly TicketService _ticketService;
+        private readonly ITicketService _ticketService;
 
-        public TicketController (ClientContext clientContext)
+        public TicketController (ITicketService ticketService)
         {
-            _ticketService = new TicketService(clientContext);
+            _ticketService = ticketService;
         }
 
         // GET: api/Ticket
         [HttpGet]
         public IEnumerable<Ticket> GetTicketsByClientId(int id)
         {
-            return _ticketService.GetTicketsById(id);
+            return _ticketService.GetTicketsByClientId(id);
         }
 
         [HttpGet("{id}", Name = "GetClient")]

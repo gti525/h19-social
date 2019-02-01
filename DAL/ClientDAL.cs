@@ -4,13 +4,19 @@ using System.Linq;
 
 namespace ASPNETCoreHeroku.DAL
 {
-    public class ClientDAL
+    public interface IClientDAL
     {
-        private readonly ClientContext _context;
+        Client Login(string username, string password);
+        void Register(Client client);
+    };
+
+    public class ClientDAL : IClientDAL
+    {
+        private readonly ClientContext _clientContext;
 
         public ClientDAL(ClientContext clientContext)
         {
-            _context = clientContext;
+            _clientContext = clientContext;
 
         }
 
@@ -18,7 +24,7 @@ namespace ASPNETCoreHeroku.DAL
         {
             try
             {
-                var client = _context.Client.Where(x => x.Email == username && x.Password == password).Single();
+                var client = _clientContext.Client.Where(x => x.Email == username && x.Password == password).Single();
                 return client;
             }
             catch (Exception e)
@@ -31,8 +37,8 @@ namespace ASPNETCoreHeroku.DAL
         {
             try
             {
-                _context.Client.Add(entity: client);
-                _context.SaveChanges();
+                _clientContext.Client.Add(entity: client);
+                _clientContext.SaveChanges();
             }
             catch (Exception e)
             {
