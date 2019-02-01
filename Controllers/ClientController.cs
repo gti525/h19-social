@@ -41,6 +41,7 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // POST: api/Client
+        [AllowAnonymous]
         [HttpPost]
         public void Post([FromBody] Client client)
         {
