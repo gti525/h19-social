@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 
 using ASPNETCoreHeroku.Models;
+using ASPNETCoreHeroku.DAL;
 
 namespace ASPNETCoreHeroku
 {

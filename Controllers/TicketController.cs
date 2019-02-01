@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using Microsoft.EntityFrameworkCore;
+using ASPNETCoreHeroku.BLL;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -13,46 +14,31 @@ namespace ASPNETCoreHeroku.Controllers
     [ApiController]
     public class TicketController : Controller
     {
-        private readonly ClientContext _context;
+        private readonly TicketBLL _ticketBLL;
 
-        public TicketController (ClientContext context)
+        public TicketController (ClientContext clientContext)
         {
-            _context = context;
+            _ticketBLL = new TicketBLL(clientContext);
         }
 
         // GET: api/Ticket
         [HttpGet]
-        public IEnumerable<Ticket> GetTickets()
+        public IEnumerable<Ticket> GetTicketsByClientId(int id)
         {
-            return _context.Client.Where(c => c.ClientId == 2).SelectMany(c => c.Tickets);
+            return _ticketBLL.GetTicketsById(id);
         }
-
-        // GET: api/Ticket/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
 
         [HttpGet("{id}", Name = "GetClient")]
-        public ActionResult<Ticket> GetById(int id)
+        public ActionResult<Ticket> GetTicketByTicketId(int id)
         {
-            var item = _context.Ticket.Find(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return item;
+            return new ActionResult<Ticket>(_ticketBLL.GetTicketByTicketId(id));
         }
 
         // POST: api/Ticket
         [HttpPost]
         public void Post([FromBody] Ticket ticket)
         {
-            _context.Ticket.Add(entity: ticket);
-
-            _context.SaveChanges();
+            _ticketBLL.AddTicket(ticket);
         }
 
         // PUT: api/Ticket/5
@@ -65,12 +51,12 @@ namespace ASPNETCoreHeroku.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var item = _context.Ticket.Find(id);
+            /*var item = _context.Ticket.Find(id);
             if (item != null)
             {
                 _context.Ticket.Remove(item);
                 _context.SaveChanges();
-            }
+            }*/
         }
     }
 }

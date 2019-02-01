@@ -5,53 +5,47 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
+using ASPNETCoreHeroku.BLL;
 
 namespace ASPNETCoreHeroku.Controllers
 {
-    [Route("client")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly ClientContext _context;
+        private readonly ClientBLL _clientBLL;
 
-        public ClientController(ClientContext context)
+        public ClientController (ClientContext clientContext)
         {
-            _context = context;
+            _clientBLL = new ClientBLL(clientContext);
         }
 
         // GET: api/Client
-        public ActionResult<Client> GetById(string username, string password)
+        [HttpGet]
+        public ActionResult<Client> Login(string username, string password)
         {
-			try
-			{
-				var item = _context.Client.Where(client => client.Email == username && client.Password == password).Single();
-                return item;
-  			}
-			catch (Exception)
-			{
-
-				return NotFound();
-			}
-        }
-        /*
-        [HttpGet("{id}", Name = "GetClient")]
-        public ActionResult<Client> GetById(int id)
-        {
-            var item = _context.client.Find(id);
-            if (item == null)
+            try
+            {
+                var client = _clientBLL.Login(username, password);
+                return client;
+            }
+            catch(Exception)
             {
                 return NotFound();
             }
-            return item;
         }
-        */
 
         // POST: api/Client
         [HttpPost]
         public void Post([FromBody] Client client)
         {
-            _context.Client.Add(entity: client);
-            _context.SaveChanges();
+            try
+            {
+                 _clientBLL.Register(client);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         // PUT: api/Client/5
