@@ -10,6 +10,12 @@ namespace ASPNETCoreHeroku.Models
     {
         public ClientContext(DbContextOptions<ClientContext> options) : base(options)
         { }
-        public DbSet<Client> client { get; set; }
+        public DbSet<Client> Client { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ticket>().HasOne(c => c.Client).WithMany(t => t.Tickets);
+        }
     }
 }

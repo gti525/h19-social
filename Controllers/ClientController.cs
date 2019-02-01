@@ -24,7 +24,7 @@ namespace ASPNETCoreHeroku.Controllers
         {
 			try
 			{
-				var item = _context.client.Where(client => client.email == username && client.password == password).Single();
+				var item = _context.Client.Where(client => client.Email == username && client.Password == password).Single();
                 return item;
   			}
 			catch (Exception)
@@ -32,12 +32,6 @@ namespace ASPNETCoreHeroku.Controllers
 
 				return NotFound();
 			}
-            
-            /*if (item == null)
-            {
-                return NotFound();
-            }
-            return item;*/
         }
         /*
         [HttpGet("{id}", Name = "GetClient")]
@@ -56,7 +50,7 @@ namespace ASPNETCoreHeroku.Controllers
         [HttpPost]
         public void Post([FromBody] Client client)
         {
-            _context.client.Add(entity: client);
+            _context.Client.Add(entity: client);
             _context.SaveChanges();
         }
 
