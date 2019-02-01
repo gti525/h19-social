@@ -6,21 +6,24 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.BLL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASPNETCoreHeroku.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
         private readonly ClientBLL _clientBLL;
 
-        public ClientController (ClientContext clientContext)
+        public ClientController (IClientBLL clientBLL)
         {
-            _clientBLL = new ClientBLL(clientContext);
+            _clientBLL = clientBLL;
         }
 
         // GET: api/Client
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<Client> Login(string username, string password)
         {

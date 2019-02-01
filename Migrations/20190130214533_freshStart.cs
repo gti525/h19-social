@@ -50,14 +50,14 @@ namespace ASPNETCoreHeroku.Migrations
                         name: "FK_Ticket_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "ClientId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ticket_ClientId",
                 table: "Ticket",
-                column: "ClientId");
+                column: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

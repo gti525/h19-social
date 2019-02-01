@@ -9,7 +9,7 @@ namespace ASPNETCoreHeroku.Models
     public class Client
     {
         [Key]
-        public int ClientId { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string FirstName { get; set; }
@@ -22,5 +22,6 @@ namespace ASPNETCoreHeroku.Models
         public string Country { get; set; }
         public string ProfileImage { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
+        public string Token { get; set; }
     }
 }

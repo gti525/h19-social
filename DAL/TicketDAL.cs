@@ -17,7 +17,7 @@ namespace ASPNETCoreHeroku.DAL
 
         public IEnumerable<Ticket> GetTicketsByClientId(int id)
         {
-            return _context.Client.Where(c => c.ClientId == id).SelectMany(c => c.Tickets);
+            return _context.Client.Where(c => c.Id == id).SelectMany(c => c.Tickets);
         }
 
         public Ticket GetTicketByTicketId(int id)

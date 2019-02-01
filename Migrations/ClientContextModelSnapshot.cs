@@ -21,7 +21,7 @@ namespace ASPNETCoreHeroku.Migrations
 
             modelBuilder.Entity("ASPNETCoreHeroku.Models.Client", b =>
                 {
-                    b.Property<int>("ClientId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
@@ -46,7 +46,7 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<string>("Province");
 
-                    b.HasKey("ClientId");
+                    b.HasKey("Id");
 
                     b.ToTable("Client");
                 });
@@ -58,7 +58,7 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<string>("Artist");
 
-                    b.Property<int>("ClientId");
+                    b.Property<int>("Id");
 
                     b.Property<DateTime>("Date");
 
@@ -68,7 +68,7 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.HasKey("TicketId");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Ticket");
                 });
@@ -77,7 +77,7 @@ namespace ASPNETCoreHeroku.Migrations
                 {
                     b.HasOne("ASPNETCoreHeroku.Models.Client", "Client")
                         .WithMany("Tickets")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

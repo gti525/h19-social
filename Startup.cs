@@ -15,6 +15,11 @@ using Microsoft.EntityFrameworkCore;
 
 using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.DAL;
+using ASPNETCoreHeroku.Helpers;
+using System.Text;
+using ASPNETCoreHeroku.BLL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ASPNETCoreHeroku
 {
@@ -33,6 +38,32 @@ namespace ASPNETCoreHeroku
 			services.AddCors();
 			services.AddDbContext<ClientContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddScoped<IClientBLL, ClientBLL>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -55,9 +86,11 @@ namespace ASPNETCoreHeroku
 				builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
 
 
-			app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
+			//app.UseHttpsRedirection();
+   //         app.UseStaticFiles();
+   //         app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
