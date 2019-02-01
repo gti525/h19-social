@@ -12,11 +12,11 @@ namespace ASPNETCoreHeroku.DAL
 
     public class ClientDAL : IClientDAL
     {
-        private readonly ClientContext _clientContext;
+        private readonly AppDbContext _appDbContext;
 
-        public ClientDAL(ClientContext clientContext)
+        public ClientDAL(AppDbContext appDbContext)
         {
-            _clientContext = clientContext;
+            _appDbContext = appDbContext;
 
         }
 
@@ -24,7 +24,7 @@ namespace ASPNETCoreHeroku.DAL
         {
             try
             {
-                var client = _clientContext.Client.Where(x => x.Email == username && x.Password == password).Single();
+                var client = _appDbContext.Client.Where(x => x.Email == username && x.Password == password).Single();
                 return client;
             }
             catch (Exception e)
@@ -37,8 +37,8 @@ namespace ASPNETCoreHeroku.DAL
         {
             try
             {
-                _clientContext.Client.Add(entity: client);
-                _clientContext.SaveChanges();
+                _appDbContext.Client.Add(entity: client);
+                _appDbContext.SaveChanges();
             }
             catch (Exception e)
             {

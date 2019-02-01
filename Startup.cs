@@ -36,7 +36,7 @@ namespace ASPNETCoreHeroku
         public void ConfigureServices(IServiceCollection services)
         {
 			services.AddCors();
-			services.AddDbContext<ClientContext>(options =>
+			services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             var appSettingsSection = Configuration.GetSection("AppSettings");

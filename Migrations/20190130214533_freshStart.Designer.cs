@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ASPNETCoreHeroku.Migrations
 {
-    [DbContext(typeof(ClientContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20190130214533_freshStart")]
     partial class freshStart
     {

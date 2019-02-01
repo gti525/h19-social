@@ -14,27 +14,27 @@ namespace ASPNETCoreHeroku.DAL
 
     public class TicketDAL
     {
-        private readonly ClientContext _clientContext;
+        private readonly AppDbContext _appDbContext;
 
-        public TicketDAL(ClientContext clientContext)
+        public TicketDAL(AppDbContext appDbContext)
         {
-            _clientContext = clientContext;
+            _appDbContext = appDbContext;
         }
 
         public IEnumerable<Ticket> GetTicketsByClientId(int id)
         {
-            return _clientContext.Client.Where(c => c.Id == id).SelectMany(c => c.Tickets);
+            return _appDbContext.Client.Where(c => c.Id == id).SelectMany(c => c.Tickets);
         }
 
         public Ticket GetTicketByTicketId(int id)
         {
-            return _clientContext.Ticket.Find(id);
+            return _appDbContext.Ticket.Find(id);
         }
 
         public void AddTicket(Ticket ticket)
         {
-            _clientContext.Ticket.Add(entity: ticket);
-            _clientContext.SaveChanges();
+            _appDbContext.Ticket.Add(entity: ticket);
+            _appDbContext.SaveChanges();
         }
     }
 }

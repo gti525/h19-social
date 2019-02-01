@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASPNETCoreHeroku.Models
 {
-    public class ClientContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public ClientContext(DbContextOptions<ClientContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
         public DbSet<Client> Client { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
