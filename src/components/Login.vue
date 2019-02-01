@@ -10,7 +10,7 @@
             <div class="card-body">
               <form action="" @submit="onSubmit" >
                 <div class="form-group">
-                  <input class="form-control" name="email" type="email" v-model="input.username" required autofocus placeholder="Adresse Courriel">
+                  <input class="form-control" name="email" type="email" v-model="input.email" required autofocus placeholder="Adresse Courriel">
                 </div>
                 <div class="form-group">
                   <input class="form-control" name="password" type="password" v-model="input.password" required placeholder="Mot de passe">
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  
+
 </template>
 
 <script>
@@ -36,7 +36,7 @@
     data () {
       return {
         input: {
-          username: "",
+          email: "",
           password: ""
         }
       }
@@ -47,27 +47,16 @@
 
         this.$http.get('https://localhost:5001/client', {
           params: {
-            username: this.input.username,
+            username: this.input.email,
             password: this.input.password
           }
         }).then(response => {
 
-          //this.someData = response.body;
-          if(response.body)
-          {
-            alert("Bienvenue " + this.input.username);
-          }
-          else
-          {
-            alert("Le username ou le mot de passe est invalide")
-          }
-
-          /*alert(response.body);*/
+          alert("Bienvenue " + this.input.email);
           console.log(response);
-
         }, response => {
           // error callback
-          alert('error');
+          alert("Le username ou le mot de passe est invalide")
           console.log(response);
         });
 
