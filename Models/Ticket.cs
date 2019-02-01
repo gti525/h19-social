@@ -10,7 +10,7 @@ namespace ASPNETCoreHeroku.Models
     public class Ticket
     {
         [Key]
-        public int TicketId { get; set; }
+        public int Id { get; set; }
         public string EventName { get; set; }
         public string Artist { get; set; }
         public DateTime Date { get; set; }

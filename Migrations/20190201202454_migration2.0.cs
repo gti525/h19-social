@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ASPNETCoreHeroku.Migrations
 {
-    public partial class freshStart : Migration
+    public partial class migration20 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace ASPNETCoreHeroku.Migrations
                 name: "Client",
                 columns: table => new
                 {
-                    ClientId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
@@ -24,18 +24,19 @@ namespace ASPNETCoreHeroku.Migrations
                     PostalCode = table.Column<string>(nullable: true),
                     Province = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
-                    ProfileImage = table.Column<string>(nullable: true)
+                    ProfileImage = table.Column<string>(nullable: true),
+                    Token = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Client", x => x.ClientId);
+                    table.PrimaryKey("PK_Client", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Ticket",
                 columns: table => new
                 {
-                    TicketId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     EventName = table.Column<string>(nullable: true),
                     Artist = table.Column<string>(nullable: true),
@@ -45,7 +46,7 @@ namespace ASPNETCoreHeroku.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
+                    table.PrimaryKey("PK_Ticket", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Ticket_Client_ClientId",
                         column: x => x.ClientId,
@@ -57,7 +58,7 @@ namespace ASPNETCoreHeroku.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Ticket_ClientId",
                 table: "Ticket",
-                column: "Id");
+                column: "ClientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

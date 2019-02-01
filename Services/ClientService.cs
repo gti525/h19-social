@@ -37,27 +37,12 @@ namespace ASPNETCoreHeroku.Services
             {
                 var client = _clientDAL.Login(username, password);
 
-                // authentication successful so generate jwt token
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, client.Id.ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                client.Token = tokenHandler.WriteToken(token);
-
-                // remove password before returning
+                client.Token = this.GenerateToken(client);
                 client.Password = null;
 
                 return client;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw;
             }
@@ -73,6 +58,25 @@ namespace ASPNETCoreHeroku.Services
             {
                 throw;
             }
+        }
+
+        private string GenerateToken (Client client)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                        new Claim(ClaimTypes.NameIdentifier, client.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }

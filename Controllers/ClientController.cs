@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
+using ASPNETCoreHeroku.Helpers;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -46,8 +48,9 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 _clientService.Register(client);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                throw;
             }
         }
 

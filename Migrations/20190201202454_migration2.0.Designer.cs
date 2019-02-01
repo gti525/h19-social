@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ASPNETCoreHeroku.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190201201521_EditId")]
-    partial class EditId
+    [Migration("20190201202454_migration2.0")]
+    partial class migration20
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,7 +57,7 @@ namespace ASPNETCoreHeroku.Migrations
 
             modelBuilder.Entity("ASPNETCoreHeroku.Models.Ticket", b =>
                 {
-                    b.Property<int>("TicketId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Artist");
@@ -70,7 +70,7 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<string>("Location");
 
-                    b.HasKey("TicketId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 

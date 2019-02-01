@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using Microsoft.EntityFrameworkCore;
 using ASPNETCoreHeroku.Services;
+using ASPNETCoreHeroku.Helpers;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -23,8 +24,11 @@ namespace ASPNETCoreHeroku.Controllers
 
         // GET: api/Ticket
         [HttpGet]
-        public IEnumerable<Ticket> GetTicketsByClientId(int id)
+        public IEnumerable<Ticket> GetTicketsByClientId()
         {
+            string token = Request.Headers["Authorization"];
+            var id = TokenHelper.GetIdFromToken(token);
+
             return _ticketService.GetTicketsByClientId(id);
         }
 
