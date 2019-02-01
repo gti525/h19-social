@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ASPNETCoreHeroku.BLL
 {
-    public class TicketBLL
+    public class TicketService
     {
         private readonly TicketDAL _ticketDAL;
 
-        public TicketBLL(ClientContext clientContext)
+        public TicketService(ClientContext clientContext)
         {
             _ticketDAL = new TicketDAL(clientContext);
         }

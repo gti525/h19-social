@@ -14,31 +14,31 @@ namespace ASPNETCoreHeroku.Controllers
     [ApiController]
     public class TicketController : Controller
     {
-        private readonly TicketBLL _ticketBLL;
+        private readonly TicketService _ticketService;
 
         public TicketController (ClientContext clientContext)
         {
-            _ticketBLL = new TicketBLL(clientContext);
+            _ticketService = new TicketService(clientContext);
         }
 
         // GET: api/Ticket
         [HttpGet]
         public IEnumerable<Ticket> GetTicketsByClientId(int id)
         {
-            return _ticketBLL.GetTicketsById(id);
+            return _ticketService.GetTicketsById(id);
         }
 
         [HttpGet("{id}", Name = "GetClient")]
         public ActionResult<Ticket> GetTicketByTicketId(int id)
         {
-            return new ActionResult<Ticket>(_ticketBLL.GetTicketByTicketId(id));
+            return new ActionResult<Ticket>(_ticketService.GetTicketByTicketId(id));
         }
 
         // POST: api/Ticket
         [HttpPost]
         public void Post([FromBody] Ticket ticket)
         {
-            _ticketBLL.AddTicket(ticket);
+            _ticketService.AddTicket(ticket);
         }
 
         // PUT: api/Ticket/5

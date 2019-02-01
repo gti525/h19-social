@@ -14,20 +14,20 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ASPNETCoreHeroku.BLL
 {
-    public interface IClientBLL
+    public interface IClientService
     {
         Client Login(string username, string password);
 
         void Register(Client client);
     };
 
-    public class ClientBLL : IClientBLL
+    public class ClientService : IClientService
     {
         private readonly ClientDAL _clientDAL;
 
         private readonly AppSettings _appSettings;
 
-        public ClientBLL(IOptions<AppSettings> appSettings)
+        public ClientService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
             _clientDAL = new ClientDAL(clientContext);

@@ -63,7 +63,7 @@ namespace ASPNETCoreHeroku
                     };
                 });
 
-            services.AddScoped<IClientBLL, ClientBLL>();
+            services.AddScoped<IClientService, ClientService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
