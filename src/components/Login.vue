@@ -1,11 +1,29 @@
 <template>
   <div id="login">
-    <input type="text" v-model="input.username" placeholder="Nom d'utilisateur TEST" />
-    <input type="password" v-model="input.password" placeholder="Mot de passe" />
-    <button type="button" v-on:click="login()">Se connecter</button>
 
-    <h1>{{input.username}}</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Connectez-Vous</h1>
+
+    <div class="container">
+      <div class="row justify-content-center align-items-center" >
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <form action="" @submit="onSubmit" >
+                <div class="form-group">
+                  <input class="form-control" name="email" type="email" v-model="input.username" required autofocus placeholder="Adresse Courriel">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" name="password" type="password" v-model="input.password" required placeholder="Mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary" variant="primary" v-on:click="login()">Se Connecter</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  
 </template>
 
 <script>
@@ -75,5 +93,7 @@
   h1 {
     color: red;
   }
+
+
 </style>
 
