@@ -107,7 +107,7 @@
            "country": this.input.country
       };
 
-        this.$http.post('https://localhost:5001/client', data , {headers: {
+        this.$http.post('https://localhost:5001/api/client', data , {headers: {
           'Content-Type': 'application/json'}}
         ).then(response => {
 

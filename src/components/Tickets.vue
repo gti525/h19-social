@@ -1,13 +1,39 @@
 <template>
     <div  id="tickets">
-
+<!--
       <div id="overlay" v-on:click="CloseOverlay()">
         <div id="text">Overlay Text</div>
       </div>
+-->
 
-      <b-list-group>
-        <b-list-group-item button v-for="ticket in tickets">{{ ticket.message }}</b-list-group-item>
-      </b-list-group>
+      <div class="container mb-4">
+        <div class="row justify-content-center align-items-center" >
+          <div class="col-10">
+
+
+                <b-list-group class="row" button v-for="ticket in tickets">
+                  <b-list-group-item class="col-2" >
+                      <h4>Date</h4>
+
+                  </b-list-group-item>
+
+                  <b-list-group-item class="col">
+                    {{ ticket.message }}
+                  </b-list-group-item>
+                </b-list-group>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="list-group col-10"  button v-for="ticket in tickets">
+          <button type="button" class="row list-group-item ">
+            <div class="">Date</div>
+            <div class="">{{ ticket.message }}</div>
+          </button>
+        </div>
+      </div>
 
     </div>
 </template>
