@@ -22,8 +22,21 @@
         </div>
       </div>
     </div>
-  </div>
 
+    <div>
+      <b-alert variant="warning" :show="validAuthentification" class="mt-1">
+        Votre adresse courriel et/ou votre mot de passe est invalide
+      </b-alert>
+    </div>
+
+    <div class="pt-2">
+      Pas de compte?
+      <router-link to="/register">
+        <a>Enregistrez-vous</a>
+      </router-link>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -38,7 +51,8 @@
         input: {
           email: "",
           password: ""
-        }
+        },
+        validAuthentification: false
       }
     },
     methods: {
@@ -56,6 +70,7 @@
           console.log(response);
         }, response => {
           // error callback
+          this.validAuthentification = true;
           alert("Le username ou le mot de passe est invalide")
           console.log(response);
         });

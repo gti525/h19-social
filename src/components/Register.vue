@@ -3,63 +3,72 @@
 
     <h1 class="h3 mb-3 font-weight-normal">Enregistrez-Vous</h1>
 
-    <div class="container mb-4">
+    <div class="container">
       <div class="row justify-content-center align-items-center" >
-        <div class="col-4">
+        <div class="col-8">
           <div class="card">
             <div class="card-body">
-              <form action="" @submit="onSubmit" >
+              <form class="row justify-content-center" action="" @submit="onSubmit" >
 
-                <div class="form-group">
-                  <input class="form-control" name="email" type="text" v-model="input.email" placeholder="Adresse Courriel">
+                <div class="col-6">
+                  <div class="form-group">
+                    <input class="form-control" name="email" type="text" v-model="input.email" placeholder="Adresse Courriel">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="password" type="password" v-model="input.password" placeholder="Mot de passe">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="name" type="text" v-model="input.firsname" placeholder="Prénom">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="lastName" type="text" v-model="input.lastname" placeholder="Nom de Famille">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="birth" type="date" v-model="input.birth">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <input class="form-control" name="address"  type="text" v-model="input.address" placeholder="Adresse">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="city" type="text" v-model="input.city" placeholder="Ville">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="postalCode" type="text" v-model="input.postal" placeholder="Code Postal">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="province"type="text" v-model="input.state" placeholder="État/Province">
+                  </div>
+
+                  <div class="form-group">
+                    <input class="form-control" name="country" type="text" v-model="input.country" placeholder="Pays">
+                  </div>
                 </div>
 
-                <div class="form-group">
-                  <input class="form-control" name="password" type="password" v-model="input.password" placeholder="Mot de passe">
-                </div>
 
-                <div class="form-group">
-                  <input class="form-control" name="name" type="text" v-model="input.firsname" placeholder="Prénom">
-                </div>
+                  <button type="submit" class="btn btn-primary" variant="primary" v-on:click="register()">S'enregistrer</button>
 
-                <div class="form-group">
-                  <input class="form-control" name="lastName" type="text" v-model="input.lastname" placeholder="Nom de Famille">
-                </div>
 
-                <div class="form-group">
-                  <input class="form-control" name="birth" type="date" v-model="input.birth">
-                </div>
-
-                <div class="form-group">
-                  <input class="form-control" name="doorNumber" type="text" v-model="input.number" placeholder="Numéro de Porte">
-                </div>
-
-                <div class="form-group">
-                  <input class="form-control" name="street"  type="text" v-model="input.street" placeholder="Rue">
-                </div>
-
-                <div class="form-group">
-                  <input class="form-control" name="city" type="text" v-model="input.city" placeholder="Ville">
-                </div>
-
-                <div class="form-group">
-                  <input class="form-control" name="postalCode" type="text" v-model="input.postal" placeholder="Code Postal">
-                </div>
-
-                <div class="form-group">
-                  <input class="form-control" name="province"type="text" v-model="input.state" placeholder="État/Province">
-                </div>
-
-                <div class="form-group">
-                  <input class="form-control" name="country" type="text" v-model="input.country" placeholder="Pays">
-                </div>
-
-                <button type="submit" class="btn btn-primary" variant="primary" v-on:click="register()">S'enregistrer</button>
               </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="pt-3 mb-4">
+      Vous avez déjà un compte?
+      <router-link to="/">
+        <a>Connectez-vous</a>
+      </router-link>
     </div>
 
   </div>
@@ -78,8 +87,7 @@
           firsname: "",
           lastname: "",
           birth: "",
-          number: "",
-          street: "",
+          address: "",
           city: "",
           postal: "",
           state: "",
@@ -100,7 +108,7 @@
            "first_name": this.input.firsname,
            "last_name": this.input.lastname,
            //"birth_date": this.input.birth,
-           "address": this.input.number + ' ' + this.input.street,
+           "address": this.input.address,
            "city": this.input.city,
            "postal_code": this.input.postal,
            "province": this.input.state,
