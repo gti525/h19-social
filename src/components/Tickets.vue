@@ -6,117 +6,106 @@
       </div>
 -->
 
-      <div class="container mb-4">
-        <div class="row justify-content-center align-items-center" >
-          <div class="col-10">
-
-
-                <b-list-group class="row" button v-for="ticket in tickets">
-                  <b-list-group-item class="col-2" >
-                      <h4>Date</h4>
-
-                  </b-list-group-item>
-
-                  <b-list-group-item class="col">
-                    {{ ticket.message }}
-                  </b-list-group-item>
-                </b-list-group>
+      <b-list-group class="justify-content-between align-items-center">
+        <b-list-group-item class="show" button v-for="ticket in tickets">
+          <div class="show-date ">
+            <div class="day">20</div>
+            <div class="month">JAN</div>
+          </div>
+          <div class="show-info">
+            <div class="show-name">
+              {{ ticket.EventName }}
+            </div>
+          </div>
+        </b-list-group-item>
+      </b-list-group>
 
           </div>
-        </div>
-      </div>
+      </template>
 
-      <div class="container">
-        <div class="list-group col-10"  button v-for="ticket in tickets">
-          <button type="button" class="row list-group-item ">
-            <div class="">Date</div>
-            <div class="">{{ ticket.message }}</div>
-          </button>
-        </div>
-      </div>
+      <script>
+          export default {
+              name: "Tickets",
 
-    </div>
-</template>
+            data() {
+                return {
+                  tickets: [
+                    {Date:'02 JANV', EventName: 'Céline Dion'},
+                    {Date:'29 MAI', EventName: 'Blue man group'},
+                    {Date:'31 DÉC', EventName: 'Bones'}
+                  ],
+                  months: {
+                    1: "JAN",
+                    2: "FÉV",
+                    3: "MAR",
+                    4: "AVR",
+                    5: "MAI",
+                    6: "JUN",
+                    7: "JUL",
+                    8: "AOÛ",
+                    9: "SEP",
+                    10: "OCT",
+                    11: "NOV",
+                    12: "DÉC",
+                  }
+                }
+            },
 
-<script>
-    export default {
-        name: "Tickets",
-
-      data() {
-          return {
-            tickets: [
-              {message: 'Céline Dion'},
-              {message: 'Blue man group'},
-              {message: 'Bones'}
-            ]
+            methods:
+              {
+                CloseOverlay()
+                {
+                  document.getElementById("overlay").style.display = "none";
+                },
+                OpenOverlay()
+                {
+                   document.getElementById("overlay").style.display = "block";
+                }
+              }
           }
-      },
 
-      methods:
-        {
-          CloseOverlay()
-          {
-            document.getElementById("overlay").style.display = "none";
-          },
-          OpenOverlay()
-          {
-             document.getElementById("overlay").style.display = "block";
-          }
+      </script>
+
+      <style scoped>
+
+        .show{
+          height: 150px;
+          width: 1000px;
+          padding: 0px;
+          margin-bottom: 20px;
         }
-    }
+        .show-date{
+          width: 20%;
+          height: 100%;
+          float: left;
+          background-color: aquamarine;
+        }
 
-</script>
+        .day{
+          margin:0;
+          position:relative;
+          height: 70%;
+          color: black;
+          font-size: 70px;
+        }
 
-<style scoped>
+        .month{
+          top: 70%;
+          font-size: 30px;
+          font-weight: bold;
+        }
 
-  #overlay {
-    position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
-  }
+        .show-info{
+          width:80%;
+          float: right;
+          height:100%;
+        }
 
-  #text {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    background-color: rgba(40,40,40,1);
-    top: 50%;
-    left: 50%;
-    font-size: 50px;
-    color: white;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-  }
+        .show-name{
+          font-size: 50px;
+          position: relative;
+          top:25%;
 
-  #tickets {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+        }
 
-  #ticketsList{
-    position: absolute;
-    width: 50%;
-    height: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-  }
-
-  ul {
-list-style-position: inside;
-    text-align: center;
-  }
-
-</style>
+      </style>

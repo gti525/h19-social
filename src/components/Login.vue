@@ -8,14 +8,14 @@
         <div class="col-4">
           <div class="card">
             <div class="card-body">
-              <form action="" @submit="onSubmit" >
+              <form action="" v-on:submit.prevent="login" >
                 <div class="form-group">
                   <input class="form-control" name="email" type="email" v-model="input.email" required autofocus placeholder="Adresse Courriel">
                 </div>
                 <div class="form-group">
                   <input class="form-control" name="password" type="password" v-model="input.password" required placeholder="Mot de passe">
                 </div>
-                <button type="submit" class="btn btn-primary" variant="primary" v-on:click="login()">Se Connecter</button>
+                <button type="submit" class="btn btn-primary" variant="primary">Se Connecter</button>
               </form>
             </div>
           </div>
@@ -24,7 +24,7 @@
     </div>
 
     <div>
-      <b-alert variant="warning" :show="validAuthentification" class="mt-1">
+      <b-alert variant="warning" :show="validAuthentification" class="mt-2">
         Votre adresse courriel et/ou votre mot de passe est invalide
       </b-alert>
     </div>
@@ -59,7 +59,7 @@
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
 
-        this.$http.get('https://localhost:5001/api/client', {
+        this.$http.get('https://localhost:5001/client', {
           params: {
             username: this.input.email,
             password: this.input.password
@@ -71,7 +71,6 @@
         }, response => {
           // error callback
           this.validAuthentification = true;
-          alert("Le username ou le mot de passe est invalide")
           console.log(response);
         });
 

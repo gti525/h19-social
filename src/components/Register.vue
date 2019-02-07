@@ -8,60 +8,64 @@
         <div class="col-8">
           <div class="card">
             <div class="card-body">
-              <form class="row justify-content-center" action="" @submit="onSubmit" >
+              <form class="row justify-content-center" action="" v-on:submit.prevent="register" >
 
                 <div class="col-6">
                   <div class="form-group">
-                    <input class="form-control" name="email" type="text" v-model="input.email" placeholder="Adresse Courriel">
+                    <input class="form-control" name="email" type="text" v-model="input.email" placeholder="Adresse Courriel" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="password" type="password" v-model="input.password" placeholder="Mot de passe">
+                    <input class="form-control" name="password" type="password" v-model="input.password" placeholder="Mot de passe" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="name" type="text" v-model="input.firsname" placeholder="Prénom">
+                    <input class="form-control" name="name" type="text" v-model="input.firsname" placeholder="Prénom" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="lastName" type="text" v-model="input.lastname" placeholder="Nom de Famille">
+                    <input class="form-control" name="lastName" type="text" v-model="input.lastname" placeholder="Nom de Famille" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="birth" type="date" v-model="input.birth">
+                    <input class="form-control" name="birth" type="date" v-model="input.birth" required>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
-                    <input class="form-control" name="address"  type="text" v-model="input.address" placeholder="Adresse">
+                    <input class="form-control" name="address"  type="text" v-model="input.address" placeholder="Adresse" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="city" type="text" v-model="input.city" placeholder="Ville">
+                    <input class="form-control" name="city" type="text" v-model="input.city" placeholder="Ville" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="postalCode" type="text" v-model="input.postal" placeholder="Code Postal">
+                    <input class="form-control" name="postalCode" type="text" v-model="input.postal" placeholder="Code Postal" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="province"type="text" v-model="input.state" placeholder="État/Province">
+                    <input class="form-control" name="province"type="text" v-model="input.state" placeholder="État/Province" required>
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="country" type="text" v-model="input.country" placeholder="Pays">
+                    <input class="form-control" name="country" type="text" v-model="input.country" placeholder="Pays" required>
                   </div>
                 </div>
 
-
-                  <button type="submit" class="btn btn-primary" variant="primary" v-on:click="register()">S'enregistrer</button>
-
+                  <button type="submit" class="btn btn-primary" variant="primary">S'enregistrer</button>
 
               </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div>
+      <b-alert variant="warning" :show="validRegistration" class="mt-2">
+        Une erreur est survenue lors de l'enregistrement
+      </b-alert>
     </div>
 
     <div class="pt-3 mb-4">
@@ -92,7 +96,8 @@
           postal: "",
           state: "",
           country: "",
-        }
+        },
+        validRegistration: false
       }
     },
 
@@ -103,26 +108,27 @@
 
         var data = {
           //"client_id": 1,
-          "email": this.input.email,
-          "password": this.input.password,
-           "first_name": this.input.firsname,
-           "last_name": this.input.lastname,
+          "Email": this.input.email,
+          "Password": this.input.password,
+           "FirstName": this.input.firsname,
+           "LastName": this.input.lastname,
            //"birth_date": this.input.birth,
-           "address": this.input.address,
-           "city": this.input.city,
-           "postal_code": this.input.postal,
-           "province": this.input.state,
-           "country": this.input.country
+           "Address": this.input.address,
+           "City": this.input.city,
+           "PostalCode": this.input.postal,
+           "Province": this.input.state,
+           "Country": this.input.country
       };
 
-        this.$http.post('https://localhost:5001/api/client', data , {headers: {
+        this.$http.post('https://localhost:5001/Client', data , {headers: {
           'Content-Type': 'application/json'}}
         ).then(response => {
 
           alert("Enregistrement réussi! \n Bienvenue " + this.input.email);
         }, response => {
           // error callback
-          alert("Erreur d'enregistrement");
+          //alert("Erreur d'enregistrement");
+          this.validRegistration = true;
         });
       }
     }
