@@ -59,7 +59,7 @@
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
 
-        this.$http.get('https://localhost:5001/client', {
+        this.$http.get('https://localhost:5001/api/client', {
           params: {
             username: this.input.email,
             password: this.input.password
@@ -93,10 +93,5 @@
     color: #2c3e50;
     margin-top: 60px;
   }
-  h1 {
-    color: red;
-  }
-
-
 </style>
 

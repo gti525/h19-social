@@ -1,13 +1,8 @@
 <template>
     <div  id="tickets">
-<!--
-      <div id="overlay" v-on:click="CloseOverlay()">
-        <div id="text">Overlay Text</div>
-      </div>
--->
 
-      <b-list-group class="justify-content-between align-items-center">
-        <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg v-on:click="OpenOverlay(index)">
+      <b-list-group class="justify-content-between align-items-center mt-4">
+        <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg v-on:click="OpenModal(index)">
           <div class="show-date ">
             <div class="day"> {{ getDay(ticket.Date) }}</div>
             <div class="month">{{ getMonth(ticket.Date) }}</div>
@@ -21,147 +16,141 @@
       </b-list-group>
 
       <b-modal id="modallg" size="lg"  centered hide-footer >
+        <img src="../assets/logo.png">
         <div> <h1>{{tickets[ticketId].EventName}} </h1></div>
         <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
         <br/>
         <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
         <div> <h3>Adresse: {{tickets[ticketId].Location}} </h3></div>
-
-
         <canvas id="barcode"></canvas>
-
-
       </b-modal>
 
     </div>
-      </template>
+</template>
 
-      <script>
-        export default {
-              name: "Tickets",
+<script>
+  export default {
+      name: "Tickets",
 
-            data() {
-                return {
-                  tickets: [
-                    {
-                      TicketId:1,
-                      EventName: 'Show must go on',
-                      Artist: 'Céline Dion',
-                      Date:'02-01-19',
-                      Location: 'Las Vegas',
-                      ClientId: 2
-                    },
-                    {
-                      TicketId:1,
-                      EventName: 'Team Sesh',
-                      Artist: 'Bones',
-                      Date:'29-05-19',
-                      Location: 'Detroit',
-                      ClientId: 2
-                    },
-                    {
-                      TicketId:1,
-                      EventName: 'Beautiful Death',
-                      Artist: 'Mugxtsu',
-                      Date:'31-12-19',
-                      Location: 'Montréal',
-                      ClientId: 2
-                    }
-                  ],
-                  months: {
-                    1: "JAN",
-                    2: "FÉV",
-                    3: "MAR",
-                    4: "AVR",
-                    5: "MAI",
-                    6: "JUN",
-                    7: "JUL",
-                    8: "AOÛ",
-                    9: "SEP",
-                    10: "OCT",
-                    11: "NOV",
-                    12: "DÉC",
-                  },
-                  ticketId: 0,
-                  barcodeValue: '123445435',
-                }
-            },
-
-            methods:
+      data() {
+          return {
+            tickets: [
               {
-                CloseOverlay()
-                {
-                  document.getElementById("overlay").style.display = "none";
-                },
-                OpenOverlay(index)
-                {
-;                  this.ticketId = index;
-                   //document.getElementById("overlay").style.display = "block";
-                },
-                getTickets ()
-                {
-                  this.$http.get('https://localhost:5001/api/ticket').then(response => {
-                    console.log(response);
-                  }, response => {
-                    // error callback
-                    console.log(response);
-                  });
-                },
-                getDay(date)
-                {
-                  return date.split("-")[0];
-                },
-                getMonth(date)
-                {
-                  return this.months[ parseInt(date.split("-")[1],10)];
-                }
+                TicketId:1,
+                EventName: 'Show must go on',
+                Artist: 'Céline Dion',
+                Date:'02-01-19',
+                Location: 'Las Vegas',
+                ClientId: 2
               },
-            beforeMount(){
-              this.getTickets();
+              {
+                TicketId:1,
+                EventName: 'Team Sesh',
+                Artist: 'Bones',
+                Date:'29-05-19',
+                Location: 'Detroit',
+                ClientId: 2
+              },
+              {
+                TicketId:1,
+                EventName: 'Beautiful Death',
+                Artist: 'Mugxtsu',
+                Date:'31-12-19',
+                Location: 'Montréal',
+                ClientId: 2
+              }
+            ],
+            months: {
+              1: "JAN",
+              2: "FÉV",
+              3: "MAR",
+              4: "AVR",
+              5: "MAI",
+              6: "JUN",
+              7: "JUL",
+              8: "AOÛ",
+              9: "SEP",
+              10: "OCT",
+              11: "NOV",
+              12: "DÉC",
             },
+            ticketId: 0,
+            barcodeValue: '123445435',
           }
-      </script>
+      },
 
-      <style scoped>
+      methods:
+        {
+          OpenModal(index)
+          {
+            this.ticketId = index;
+          },
+          getTickets ()
+          {
+            this.$http.get('https://localhost:5001/api/ticket').then(response => {
+              console.log(response);
+              this.tickets = response.data;
+            }, response => {
+              // error callback
+              console.log(response);
+            });
+          },
+          getDay(date)
+          {
+            return date.split("-")[0];
+          },
+          getMonth(date)
+          {
+            return this.months[ parseInt(date.split("-")[1],10)];
+          }
+        },
+      beforeMount(){
+        this.getTickets();
+      },
+    }
+</script>
 
-        .show{
-          height: 150px;
-          width: 1000px;
-          padding: 0px;
-          margin-bottom: 20px;
-        }
-        .show-date{
-          width: 20%;
-          height: 100%;
-          float: left;
-          background-color: aquamarine;
-        }
+<style scoped>
+  .show{
+    height: 150px;
+    width: 1000px;
+    padding: 0px;
+    margin-bottom: 20px;
+  }
+  .show-date{
+    width: 20%;
+    height: 100%;
+    float: left;
+    background-color: aquamarine;
+  }
 
-        .day{
-          margin:0;
-          position:relative;
-          height: 70%;
-          color: black;
-          font-size: 70px;
-        }
+  .day{
+    margin:0;
+    position:relative;
+    height: 70%;
+    color: black;
+    font-size: 70px;
+  }
 
-        .month{
-          top: 70%;
-          font-size: 30px;
-          font-weight: bold;
-        }
+  .month{
+    top: 70%;
+    font-size: 30px;
+    font-weight: bold;
+  }
 
-        .show-info{
-          width:80%;
-          float: right;
-          height:100%;
-        }
+  .show-info{
+    width:80%;
+    float: right;
+    height:100%;
+  }
 
-        .show-name{
-          font-size: 50px;
-          position: relative;
-          top:25%;
+  .show-name{
+    font-size: 50px;
+    position: relative;
+    top:25%;
+  }
 
-        }
-
-      </style>
+  h1{
+    color: #3eb8a1
+  }
+</style>

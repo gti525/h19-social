@@ -120,7 +120,7 @@
            "Country": this.input.country
       };
 
-        this.$http.post('https://localhost:5001/Client', data , {headers: {
+        this.$http.post('https://localhost:5001/api/Client', data , {headers: {
           'Content-Type': 'application/json'}}
         ).then(response => {
 
@@ -145,9 +145,6 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
-  }
-  h1 {
-    color: red;
   }
 </style>
 
