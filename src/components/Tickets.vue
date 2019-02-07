@@ -7,10 +7,10 @@
 -->
 
       <b-list-group class="justify-content-between align-items-center">
-        <b-list-group-item class="show" button v-for="ticket in tickets">
+        <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg v-on:click="OpenOverlay(index)">
           <div class="show-date ">
-            <div class="day">20</div>
-            <div class="month">JAN</div>
+            <div class="day"> {{ getDay(ticket.Date) }}</div>
+            <div class="month">{{ getMonth(ticket.Date) }}</div>
           </div>
           <div class="show-info">
             <div class="show-name">
@@ -20,19 +20,53 @@
         </b-list-group-item>
       </b-list-group>
 
-          </div>
+      <b-modal id="modallg" size="lg"  centered hide-footer >
+        <div> <h1>{{tickets[ticketId].EventName}} </h1></div>
+        <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
+        <br/>
+        <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
+        <div> <h3>Adresse: {{tickets[ticketId].Location}} </h3></div>
+
+
+        <canvas id="barcode"></canvas>
+
+
+      </b-modal>
+
+    </div>
       </template>
 
       <script>
-          export default {
+        export default {
               name: "Tickets",
 
             data() {
                 return {
                   tickets: [
-                    {Date:'02 JANV', EventName: 'Céline Dion'},
-                    {Date:'29 MAI', EventName: 'Blue man group'},
-                    {Date:'31 DÉC', EventName: 'Bones'}
+                    {
+                      TicketId:1,
+                      EventName: 'Show must go on',
+                      Artist: 'Céline Dion',
+                      Date:'02-01-19',
+                      Location: 'Las Vegas',
+                      ClientId: 2
+                    },
+                    {
+                      TicketId:1,
+                      EventName: 'Team Sesh',
+                      Artist: 'Bones',
+                      Date:'29-05-19',
+                      Location: 'Detroit',
+                      ClientId: 2
+                    },
+                    {
+                      TicketId:1,
+                      EventName: 'Beautiful Death',
+                      Artist: 'Mugxtsu',
+                      Date:'31-12-19',
+                      Location: 'Montréal',
+                      ClientId: 2
+                    }
                   ],
                   months: {
                     1: "JAN",
@@ -47,7 +81,9 @@
                     10: "OCT",
                     11: "NOV",
                     12: "DÉC",
-                  }
+                  },
+                  ticketId: 0,
+                  barcodeValue: '123445435',
                 }
             },
 
@@ -57,13 +93,33 @@
                 {
                   document.getElementById("overlay").style.display = "none";
                 },
-                OpenOverlay()
+                OpenOverlay(index)
                 {
-                   document.getElementById("overlay").style.display = "block";
+;                  this.ticketId = index;
+                   //document.getElementById("overlay").style.display = "block";
+                },
+                getTickets ()
+                {
+                  this.$http.get('https://localhost:5001/api/ticket').then(response => {
+                    console.log(response);
+                  }, response => {
+                    // error callback
+                    console.log(response);
+                  });
+                },
+                getDay(date)
+                {
+                  return date.split("-")[0];
+                },
+                getMonth(date)
+                {
+                  return this.months[ parseInt(date.split("-")[1],10)];
                 }
-              }
+              },
+            beforeMount(){
+              this.getTickets();
+            },
           }
-
       </script>
 
       <style scoped>
