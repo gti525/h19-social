@@ -14,7 +14,7 @@ namespace ASPNETCoreHeroku.Services
         void AddTicket(Ticket ticket);
     }
 
-    public class TicketService
+    public class TicketService : ITicketService
     {
         private readonly ITicketDAL _ticketDAL;
 

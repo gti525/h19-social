@@ -20,6 +20,7 @@ using System.Text;
 using ASPNETCoreHeroku.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 
 namespace ASPNETCoreHeroku
 {
@@ -65,8 +66,11 @@ namespace ASPNETCoreHeroku
 
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IClientDAL, ClientDAL>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<ITicketDAL, TicketDAL>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

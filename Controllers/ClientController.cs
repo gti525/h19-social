@@ -34,7 +34,7 @@ namespace ASPNETCoreHeroku.Controllers
                 var client = _clientService.Login(username, password);
                 return client;
             }
-            catch(Exception)
+            catch(Exception e)
             {
                 return NotFound();
             }
@@ -43,7 +43,7 @@ namespace ASPNETCoreHeroku.Controllers
         // POST: api/Client
         [AllowAnonymous]
         [HttpPost]
-        public void Post([FromBody] Client client)
+        public void Register([FromBody] Client client)
         {
             try
             {

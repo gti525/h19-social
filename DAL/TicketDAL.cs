@@ -12,7 +12,7 @@ namespace ASPNETCoreHeroku.DAL
         void AddTicket(Ticket ticket);
     }
 
-    public class TicketDAL
+    public class TicketDAL : ITicketDAL
     {
         private readonly AppDbContext _appDbContext;
 

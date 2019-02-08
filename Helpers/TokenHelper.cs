@@ -10,7 +10,13 @@ namespace ASPNETCoreHeroku.Helpers
     {
         public static int GetIdFromToken(string token)
         {
-            return (int) new JwtSecurityTokenHandler().ReadJwtToken(token.Substring("Bearer ".Length).Trim()).Payload["nameid"];
+            var sub = token.Substring("Bearer ".Length).Trim();
+            var JSTH = new JwtSecurityTokenHandler();
+            var tok = JSTH.ReadJwtToken(sub);
+            int id = Int32.Parse(tok.Payload["nameid"].ToString());
+
+            return id;
+            //return (int) new JwtSecurityTokenHandler().ReadJwtToken(token.Substring("Bearer ".Length).Trim()).Payload["nameid"];
         }
     }
 }

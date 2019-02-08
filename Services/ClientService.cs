@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using ASPNETCoreHeroku.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Logging;
 
 namespace ASPNETCoreHeroku.Services
 {
@@ -64,6 +65,8 @@ namespace ASPNETCoreHeroku.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            IdentityModelEventSource.ShowPII = true;
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

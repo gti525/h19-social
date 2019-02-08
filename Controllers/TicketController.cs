@@ -8,9 +8,11 @@ using ASPNETCoreHeroku.Models;
 using Microsoft.EntityFrameworkCore;
 using ASPNETCoreHeroku.Services;
 using ASPNETCoreHeroku.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASPNETCoreHeroku.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TicketController : Controller
@@ -27,7 +29,11 @@ namespace ASPNETCoreHeroku.Controllers
         public IEnumerable<Ticket> GetTicketsByClientId()
         {
             string token = Request.Headers["Authorization"];
-            var id = TokenHelper.GetIdFromToken(token);
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
 
             return _ticketService.GetTicketsByClientId(id);
         }
