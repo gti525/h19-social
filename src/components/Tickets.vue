@@ -1,6 +1,6 @@
 <template>
     <div  id="tickets">
-
+	<h1 class="h1 mb-1 font-weight-normal">Mes billets:</h1>
       <b-list-group class="justify-content-between align-items-center mt-4">
         <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg v-on:click="OpenModal(index)">
           <div class="show-date ">
@@ -21,7 +21,7 @@
         <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
         <br/>
         <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
-        <div> <h3>Adresse: {{tickets[ticketId].Location}} </h3></div>
+        <div> <h3>Lieu: {{tickets[ticketId].Location}} </h3></div>
         <canvas id="barcode"></canvas>
       </b-modal>
 
@@ -78,13 +78,8 @@
 				}
 			}
 			).then(response => {
-			  console.log(response.data[0]);
-			  console.log(this.tickets[0]);
+
 			  this.tickets = response.data;
-			  //this.tickets.push(response.data[0]);
-			  /*response.data.forEach(function(ticket) {
-				  this.tickets.push(response.data[0])
-				});*/
 			  
             }, response => {
               // error callback
@@ -93,7 +88,7 @@
           },
           getDay(date)
           {
-            return date.split("-")[0];
+            return date.substring(8,10);
           },
           getMonth(date)
           {
@@ -117,7 +112,7 @@
     width: 20%;
     height: 100%;
     float: left;
-    background-color: aquamarine;
+    background-color: 	#7cf9d6;
   }
 
   .day{
@@ -147,6 +142,32 @@
   }
 
   h1{
-    color: #3eb8a1
+    color: #7cf9d6
   }
+  
+  .day, .month{
+	color: #495057;
+  }
+  
+  .show-date{
+	border-style: solid;
+	border-width: 0px 3px 0px 0px;
+	border-color: #7fccb6;
+
+  }
+  
+  .show-info {
+	background-color: aquamarine;
+   }
+   
+   .list-group-item {
+		border-style: solid;
+		border-width: 7px;
+		border-color: #7fccb6;
+	}
+	
+	.h1 {
+	color: #42c6af;
+  }
+  
 </style>

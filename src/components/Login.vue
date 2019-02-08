@@ -1,7 +1,7 @@
 <template>
   <div id="login">
 
-    <h1 class="h3 mb-3 font-weight-normal">Connectez-Vous</h1>
+    <h1 class="h2 mb-2 font-weight-normal">Connectez-Vous</h1>
 
     <div class="container">
       <div class="row justify-content-center align-items-center" >
@@ -93,6 +93,19 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+  
+  .btn-primary {
+	 background-color: aquamarine;	
+	 color: #42c6af;	
+  }
+  
+  .h2 {
+	color: #007bff;
+  }
+  
+  a {
+	color: #007bff;
   }
 </style>
 
