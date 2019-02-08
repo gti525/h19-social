@@ -67,6 +67,7 @@
         }).then(response => {
 
           alert("Bienvenue " + this.input.email);
+		  localStorage.setItem("token", response.data.token);
           console.log(response);
         }, response => {
           // error callback

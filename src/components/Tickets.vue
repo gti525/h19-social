@@ -42,22 +42,6 @@
                 Date:'02-01-19',
                 Location: 'Las Vegas',
                 ClientId: 2
-              },
-              {
-                TicketId:1,
-                EventName: 'Team Sesh',
-                Artist: 'Bones',
-                Date:'29-05-19',
-                Location: 'Detroit',
-                ClientId: 2
-              },
-              {
-                TicketId:1,
-                EventName: 'Beautiful Death',
-                Artist: 'Mugxtsu',
-                Date:'31-12-19',
-                Location: 'Montréal',
-                ClientId: 2
               }
             ],
             months: {
@@ -87,9 +71,21 @@
           },
           getTickets ()
           {
-            this.$http.get('https://localhost:5001/api/ticket').then(response => {
-              console.log(response);
-              this.tickets = response.data;
+
+            this.$http.get('https://localhost:5001/api/ticket', {
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token")
+				}
+			}
+			).then(response => {
+			  console.log(response.data[0]);
+			  console.log(this.tickets[0]);
+			  this.tickets = response.data;
+			  //this.tickets.push(response.data[0]);
+			  /*response.data.forEach(function(ticket) {
+				  this.tickets.push(response.data[0])
+				});*/
+			  
             }, response => {
               // error callback
               console.log(response);
