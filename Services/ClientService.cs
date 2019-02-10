@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using ASPNETCoreHeroku.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Logging;
@@ -19,6 +20,7 @@ namespace ASPNETCoreHeroku.Services
     {
         Client Login(string username, string password);
         void Register(Client client);
+        void AddProfilePicture(int id, string picture);
     };
 
     public class ClientService : IClientService
@@ -59,6 +61,11 @@ namespace ASPNETCoreHeroku.Services
             {
                 throw;
             }
+        }
+
+        public void AddProfilePicture(int id, string picture)
+        {
+            
         }
 
         private string GenerateToken (Client client)
