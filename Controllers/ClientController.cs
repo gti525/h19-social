@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using ASPNETCoreHeroku.Helpers;
+using System.IO;
+using Imgur.API;
+using Imgur.API.Authentication.Impl;
+using Imgur.API.Endpoints.Impl;
+using Imgur.API.Models;
+using Imgur.API.Models.Impl;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -55,10 +56,29 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        // PUT: api/Client/5
+        // PUT: api/Client/5/photo
+        [AllowAnonymous]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        /*
+         * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
+         */
+        public void UploadImage(int id)
         {
+            _clientService.AddProfilePicture(id);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public ActionResult<Client> GetImage(int id)
+        {
+            try
+            {
+                return _clientService.GetClientById(id);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         // DELETE: api/ApiWithActions/5
