@@ -59,24 +59,25 @@ namespace ASPNETCoreHeroku.Controllers
         // PUT: api/Client/5/photo
         [AllowAnonymous]
         [HttpPut("{id}")]
+        /*
+         * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
+         */
         public void UploadImage(int id)
+        {
+            _clientService.AddProfilePicture(id);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public ActionResult<Client> GetImage(int id)
         {
             try
             {
-                var path = @"c:\users\jacobpc\pictures\dino.jpg";
-                var client = new ImgurClient("1573808507169ed", "64c55ef97e8bb9885002995e9247e4ffaa5b81e6");
-                var endpoint = new ImageEndpoint(client);
-                IImage image;
-                using (var fs = new FileStream(path, FileMode.Open))
-                {
-                    image = endpoint.UploadImageStreamAsync(fs).GetAwaiter().GetResult();
-                }
-                Debug.Write("Image uploaded. Image Url: " + image.Link);
+                return _clientService.GetClientById(id);
             }
-            catch (ImgurException imgurEx)
+            catch (Exception e)
             {
-                Debug.Write("An error occurred uploading an image to Imgur.");
-                Debug.Write(imgurEx.Message);
+                throw;
             }
         }
 
