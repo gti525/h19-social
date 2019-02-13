@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ASPNETCoreHeroku</name>
+    </assembly>
+    <members>
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Login(System.String,System.String)">
+            <summary>
+            Recuperer les identifiants d'un client
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Register(ASPNETCoreHeroku.Models.Client)">
+            <summary>
+            Enregistrer un client
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.UploadImage(System.Int32)">
+            <summary>
+            Modifier la photo de profil d'un client
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Delete(System.Int32)">
+            <summary>
+            Removes the customer ApiWithActions
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.TicketController.GetTicketsByClientId">
+            <summary>
+            Recupere les tickets d'une client
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.TicketController.Post(ASPNETCoreHeroku.Models.Ticket)">
+            <summary>
+            Reserver un ticket
+            </summary>
+            <param name="ticket"></param>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.TicketController.Put(System.Int32,System.String)">
+            <summary>
+            Remplacer le ticket d'un client specifique
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.TicketController.Delete(System.Int32)">
+            <summary>
+            Supprimer le ticket d'un client
+            </summary>
+            <param name="id"></param>
+        </member>
+    </members>
+</doc>

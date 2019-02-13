@@ -25,6 +25,10 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // GET: api/Ticket
+        /// <summary>
+        /// Recupere les tickets d'une client
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Ticket> GetTicketsByClientId()
         {
@@ -45,6 +49,10 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // POST: api/Ticket
+        /// <summary>
+        /// Reserver un ticket
+        /// </summary>
+        /// <param name="ticket"></param>
         [HttpPost]
         public void Post([FromBody] Ticket ticket)
         {
@@ -52,12 +60,21 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // PUT: api/Ticket/5
+        /// <summary>
+        /// Remplacer le ticket d'un client specifique
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Supprimer le ticket d'un client
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
