@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <h1> ceci est un test</h1>
-    <div>
+
+    <div class="full-page">
+      <div class="header">
+        <img src="../images/logo.svg" height="50" class=" " alt="" id="logo">
+
+      </div>
       <slot/>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -14,5 +17,19 @@
 </script>
 
 <style scoped>
+
+  .full-page{
+    height: 100%;
+  }
+
+  .header{
+    background-color: var(--primary-color);
+    height: 300px;
+  }
+
+  #logo{
+    margin-top: 50px;
+    height: 200px;
+  }
 
 </style>

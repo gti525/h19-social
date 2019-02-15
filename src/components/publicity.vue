@@ -19,10 +19,9 @@
   .sidenav {
     position:sticky;
     top: 20px;
-    float:left;
+
     width:20%;
     height: 575px;
-    left: 5%;
   }
 
   .publicity-content{

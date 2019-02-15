@@ -74,10 +74,6 @@
           this.validAuthentification = true;
           console.log(response);
         });
-
-      /*  if (this.input.username == "username" && this.input.password == "password") {
-            alert("Connection réussi");
-        }*/
       }
     }
   }

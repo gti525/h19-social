@@ -140,11 +140,19 @@
 </script>
 
 <style scoped>
+
+  #tickets{
+    width:800px;
+    margin:auto;
+    left:50%;
+  }
+
   .show{
     height: 150px;
-    width: 1000px;
+    width: 800px;
     padding: 0px;
     margin-bottom: 20px;
+    z-index: 0;
   }
   .show-date{
     width: 20%;
@@ -185,7 +193,7 @@
   .show-date{
 	border-style: solid;
 	border-width: 0px 2px 0px 0px;
-	border-color: #a133f8;
+	border-color: var(--primary-color);
 
   }
   
@@ -194,11 +202,12 @@
    }
    
    .list-group-item:hover .show-date {
-	background-color: #E6E6FA;
+	background-color: var(--secondary-color);
    }
    
    .list-group-item:hover .show-info{
-	background-color: #E6E6FA;
+     background-color: var(--secondary-color);
+
    }
    
    .list-group-item {
@@ -209,6 +218,7 @@
 	
 	.h1 {
 	color: #495057;
+    left:0;
   }
 
   

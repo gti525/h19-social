@@ -40,11 +40,11 @@
 
 <style scoped>
   .footer-copyright{
-    background-color: darkblue;
+    background-color: var(--tertiary-color);
     color: white;
   }
 
   .footer-content{
-    background-color: cornflowerblue;
+    background-color: var(--secondary-color);;
   }
 </style>

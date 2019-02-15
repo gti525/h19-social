@@ -4,7 +4,8 @@
         <header-bar id="header"/>
 
         <div class="main-content">
-          <publicity id="publicity"/>
+          <publicity id="publicity-left"/>
+          <publicity id="publicity-right"/>
           <slot id="main-view"/>
         </div>
       </div>
@@ -44,26 +45,22 @@
     z-index: 1;
   }
 
-  #footer{
-  }
-
   .main-content{
     height: 100%;
   }
 
-  #publicity{
+  #publicity-left{
+    float:left;
+    left:5%;
   }
 
-  #main-view{
+  #publicity-right{
+    float:right;
+    right:5%;
   }
 
   slot{
     width:70%;
   }
-
-
- /* #push {
-    height:224px;
-  }*/
 
 </style>

@@ -21,6 +21,13 @@ export default {
 
 <style>
 
+  :root{
+    --primary-color: #a133f8;
+    --secondary-color: #E6E6FA;
+    --tertiary-color: #3a105b;
+    --light-color: #f7f7f7
+  }
+
   html{
     height: 100%;
   }
