@@ -5,6 +5,13 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 
+import Default from './layouts/Default.vue'
+import Credentials from './layouts/Credentials.vue'
+
+Vue.component('default-layout', Default);
+Vue.component('credentials-layout', Credentials);
+
+
 Vue.use(VueResource);
 Vue.config.productionTip = false
 
