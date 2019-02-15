@@ -67,8 +67,8 @@
         }).then(response => {
 
           alert("Bienvenue " + this.input.email);
-		  localStorage.setItem("token", response.data.token);
-          console.log(response);
+		  localStorage.setItem("token", response.data.Token);
+
         }, response => {
           // error callback
           this.validAuthentification = true;
@@ -86,22 +86,27 @@
 
 
 <style>
-  #Login {
+  #login {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+    margin-top: 55px;
   }
   
   .btn-primary {
-	 background-color: aquamarine;	
-	 color: #42c6af;	
+	 background-color: #a133f8;	
+	 color: white;	
+  }
+  
+  .btn-primary:hover {
+	 background-color: white;;	
+	 color: #a133f8;	
   }
   
   .h2 {
-	color: #007bff;
+	color: #a133f8;
   }
   
   a {

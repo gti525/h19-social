@@ -138,22 +138,22 @@
 
 
 <style>
-  #Login {
+  #register {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    color: black;
+    margin-top: 55px;
   }
   
   .btn-primary {
-	 background-color: aquamarine;	
-	 color: #007bff;	
+	 background-color: #a133f8;	
+	 color: white;	
   }
   
   .h2 {
-	color: #42c6af;
+	color: #a133f8;	
   }
   
   a {
