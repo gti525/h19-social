@@ -2,7 +2,7 @@
 
     <div class="full-page">
       <div class="header">
-        <img src="../images/logo.svg" height="50" class=" " alt="" id="logo">
+        <img src="../images/logo.svg" class=" " alt="" id="logo">
 
       </div>
       <slot/>
