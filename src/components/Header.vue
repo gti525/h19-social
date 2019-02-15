@@ -40,18 +40,11 @@
 </script>
 
 <style scoped>
-
-  .navbar-toggler-icon{
-  background-image: url("https://mdbootstrap.com/img/svg/hamburger3.svg?color=FFFFF");
+  .navbar{
+    position:sticky;
+    top: 0;
   }
-
   .form-control{
     width:500px;
   }
-
-  #ddown-account{
-    background-image: none;
-    background-image: url("https://mdbootstrap.com/img/svg/hamburger3.svg?color=FFFFF");
-  }
-
 </style>

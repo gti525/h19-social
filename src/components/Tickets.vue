@@ -64,24 +64,14 @@
                 Date:'2019-01-19',
                 Location: 'Las Vegas',
                 ClientId: 2
-              },
-              {
+              },{
                 TicketId:1,
                 EventName: 'Show must go on',
                 Artist: 'Céline Dion',
                 Date:'2019-01-19',
                 Location: 'Las Vegas',
                 ClientId: 2
-              },
-              {
-                TicketId:1,
-                EventName: 'Show must go on',
-                Artist: 'Céline Dion',
-                Date:'2019-01-19',
-                Location: 'Las Vegas',
-                ClientId: 2
-              },
-              {
+              },{
                 TicketId:1,
                 EventName: 'Show must go on',
                 Artist: 'Céline Dion',

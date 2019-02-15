@@ -18,17 +18,17 @@
   /* The sidebar menu */
   .sidenav {
     position:sticky;
-    top: 0;
+    top: 20px;
     float:left;
     width:20%;
-    height: 800px;
+    height: 575px;
     left: 5%;
   }
 
   .publicity-content{
     background-image: url("../images/fakePublicity.png");
     position:absolute;
-    top:100px;
+    top:75px;
     width: 100%;
     height: 500px;
   }

@@ -7,7 +7,6 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Tickets from '@/components/Tickets'
-import Home from '@/components/Home'
 
 Vue.use(Router)
 Vue.use(BootstrapVue);
@@ -20,7 +19,7 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/login',
+      path: '/',
       name: 'Login',
       meta: { layout: "credentials"},
       component: Login
@@ -35,12 +34,6 @@ export default new Router({
       path: '/tickets',
       name: 'Tickets',
       component: Tickets
-    },
-    {
-      path: '/',
-      name: 'Home',
-      meta: { layout: ""},
-      component: Home
     }
   ]
 })
