@@ -27,7 +27,7 @@ namespace ASPNETCoreHeroku.Controllers
             _clientService = clientService;
         }
 
-        /*// GET: api/Client
+        // GET: api/Client
         /// <summary>
         /// Recuperer les identifiants d'un client
         /// </summary>
@@ -35,7 +35,8 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="password"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet]
+        [Route("api/[controller]/login")]
+        [HttpPost]
         public ActionResult<Client> Login(string username, string password)
         {
             try
@@ -47,7 +48,7 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 return NotFound();
             }
-        }*/
+        }
 
         // POST: api/client/login
         /// <summary>
