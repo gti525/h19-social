@@ -26,6 +26,12 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // GET: api/Client
+        /// <summary>
+        /// Recuperer les identifiants d'un client
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult<Client> Login(string username, string password)
@@ -42,6 +48,10 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // POST: api/Client
+        /// <summary>
+        /// Enregistrer un client
+        /// </summary>
+        /// <param name="client"></param>
         [AllowAnonymous]
         [HttpPost]
         public void Register([FromBody] Client client)
@@ -57,6 +67,10 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // PUT: api/Client/5/photo
+        /// <summary>
+        /// Modifier la photo de profil d'un client
+        /// </summary>
+        /// <param name="id"></param>
         [AllowAnonymous]
         [HttpPut("{id}")]
         /*
@@ -82,6 +96,10 @@ namespace ASPNETCoreHeroku.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Removes the customer ApiWithActions
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

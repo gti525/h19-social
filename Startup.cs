@@ -21,6 +21,7 @@ using ASPNETCoreHeroku.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ASPNETCoreHeroku
 {
@@ -73,6 +74,18 @@ namespace ASPNETCoreHeroku
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+
+            //Configure Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v4", new Info { Title = "API Réseau social", Description = "Plate forme API destinée à fournir des données" });
+
+                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"ASPNETCoreHeroku.xml";
+                c.IncludeXmlComments(xmlPath);
+            }
+                );
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,6 +117,13 @@ namespace ASPNETCoreHeroku
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            //app.UseSwagger()
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v4/swagger.json", "Core API");
             });
         }
     }
