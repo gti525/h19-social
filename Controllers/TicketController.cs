@@ -26,7 +26,7 @@ namespace ASPNETCoreHeroku.Controllers
 
         // GET: api/Ticket
         /// <summary>
-        /// Recupere les tickets d'une client
+        /// Recuperer les tickets d'un client
         /// </summary>
         /// <returns></returns>
         [HttpGet]

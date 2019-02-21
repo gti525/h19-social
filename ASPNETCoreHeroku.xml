@@ -4,14 +4,6 @@
         <name>ASPNETCoreHeroku</name>
     </assembly>
     <members>
-        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Login(System.String,System.String)">
-            <summary>
-            Recuperer les identifiants d'un client
-            </summary>
-            <param name="username"></param>
-            <param name="password"></param>
-            <returns></returns>
-        </member>
         <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Register(ASPNETCoreHeroku.Models.Client)">
             <summary>
             Enregistrer un client
@@ -26,13 +18,13 @@
         </member>
         <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Delete(System.Int32)">
             <summary>
-            Removes the customer ApiWithActions
+            Removes a customer 
             </summary>
             <param name="id"></param>
         </member>
         <member name="M:ASPNETCoreHeroku.Controllers.TicketController.GetTicketsByClientId">
             <summary>
-            Recupere les tickets d'une client
+            Recuperer les tickets d'un client
             </summary>
             <returns></returns>
         </member>
