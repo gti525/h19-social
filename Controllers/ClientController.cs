@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.Services;
+using ASPNETCoreHeroku.DAL;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Imgur.API;
@@ -18,14 +19,15 @@ namespace ASPNETCoreHeroku.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly IClientService _clientService;
+        //private readonly IClientService _clientService;
+        private IClientService _clientService;
 
         public ClientController (IClientService clientService)
         {
             _clientService = clientService;
         }
 
-        // GET: api/Client
+        /*// GET: api/Client
         /// <summary>
         /// Recuperer les identifiants d'un client
         /// </summary>
@@ -45,7 +47,15 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 return NotFound();
             }
-        }
+        }*/
+
+        // POST: api/client/login
+        /// <summary>
+        ///  permettre à un client de se connecter
+        /// </summary>
+        
+       
+
 
         // POST: api/Client
         /// <summary>
@@ -97,7 +107,7 @@ namespace ASPNETCoreHeroku.Controllers
 
         // DELETE: api/ApiWithActions/5
         /// <summary>
-        /// Removes the customer ApiWithActions
+        /// Removes a customer 
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]

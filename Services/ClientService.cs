@@ -32,6 +32,8 @@ namespace ASPNETCoreHeroku.Services
         void Register(Client client);
         void AddProfilePicture(int id);
         Client GetClientById(int id);
+        
+
     };
 
     public class ClientService : IClientService
