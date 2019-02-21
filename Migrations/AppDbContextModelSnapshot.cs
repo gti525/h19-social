@@ -40,6 +40,8 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<string>("Password");
 
+                    b.Property<bool>("PendingFriendRequests");
+
                     b.Property<string>("PostalCode");
 
                     b.Property<string>("ProfileImage");
@@ -51,6 +53,20 @@ namespace ASPNETCoreHeroku.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("ASPNETCoreHeroku.Models.FriendRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("From");
+
+                    b.Property<string>("To");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FriendRequest");
                 });
 
             modelBuilder.Entity("ASPNETCoreHeroku.Models.Ticket", b =>

@@ -21,6 +21,7 @@ namespace ASPNETCoreHeroku.Models
         public string Province { get; set; }
         public string Country { get; set; }
         public string ProfileImage { get; set; }
+        public bool PendingFriendRequests { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
         public string Token { get; set; }
     }

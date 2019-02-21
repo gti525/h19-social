@@ -68,6 +68,8 @@ namespace ASPNETCoreHeroku
             services.AddScoped<IClientDAL, ClientDAL>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<ITicketDAL, TicketDAL>();
+            services.AddScoped<IFriendRequestService, FriendRequestService>();
+            services.AddScoped<IFriendRequestDAL, FriendRequestDAL>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;

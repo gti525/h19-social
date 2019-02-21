@@ -19,7 +19,6 @@ namespace ASPNETCoreHeroku.DAL
         public ClientDAL(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-
         }
 
         public Client Login(string username, string password)

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ASPNETCoreHeroku.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190201202454_migration2.0")]
-    partial class migration20
+    [Migration("20190212193027_migration")]
+    partial class migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,8 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<string>("Password");
 
+                    b.Property<bool>("PendingFriendRequests");
+
                     b.Property<string>("PostalCode");
 
                     b.Property<string>("ProfileImage");
@@ -53,6 +55,20 @@ namespace ASPNETCoreHeroku.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("ASPNETCoreHeroku.Models.FriendRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("From");
+
+                    b.Property<string>("To");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FriendRequest");
                 });
 
             modelBuilder.Entity("ASPNETCoreHeroku.Models.Ticket", b =>
