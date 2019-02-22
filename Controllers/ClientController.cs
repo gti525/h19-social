@@ -27,7 +27,7 @@ namespace ASPNETCoreHeroku.Controllers
             _clientService = clientService;
         }
 
-        // GET: api/Client
+        // POST: api/Client/login
         /// <summary>
         /// Recuperer les identifiants d'un client
         /// </summary>
