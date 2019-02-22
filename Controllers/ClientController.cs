@@ -49,14 +49,8 @@ namespace ASPNETCoreHeroku.Controllers
                 return NotFound();
             }
         }
-
-        // POST: api/client/login
-        /// <summary>
-        ///  permettre à un client de se connecter
-        /// </summary>
         
        
-
 
         // POST: api/Client
         /// <summary>

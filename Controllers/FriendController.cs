@@ -22,6 +22,11 @@ namespace ASPNETCoreHeroku.Controllers
             _friendRequestService = friendRequestService;
         }
 
+        // GET: api/Fiend
+        /// <summary>
+        /// Rechercher un ami
+        /// </summary>
+        /// <param name="friendUsername"></param>
         [AllowAnonymous]
         [HttpGet]
         public IEnumerable<string> GetFriendRequests(string friendUsername)
@@ -43,6 +48,11 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
+        // POST: api/Friend
+        /// <summary>
+        /// ajouter un ami
+        /// </summary>
+        /// <param name="friendUsername"></param>
         [AllowAnonymous]
         [HttpPost]
         public void CreateFriendRequest([FromBody] string friendUsername)
