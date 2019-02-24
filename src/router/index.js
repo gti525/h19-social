@@ -7,6 +7,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Tickets from '@/components/Tickets'
+import FriendRequests from '@/components/FriendRequests'
 
 Vue.use(Router)
 Vue.use(BootstrapVue);
@@ -34,6 +35,16 @@ export default new Router({
       path: '/tickets',
       name: 'Tickets',
       component: Tickets
+    },
+    {
+      path: '/tickets/:id',
+      name: 'FriendTickets',
+      component: Tickets,
+    },
+    {
+      path: '/friendRequests',
+      name: 'FriendRequests',
+      component: FriendRequests,
     }
   ]
 })

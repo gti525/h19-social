@@ -1,28 +1,29 @@
 <template>
     <div  id="tickets">
-	<h1 class="h1 mb-1 mt-3 font-weight-normal">Mes billets:</h1>
-      <b-list-group class="justify-content-between align-items-center mt-4">
-        <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg v-on:click="OpenModal(index)">
-          <div class="show-date ">
-            <div class="day"> {{ getDay(ticket.Date) }}</div>
-            <div class="month">{{ getMonth(ticket.Date) }}</div>
-          </div>
-          <div class="show-info">
-            <div class="show-name">
-              {{ ticket.EventName }}
-            </div>
-          </div>
-        </b-list-group-item>
-      </b-list-group>
+      <h1 class="h1 mb-1 mt-3 font-weight-normal">{{pageTitle}}</h1>
+      <img src="../images/defaultAvatar.svg" height="100px"></img>
+          <b-list-group class="justify-content-between align-items-center mt-4">
+            <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg v-on:click="OpenModal(index)">
+              <div class="show-date ">
+                <div class="day"> {{ getDay(ticket.Date) }}</div>
+                <div class="month">{{ getMonth(ticket.Date) }}</div>
+              </div>
+              <div class="show-info">
+                <div class="show-name">
+                  {{ ticket.EventName }}
+                </div>
+              </div>
+            </b-list-group-item>
+          </b-list-group>
 
       <b-modal id="modallg" size="lg"  centered hide-footer hide-header>
         <img src="../images/logo-primary.svg" class=" " alt="" width="455" height="210" id="logo">
 
-		<div class="pt-3 font-weight-bold">  <h1 class="font-weight-bold">{{tickets[ticketId].EventName}} </h1></div>
-        <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
-        <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
-        <div> <h3>Lieu: {{tickets[ticketId].Location}} </h3></div>
-        <img src="https://cdn.barcodesinc.com/themes/barcodesinc/images/upc.gif"></img>
+        <div class="pt-3 font-weight-bold">  <h1 class="font-weight-bold">{{tickets[ticketId].EventName}} </h1></div>
+            <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
+            <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
+            <div> <h3>Lieu: {{tickets[ticketId].Location}} </h3></div>
+            <img src="https://cdn.barcodesinc.com/themes/barcodesinc/images/upc.gif"></img>
       </b-modal>
     </div>
 </template>
@@ -99,7 +100,9 @@
             },
             ticketId: 0,
             barcodeValue: '123445435',
+            pageTitle: 'Mes Billets'
           }
+
       },
 
       methods:
@@ -110,8 +113,13 @@
           },
           getTickets ()
           {
+            var path = 'https://localhost:5001/api/ticket';
+            if(this.$route.params.id != undefined)
+            {
+              path + '/this.$route.params.id';
+            }
 
-            this.$http.get('https://localhost:5001/api/ticket', {
+            this.$http.get(path, {
 				headers: {
 					Authorization: "Bearer " + localStorage.getItem("token")
 				}
@@ -136,6 +144,10 @@
         },
       beforeMount(){
         this.getTickets();
+        if(this.$route.params.id != undefined)
+        {
+          this.pageTitle = "Billets de 'nom de l'ami'";
+        }
       },
     }
 </script>
@@ -199,7 +211,7 @@
   }
   
   .show-info {
-	background-color: #white;
+	background-color: white;
    }
    
    .list-group-item:hover .show-date {

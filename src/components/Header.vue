@@ -1,8 +1,10 @@
 <template>
    <nav class="navbar navbar-light justify-content-between">
-    <div class="logo-section ">
-      <a class="navbar-brand" href="#">
-        <img src="../images/logo-primary.svg" height="50" class=" " alt="" id="logo">
+    <div class="logo-section " v-on:click="Reload()">
+      <a class="navbar-brand">
+        <router-link to="/tickets">
+          <img src="../images/logo-primary.svg" height="50" class=" " alt="" id="logo">
+        </router-link>
       </a>
     </div>
     <div class="search-section">
@@ -16,15 +18,15 @@
        <b-dropdown variant="link" right size="lg" no-caret>
          <template slot="button-content"><img width="30px" src="../images/defaultAvatar.svg"/> <span class="sr-only">Search</span></template>
 
-         <b-dropdown-item href="#">Mon profil</b-dropdown-item>
-         <b-dropdown-item href="#">Déconnexion</b-dropdown-item>
+         <b-dropdown-item v-on:click="Reload()"> <router-link to="/tickets">Mon profil</router-link> </b-dropdown-item>
+         <b-dropdown-item v-on:click="Deconnexion()"> <router-link to="/">Déconnexion </router-link></b-dropdown-item>
        </b-dropdown>
 
        <b-dropdown variant="link" right size="lg" no-caret>
          <template slot="button-content"><img width="30px" src="https://mdbootstrap.com/img/svg/hamburger3.svg?color=FFFFF"/> <span class="sr-only">Search</span></template>
 
-         <b-dropdown-item href="#">Accueil</b-dropdown-item>
-         <b-dropdown-item href="#">Invitations</b-dropdown-item>
+         <b-dropdown-item v-on:click="Reload()"> <router-link to="/tickets">Accueil</router-link></b-dropdown-item>
+         <b-dropdown-item> <router-link to="/friendRequests">Invitations</router-link> </b-dropdown-item>
          <b-dropdown-item href="#">Paramètres</b-dropdown-item>
        </b-dropdown>
      </div>
@@ -35,7 +37,15 @@
 
 <script>
     export default {
-        name: "Header"
+        name: "Header",
+      methods: {
+          Reload(){
+              location.reload(true);
+          },
+          Deconnexion(){
+            //clearCache here
+          }
+      }
     }
 </script>
 
