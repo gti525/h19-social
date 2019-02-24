@@ -18,7 +18,7 @@
             </summary>
             <param name="client"></param>
         </member>
-        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.UploadImage(System.Int32)">
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.UploadImage">
             <summary>
             Modifier la photo de profil d'un client
             </summary>
