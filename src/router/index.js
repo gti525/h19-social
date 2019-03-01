@@ -8,6 +8,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Tickets from '@/components/Tickets'
 import FriendRequests from '@/components/FriendRequests'
+import Parametres from '@/components/Parametres'
 
 Vue.use(Router)
 Vue.use(BootstrapVue);
@@ -45,6 +46,12 @@ export default new Router({
       path: '/friendRequests',
       name: 'FriendRequests',
       component: FriendRequests,
+    },
+
+    {
+      path: '/Parametres',
+      name: 'Parametres',
+      component: Parametres
     }
   ]
 })

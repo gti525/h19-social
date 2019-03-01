@@ -22,9 +22,9 @@ export default {
 <style>
 
   :root{
-    --primary-color: #a133f8;
-    --secondary-color: #E6E6FA;
-    --tertiary-color: #3a105b;
+    --primary-color:#2f2caf;
+    --secondary-color:#3db7cc;
+    --tertiary-color:#3db7cc;
     --light-color: #f7f7f7
   }
 
