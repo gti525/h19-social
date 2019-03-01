@@ -12,10 +12,11 @@
               <form class="row justify-content-center" action="" v-on:submit.prevent="Parametres" >
                 <div class="col-6">
                   <label for="image">Choisissez une nouvelle photo de profile:</label>
+                  
                   <div class="form-group">
-                    <input id="image" type="file" name="profile_photo" placeholder="Photo">
+                    <input id="image" type="file" name="profile_photo" placeholder="Photo" @change="imgSelected">
                   </div>
-                  <button type="Modifier" class="btn btn-primary" variant="primary">Modifier</button>
+                  <button type="Modifier" class="btn btn-primary" variant="primary" @click="uploadImg">Modifier</button>
                 </div>
               </form>
               <!-- Fin modifier la photo de profile -->
@@ -79,7 +80,37 @@
 
 <script>
   export default {
-    name: "Parametres"}
+    name: "Parametres",
+    data() {
+      return {
+        file: ''
+      }
+    },
+    methods:
+      {
+        uploadImg: function() {
+          let formData = new FormData();
+          formData.append('file', this.file);
+
+          this.$http.post('https://localhost:5001/api/Client/uploadImage',
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form',
+                Authorization: "Bearer " + localStorage.getItem("token")
+              }
+            })
+            .then(response=> {
+              alert("Enregistrement rĂ©ussi! \n " + this.file.name);
+            }).catch(response=> {
+            console.log(response);
+          });
+        },
+        imgSelected: function($event) {
+          this.file = $event.target.files[0];
+        }
+      }
+  }
 </script>
 
 

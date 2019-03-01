@@ -1,7 +1,7 @@
 <template>
     <div  id="tickets">
       <h1 class="h1 mb-1 mt-3 font-weight-normal">{{pageTitle}}</h1>
-      <img src="../images/defaultAvatar.svg" height="100px"></img>
+      <img src="../images/defaultAvatar.svg" alt="Profile icon" height="100px"></img>
           <b-list-group class="justify-content-between align-items-center mt-4">
             <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg v-on:click="OpenModal(index)">
               <div class="show-date ">
@@ -23,6 +23,7 @@
             <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
             <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
             <div> <h3>Lieu: {{tickets[ticketId].Location}} </h3></div>
+            <div> <button class="btn btn-primary" @click="printPDF(ticketId)">Imprimer le billet</button> </div>
             <img src="https://cdn.barcodesinc.com/themes/barcodesinc/images/upc.gif"></img>
       </b-modal>
     </div>
@@ -101,7 +102,8 @@
             ticketId: 0,
             barcodeValue: '123445435',
             pageTitle: 'Mes Billets'
-          }
+          };
+          client : { ProfileImage : "../images/defaultAvatar.svg" }
 
       },
 
@@ -140,10 +142,37 @@
           getMonth(date)
           {
             return this.months[ parseInt(date.split("-")[1],10)];
+          },
+
+          getClient() {
+            this.$http.get('https://localhost:5001/api/client', {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token")
+              }
+            }).then(response => {
+              this.client = response.data;
+            }, response => {
+              // error callback
+              console.log(response);
+            });
+          },
+
+          printPDF(ticketId) {
+            this.$http.get('https://localhost:5001/api/ticket/' + ticketId+1 + '/printPDF', {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token")
+              }
+            }).then(response => {
+              console.log('Print PDF worked')
+            }, response => {
+              console.log('Print PDF has failed')
+            });
           }
+
         },
       beforeMount(){
         this.getTickets();
+        this.getClient();
         if(this.$route.params.id != undefined)
         {
           this.pageTitle = "Billets de 'nom de l'ami'";
