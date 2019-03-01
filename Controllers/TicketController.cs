@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
-using Microsoft.EntityFrameworkCore;
 using ASPNETCoreHeroku.Services;
 using ASPNETCoreHeroku.Helpers;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ASPNETCoreHeroku.Controllers
@@ -18,10 +14,12 @@ namespace ASPNETCoreHeroku.Controllers
     public class TicketController : Controller
     {
         private readonly ITicketService _ticketService;
+        private IConverter _converter;
 
-        public TicketController (ITicketService ticketService)
+        public TicketController (ITicketService ticketService, IConverter converter)
         {
             _ticketService = ticketService;
+            _converter = converter;
         }
 
         // GET: api/Ticket
@@ -57,6 +55,12 @@ namespace ASPNETCoreHeroku.Controllers
         public void Post([FromBody] Ticket ticket)
         {
             _ticketService.AddTicket(ticket);
+        }
+
+        [HttpGet("{id}/printPDF")]
+        public ActionResult PrintTicket(int id)
+        {
+            return _ticketService.printPDF(id);
         }
 
         // PUT: api/Ticket/5

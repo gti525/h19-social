@@ -12,6 +12,8 @@ using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
 using Imgur.API.Models.Impl;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -37,7 +39,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [Route("login")]
-        [HttpPost]
+        [HttpGet]
         public ActionResult<Client> Login(string username, string password)
         {
             try
@@ -72,16 +74,16 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        // PUT: api/Client/5/photo
+        // POST: api/Client/uploadImage
         /// <summary>
         /// Modifier la photo de profil d'un client
         /// </summary>
-        /// <param name="id"></param>
-        [HttpPut("/uploadImage")]
+        /// <param name="file"></param>
         /*
          * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
          */
-        public void UploadImage()
+        [HttpPost("uploadImage")]
+        public void UploadImageFromPost(IFormFile file)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -89,7 +91,7 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 id = TokenHelper.GetIdFromToken(token);
             }
-            _clientService.AddProfilePicture(id);
+            _clientService.AddProfilePicture(id, file);
         }
 
         [AllowAnonymous]

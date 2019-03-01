@@ -18,6 +18,8 @@ using ASPNETCoreHeroku.DAL;
 using ASPNETCoreHeroku.Helpers;
 using System.Text;
 using ASPNETCoreHeroku.Services;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
@@ -74,6 +76,8 @@ namespace ASPNETCoreHeroku
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             //Configure Swagger
             services.AddSwaggerGen(c =>

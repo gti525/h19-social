@@ -23,6 +23,7 @@ using Imgur.API.Endpoints.Impl;
 using Imgur.API.Authentication.Impl;
 using System.Diagnostics;
 using Imgur.API;
+using Image = System.Drawing.Image;
 
 namespace ASPNETCoreHeroku.Services
 {
@@ -30,7 +31,7 @@ namespace ASPNETCoreHeroku.Services
     {
         Client Login(string username, string password);
         void Register(Client client);
-        void AddProfilePicture(int id);
+        void AddProfilePicture(int id, IFormFile file);
         Client GetClientById(int id);
         
 
@@ -76,21 +77,30 @@ namespace ASPNETCoreHeroku.Services
             }
         }
 
-        public void AddProfilePicture(int id)
+        public void AddProfilePicture(int id, IFormFile file)
         {
             try
             {
                 // Possibilité d'envoyer des images à Imgur dans les formats suivants : JPG/PNG, Base64 et fichier bin
-                var path = @"c:\users\jacobpc\pictures\base64_decrypt.bin";
-                //var path = @"c:\users\jacobpc\pictures\dino.jpg";
+                //var path = @"c:\users\jacobpc\pictures\base64_decrypt.bin";
+                var filePath = Path.GetTempFileName();
 
+                if (file.Length > 0)
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                        file.CopyTo(stream);
+
+                //var path = @"c:\users\jacobpc\pictures\dino.jpg";
                 var client = new ImgurClient("1573808507169ed", "64c55ef97e8bb9885002995e9247e4ffaa5b81e6");
                 var endpoint = new ImageEndpoint(client);
                 IImage image;
-                using (var fs = new FileStream(path, FileMode.Open))
+
+                //image = endpoint.UploadImageStreamAsync(filePath).GetAwaiter().GetResult();
+
+                using (var fs = new FileStream(filePath, FileMode.Open))
                 {
                     image = endpoint.UploadImageStreamAsync(fs).GetAwaiter().GetResult();
                 }
+
                 Debug.Write("Image uploaded. Image Url: " + image.Link);
 
                 _clientDAL.AddProfilePicture(id, image.Link);
