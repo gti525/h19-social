@@ -94,10 +94,15 @@ namespace ASPNETCoreHeroku.Controllers
             _clientService.AddProfilePicture(id, file);
         }
 
-        [AllowAnonymous]
-        [HttpGet("{id}")]
-        public ActionResult<Client> GetImage(int id)
+        [HttpGet]
+        public ActionResult<Client> GetClientById()
         {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
             try
             {
                 return _clientService.GetClientById(id);
