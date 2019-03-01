@@ -59,9 +59,9 @@ namespace ASPNETCoreHeroku.Controllers
         }
         
         [HttpGet("{id}/printPDF")]
-        public ActionResult PrintTicket(int id)
+        public void PrintTicket(int id)
         {
-            return _ticketService.printPDF(id);
+            _ticketService.printPDF(id);
         }
 
         // PUT: api/Ticket/5
