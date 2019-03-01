@@ -5,6 +5,7 @@ using ASPNETCoreHeroku.Services;
 using ASPNETCoreHeroku.Helpers;
 using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using org.pdfclown.documents.interaction.actions;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -56,7 +57,7 @@ namespace ASPNETCoreHeroku.Controllers
         {
             _ticketService.AddTicket(ticket);
         }
-
+        
         [HttpGet("{id}/printPDF")]
         public ActionResult PrintTicket(int id)
         {
