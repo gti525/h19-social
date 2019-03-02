@@ -6,11 +6,14 @@ using ASPNETCoreHeroku.Services;
 using ASPNETCoreHeroku.DAL;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
+using ASPNETCoreHeroku.Helpers;
 using Imgur.API;
 using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
 using Imgur.API.Models.Impl;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -35,8 +38,8 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="password"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [Route("api/[controller]/login")]
-        [HttpPost]
+        [Route("login")]
+        [HttpGet]
         public ActionResult<Client> Login(string username, string password)
         {
             try
@@ -71,25 +74,35 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        // PUT: api/Client/5/photo
+        // POST: api/Client/uploadImage
         /// <summary>
         /// Modifier la photo de profil d'un client
         /// </summary>
-        /// <param name="id"></param>
-        [AllowAnonymous]
-        [HttpPut("{id}")]
+        /// <param name="file"></param>
         /*
          * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
          */
-        public void UploadImage(int id)
+        [HttpPost("uploadImage")]
+        public void UploadImageFromPost(IFormFile file)
         {
-            _clientService.AddProfilePicture(id);
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+            _clientService.AddProfilePicture(id, file);
         }
 
-        [AllowAnonymous]
-        [HttpGet("{id}")]
-        public ActionResult<Client> GetImage(int id)
+        [HttpGet]
+        public ActionResult<Client> GetClientById()
         {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
             try
             {
                 return _clientService.GetClientById(id);

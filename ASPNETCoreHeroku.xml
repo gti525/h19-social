@@ -18,11 +18,11 @@
             </summary>
             <param name="client"></param>
         </member>
-        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.UploadImage(System.Int32)">
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.UploadImageFromPost(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
             Modifier la photo de profil d'un client
             </summary>
-            <param name="id"></param>
+            <param name="file"></param>
         </member>
         <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Delete(System.Int32)">
             <summary>
