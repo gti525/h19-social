@@ -107,10 +107,7 @@ namespace ASPNETCoreHeroku
             }
 
 			app.UseCors(builder =>
-				builder
-                .WithOrigins("*")
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+				builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
 
             app.UseAuthentication();
 
