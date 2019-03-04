@@ -32,18 +32,7 @@ namespace ASPNETCoreHeroku.DAL
                 var friendRequests = _appDbContext.FriendRequest.Where(x => x.To == currentClient.Email);
                 currentClient.PendingFriendRequests = false;
 
-                var friends = friendRequests.Select(x => x.To);
-
-                foreach (var friendRequest in friendRequests)
-                {
-                    _appDbContext.Remove(friendRequest);
-                }
-
-                var a = friends.First();
-
-                _appDbContext.SaveChanges();
-
-                return friends;
+                return friendRequests.Select(x => x.To);
             }
             catch (Exception e)
             {

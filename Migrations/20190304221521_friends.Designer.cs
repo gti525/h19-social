@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ASPNETCoreHeroku.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190212193027_migration")]
-    partial class migration
+    [Migration("20190304221521_friends")]
+    partial class friends
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,8 @@ namespace ASPNETCoreHeroku.Migrations
                     b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<int[]>("Friends");
 
                     b.Property<string>("LastName");
 

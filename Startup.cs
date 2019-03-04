@@ -108,10 +108,8 @@ namespace ASPNETCoreHeroku
 
 			app.UseCors(builder =>
 				builder
-                .SetIsOriginAllowedToAllowWildcardSubdomains()
                 .WithOrigins("*")
                 .AllowAnyMethod()
-                .AllowCredentials()
                 .AllowAnyHeader());
 
             app.UseAuthentication();

@@ -36,6 +36,8 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<int[]>("Friends");
+
                     b.Property<string>("LastName");
 
                     b.Property<string>("Password");

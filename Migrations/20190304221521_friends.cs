@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ASPNETCoreHeroku.Migrations
 {
-    public partial class migration : Migration
+    public partial class friends : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,7 @@ namespace ASPNETCoreHeroku.Migrations
                     Country = table.Column<string>(nullable: true),
                     ProfileImage = table.Column<string>(nullable: true),
                     PendingFriendRequests = table.Column<bool>(nullable: false),
+                    Friends = table.Column<int[]>(nullable: true),
                     Token = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
