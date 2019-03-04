@@ -39,7 +39,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [Route("login")]
-        [HttpGet]
+        [HttpPost]
         public ActionResult<Client> Login(string username, string password)
         {
             try
