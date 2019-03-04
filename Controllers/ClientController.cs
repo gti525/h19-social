@@ -34,8 +34,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <summary>
         /// Recuperer les identifiants d'un client
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="credential"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [Route("login")]
@@ -53,8 +52,6 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
         
-       
-
         // POST: api/Client
         /// <summary>
         /// Enregistrer un client

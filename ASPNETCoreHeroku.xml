@@ -8,8 +8,7 @@
             <summary>
             Recuperer les identifiants d'un client
             </summary>
-            <param name="username"></param>
-            <param name="password"></param>
+            <param name="credential"></param>
             <returns></returns>
         </member>
         <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Register(ASPNETCoreHeroku.Models.Client)">
