@@ -48,9 +48,7 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch(Exception e)
             {
-                var cli = new Client();
-                cli.Email = e.Message;
-                return new ActionResult<Client>(cli);
+                return NotFound();
             }
         }
         
