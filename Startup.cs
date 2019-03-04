@@ -107,12 +107,12 @@ namespace ASPNETCoreHeroku
             }
 
 			app.UseCors(builder =>
-				builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
-
-
-			//app.UseHttpsRedirection();
-   //         app.UseStaticFiles();
-   //         app.UseCookiePolicy();
+				builder
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
+                .WithOrigins("*")
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
 
@@ -123,7 +123,6 @@ namespace ASPNETCoreHeroku
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //app.UseSwagger()
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

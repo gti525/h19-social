@@ -4,7 +4,7 @@
         <name>ASPNETCoreHeroku</name>
     </assembly>
     <members>
-        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Login(System.String,System.String)">
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Login(ASPNETCoreHeroku.Models.Credential)">
             <summary>
             Recuperer les identifiants d'un client
             </summary>

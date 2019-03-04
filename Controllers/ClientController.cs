@@ -40,11 +40,11 @@ namespace ASPNETCoreHeroku.Controllers
         [AllowAnonymous]
         [Route("login")]
         [HttpPost]
-        public ActionResult<Client> Login(string username, string password)
+        public ActionResult<Client> Login([FromBody] Credential credential)
         {
             try
             {
-                var client = _clientService.Login(username, password);
+                var client = _clientService.Login(credential.Email, credential.Password);
                 return client;
             }
             catch(Exception e)
