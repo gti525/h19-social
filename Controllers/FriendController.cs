@@ -29,7 +29,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="friendUsername"></param>
         [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<string> GetFriendRequests(string friendUsername)
+        public IEnumerable<string> GetFriendRequests()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                return _friendRequestService.GetFriendRequests(id, friendUsername);
+                return _friendRequestService.GetFriendRequests(id);
             }
             catch (Exception e)
             {
@@ -55,7 +55,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="friendUsername"></param>
         [AllowAnonymous]
         [HttpPost]
-        public void CreateFriendRequest([FromBody] string friendUsername)
+        public void CreateFriendRequest(string friendUsername)
         {
             try
             {
@@ -67,6 +67,48 @@ namespace ASPNETCoreHeroku.Controllers
                 }
 
                 _friendRequestService.CreateFriendRequests(id, friendUsername);
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("accept")]
+        [HttpPost]
+        public void AcceptFriendRequest(string friendUsername)
+        {
+            try
+            {
+                string token = Request.Headers["Authorization"];
+                int id = -1;
+                if (token != "" && token != null)
+                {
+                    id = TokenHelper.GetIdFromToken(token);
+                }
+
+                _friendRequestService.AcceptFriendRequests(id, friendUsername, true);
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("denie")]
+        [HttpPost]
+        public void DenieFriendRequest(string friendUsername)
+        {
+            try
+            {
+                string token = Request.Headers["Authorization"];
+                int id = -1;
+                if (token != "" && token != null)
+                {
+                    id = TokenHelper.GetIdFromToken(token);
+                }
+
+                _friendRequestService.AcceptFriendRequests(id, friendUsername, false);
             }
             catch (Exception e)
             {

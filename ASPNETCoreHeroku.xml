@@ -29,7 +29,7 @@
             </summary>
             <param name="id"></param>
         </member>
-        <member name="M:ASPNETCoreHeroku.Controllers.FriendController.GetFriendRequests(System.String)">
+        <member name="M:ASPNETCoreHeroku.Controllers.FriendController.GetFriendRequests">
             <summary>
             Rechercher un ami
             </summary>

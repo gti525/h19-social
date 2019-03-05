@@ -10,6 +10,7 @@ namespace ASPNETCoreHeroku.DAL
         void Register(Client client);
         void AddProfilePicture(int id, string picture);
         Client GetClientById(int id);
+        int GetClientIdByUsername(string username);
     };
 
     public class ClientDAL : IClientDAL
@@ -64,6 +65,11 @@ namespace ASPNETCoreHeroku.DAL
         public Client GetClientById(int id)
         {
             return _appDbContext.Client.Find(id);
+        }
+
+        public int GetClientIdByUsername(string username)
+        {
+            return _appDbContext.Client.Where(x => x.Email == username).Single().Id;
         }
     }
 }

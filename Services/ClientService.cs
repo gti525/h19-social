@@ -33,8 +33,7 @@ namespace ASPNETCoreHeroku.Services
         void Register(Client client);
         void AddProfilePicture(int id, IFormFile file);
         Client GetClientById(int id);
-        
-
+        int GetClientIdByUsername(string username);
     };
 
     public class ClientService : IClientService
@@ -116,6 +115,11 @@ namespace ASPNETCoreHeroku.Services
         public Client GetClientById(int id)
         {
             return _clientDAL.GetClientById(id);
+        }
+
+        public int GetClientIdByUsername(string username)
+        {
+            return _clientDAL.GetClientIdByUsername(username);
         }
 
         private string GenerateToken (Client client)
