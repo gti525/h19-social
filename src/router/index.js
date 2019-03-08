@@ -7,6 +7,8 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Tickets from '@/components/Tickets'
+import FriendRequests from '@/components/FriendRequests'
+import Parametres from '@/components/Parametres'
 
 Vue.use(Router)
 Vue.use(BootstrapVue);
@@ -21,17 +23,35 @@ export default new Router({
     {
       path: '/',
       name: 'Login',
+      meta: { layout: "credentials"},
       component: Login
     },
     {
       path: '/register',
       name: 'Register',
+      meta: { layout: "credentials"},
       component: Register
     },
     {
       path: '/tickets',
       name: 'Tickets',
       component: Tickets
+    },
+    {
+      path: '/tickets/:id',
+      name: 'FriendTickets',
+      component: Tickets,
+    },
+    {
+      path: '/friendRequests',
+      name: 'FriendRequests',
+      component: FriendRequests,
+    },
+
+    {
+      path: '/Parametres',
+      name: 'Parametres',
+      component: Parametres
     }
   ]
 })

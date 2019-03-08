@@ -28,7 +28,7 @@
                   </div>
 
                   <div class="form-group">
-                    <input class="form-control" name="birth" type="date" v-model="input.birth" required>
+                    <input class="form-control" name="birth" type="date" v-model="input.birth"placeholder="aaaa-mm-dd" required>
                   </div>
                 </div>
                 <div class="col-6">
