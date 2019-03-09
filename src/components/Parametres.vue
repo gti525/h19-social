@@ -19,30 +19,7 @@
                   <button type="Modifier" class="btn btn-primary" variant="primary" @click="uploadImg">Modifier</button>
                 </div>
               </form>
-              <!-- Fin modifier la photo de profile -->
 
-
-              <!-- Modifier le compte email ->
-              <form class="row justify-content-center" action="" v-on:submit.prevent="Parametres" >
-
-               <div class="col-6">
-                 <label for="email">Modifier le compte email:</label>
-
-                 <div class="form-group">
-                  <input class="form-control"  type="text"  id="email"  placeholder="Entre la nouvelle adresse email " >
-                 </div>
-
-                 <div class="form-group">
-                   <input class="form-control"  type="text"  id="email" placeholder="Entre à nouveau la nouvelle adresse email " >
-                 </div>
-
-                 <button type="Modifier" class="btn btn-primary" variant="primary">Modifier</button>
-                 <button type="Annuler" class="btn btn-primary" variant="primary">Annuler</button>
-
-               </div>
-
-              </form>
-              <!-- Fin Modifier le compte email -->
 
 
               <!-- Modifier le mot de passe -->
@@ -115,7 +92,7 @@
 
 
 <style scoped>
-  .Parametres{
+  #Parametres{
     background-color:#3db7cc;
     width: 800px;
     margin: auto;
