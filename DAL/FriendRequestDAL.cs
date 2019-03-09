@@ -9,10 +9,10 @@ namespace ASPNETCoreHeroku.DAL
 {
     public interface IFriendRequestDAL
     {
-        IEnumerable<string> GetFriendRequests(int currentUserId);
+        IEnumerable<FriendRequestResponse> GetFriendRequests(int currentUserId);
         void CreateFriendRequests(int currentUserId, string friendUsername);
-        void AcceptFriend(int currentUserId, string friendUsername);
-        void DeleteFriendRequest(int currentUserId, string friendUsername);
+        void AcceptFriend(int currentUserId, int friendId);
+        void DeleteFriendRequest(int currentUserId, int friendId);
     };
 
     public class FriendRequestDAL : IFriendRequestDAL
@@ -26,15 +26,17 @@ namespace ASPNETCoreHeroku.DAL
             _clientService = clientService;
         }
 
-        public IEnumerable<string> GetFriendRequests(int currentUserId)
+        public IEnumerable<FriendRequestResponse> GetFriendRequests(int currentUserId)
         {
             try
             {
                 var currentClient = _clientService.GetClientById(currentUserId);
-                var friendRequests = _appDbContext.FriendRequest.Where(x => x.To == currentClient.Email);
-                currentClient.PendingFriendRequests = false;
+                var friendRequestUsernames = _appDbContext.FriendRequest.Where(x => x.To == currentClient.Email).Select(t => t.From);
+                //currentClient.PendingFriendRequests = false;
 
-                return friendRequests.Select(x => x.From);
+                var friendRequestClients = _clientService.GetClientsByUsername(friendRequestUsernames);
+
+                return friendRequestClients;
             }
             catch (Exception e)
             {
@@ -55,7 +57,7 @@ namespace ASPNETCoreHeroku.DAL
 
                 var friend = _appDbContext.Client.Where(x => x.Email == friendUsername).Single();
 
-                friend.PendingFriendRequests = true;
+                //friend.PendingFriendRequests = true;
 
                 _appDbContext.SaveChanges();
             }
@@ -65,12 +67,11 @@ namespace ASPNETCoreHeroku.DAL
             }
         }
 
-        public void AcceptFriend(int currentUserId, string friendUsername)
+        public void AcceptFriend(int currentUserId, int friendId)
         {
             try
             {
                 var currentClient = _clientService.GetClientById(currentUserId);
-                var friendId = _clientService.GetClientIdByUsername(friendUsername);
 
                 if (currentClient.Friends == null)
                 {
@@ -93,7 +94,7 @@ namespace ASPNETCoreHeroku.DAL
 
                 _appDbContext.SaveChanges();
 
-                DeleteFriendRequest(currentUserId, friendUsername);
+                DeleteFriendRequest(currentUserId, friendId);
             }
             catch (Exception e)
             {
@@ -101,11 +102,12 @@ namespace ASPNETCoreHeroku.DAL
             }
         }
 
-        public void DeleteFriendRequest(int currentUserId, string friendUsername)
+        public void DeleteFriendRequest(int currentUserId, int friendId)
         {
             try
             {
                 var currentClient = _clientService.GetClientById(currentUserId);
+                var friendUsername = _clientService.GetClientById(friendId).Email;
                 var friendRequest = _appDbContext.FriendRequest.Where(x => x.To == currentClient.Email && x.From == friendUsername).Single();
 
                 _appDbContext.Remove(friendRequest);

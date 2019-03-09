@@ -1,5 +1,6 @@
 ﻿using ASPNETCoreHeroku.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ASPNETCoreHeroku.DAL
@@ -11,6 +12,7 @@ namespace ASPNETCoreHeroku.DAL
         void AddProfilePicture(int id, string picture);
         Client GetClientById(int id);
         int GetClientIdByUsername(string username);
+        IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
     };
 
     public class ClientDAL : IClientDAL
@@ -26,7 +28,7 @@ namespace ASPNETCoreHeroku.DAL
         {
             try
             {
-                var client = _appDbContext.Client.Where(x => x.Email == username && x.Password == password).Single();
+                var client = _appDbContext.Client.Where(x => x.Email == username && x.Password == password).First();
                 return client;
             }
             catch (Exception e)
@@ -70,6 +72,15 @@ namespace ASPNETCoreHeroku.DAL
         public int GetClientIdByUsername(string username)
         {
             return _appDbContext.Client.Where(x => x.Email == username).Single().Id;
+        }
+
+        public IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernamess)
+        {
+            foreach (string username in usernamess) {
+                var client = _appDbContext.Client.Where(c => c.Email == username).First();
+                var temp = new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
+                yield return temp;
+            }
         }
     }
 }

@@ -28,8 +28,9 @@ namespace ASPNETCoreHeroku.Controllers
         /// </summary>
         /// <param name="friendUsername"></param>
         [AllowAnonymous]
+        [Route("friendrequest")]
         [HttpGet]
-        public IEnumerable<string> GetFriendRequests()
+        public IEnumerable<FriendRequestResponse> GetFriendRequests()
         {
             try
             {
@@ -39,7 +40,6 @@ namespace ASPNETCoreHeroku.Controllers
                 {
                     id = TokenHelper.GetIdFromToken(token);
                 }
-
                 return _friendRequestService.GetFriendRequests(id);
             }
             catch (Exception e)
@@ -54,6 +54,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// </summary>
         /// <param name="friendUsername"></param>
         [AllowAnonymous]
+        [Route("friendrequest")]
         [HttpPost]
         public void CreateFriendRequest(string friendUsername)
         {
@@ -75,9 +76,10 @@ namespace ASPNETCoreHeroku.Controllers
 
         [AllowAnonymous]
         [Route("accept")]
-        [HttpPost]
-        public void AcceptFriendRequest(string friendUsername)
+        [HttpGet]
+        public void AcceptFriendRequest(int FriendId)
         {
+            var a = "asdf";
             try
             {
                 string token = Request.Headers["Authorization"];
@@ -87,7 +89,7 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                _friendRequestService.AcceptFriendRequests(id, friendUsername, true);
+                _friendRequestService.AcceptFriendRequests(id, FriendId, true);
             }
             catch (Exception e)
             {
@@ -96,8 +98,8 @@ namespace ASPNETCoreHeroku.Controllers
 
         [AllowAnonymous]
         [Route("denie")]
-        [HttpPost]
-        public void DenieFriendRequest(string friendUsername)
+        [HttpGet]
+        public void DenieFriendRequest(int friendId)
         {
             try
             {
@@ -108,7 +110,7 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                _friendRequestService.AcceptFriendRequests(id, friendUsername, false);
+                _friendRequestService.AcceptFriendRequests(id, friendId, false);
             }
             catch (Exception e)
             {

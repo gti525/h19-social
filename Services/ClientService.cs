@@ -34,6 +34,7 @@ namespace ASPNETCoreHeroku.Services
         void AddProfilePicture(int id, IFormFile file);
         Client GetClientById(int id);
         int GetClientIdByUsername(string username);
+        IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
     };
 
     public class ClientService : IClientService
@@ -120,6 +121,13 @@ namespace ASPNETCoreHeroku.Services
         public int GetClientIdByUsername(string username)
         {
             return _clientDAL.GetClientIdByUsername(username);
+        }
+
+        public IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames)
+        {
+            var a = _clientDAL.GetClientsByUsername(usernames);
+            return a;
+            
         }
 
         private string GenerateToken (Client client)
