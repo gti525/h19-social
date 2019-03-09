@@ -3,7 +3,7 @@
     <h1 class="h1 mb-1 mt-3 font-weight-normal">{{pageTitle}}</h1>
     <img src="../images/defaultAvatar.svg" alt="Profile icon" height="100px"></img>
     <b-list-group class="justify-content-between align-items-center mt-4">
-      <b-list-group-item class="show" button v-for="(ticket,index) in tickets" v-b-modal.modallg >
+      <b-list-group-item class="show" button v-for="(ticket,index) in tickets" >
         <div class="show-date ">
           <div class="day"> {{ getDay(ticket.Date) }}</div>
           <div class="month">{{ getMonth(ticket.Date) }}</div>
