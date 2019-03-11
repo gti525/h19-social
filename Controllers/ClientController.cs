@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
@@ -6,6 +7,7 @@ using ASPNETCoreHeroku.Services;
 using ASPNETCoreHeroku.DAL;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
+using System.Linq;
 using ASPNETCoreHeroku.Helpers;
 using Imgur.API;
 using Imgur.API.Authentication.Impl;
@@ -25,10 +27,12 @@ namespace ASPNETCoreHeroku.Controllers
     {
         //private readonly IClientService _clientService;
         private IClientService _clientService;
+        private ITicketService _ticketService;
 
-        public ClientController (IClientService clientService)
+        public ClientController (IClientService clientService, ITicketService ticketService)
         {
             _clientService = clientService;
+            _ticketService = ticketService;
         }
 
         // POST: api/Client/login
@@ -45,6 +49,9 @@ namespace ASPNETCoreHeroku.Controllers
             try
             {
                 var client = _clientService.Login(credential.Email, credential.Password);
+
+                client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
+
                 return client;
             }
             catch(Exception e)
