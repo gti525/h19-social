@@ -21,8 +21,9 @@ namespace ASPNETCoreHeroku.Services
     public interface ITicketService
     {
         IEnumerable<Ticket> GetTicketsByClientId(int id);
+        IEnumerable<Ticket> GetTicketsByClientIdWithoutClientRelation(int id);
         Ticket GetTicketByTicketId(int id);
-        void AddTicket(Ticket ticket);
+        void AddTicket(int id, Ticket ticket);
         void printPDF(int id);
     }
 
@@ -40,14 +41,19 @@ namespace ASPNETCoreHeroku.Services
             return _ticketDAL.GetTicketsByClientId(id);
         }
 
+        public IEnumerable<Ticket> GetTicketsByClientIdWithoutClientRelation(int id)
+        {
+            return _ticketDAL.GetTicketsByClientIdWithoutClientRelation(id);
+        }
+
         public Ticket GetTicketByTicketId(int id)
         {
             return _ticketDAL.GetTicketByTicketId(id);
         }
 
-        public void AddTicket(Ticket ticket)
+        public void AddTicket(int id, Ticket ticket)
         {
-            _ticketDAL.AddTicket(ticket);
+            _ticketDAL.AddTicket(id, ticket);
         }
 
         public void printPDF(int id)

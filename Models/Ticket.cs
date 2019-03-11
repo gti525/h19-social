@@ -11,6 +11,7 @@ namespace ASPNETCoreHeroku.Models
     {
         [Key]
         public int Id { get; set; }
+        public long UUID { get; set; }
         public string EventName { get; set; }
         public string Artist { get; set; }
         public DateTime Date { get; set; }

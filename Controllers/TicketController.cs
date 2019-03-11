@@ -55,7 +55,13 @@ namespace ASPNETCoreHeroku.Controllers
         [HttpPost]
         public void Post([FromBody] Ticket ticket)
         {
-            _ticketService.AddTicket(ticket);
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+            _ticketService.AddTicket(id, ticket);
         }
         
         [HttpGet("{id}/printPDF")]
