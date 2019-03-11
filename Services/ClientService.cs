@@ -33,6 +33,7 @@ namespace ASPNETCoreHeroku.Services
         void Register(Client client);
         void AddProfilePicture(int id, IFormFile file);
         Client GetClientById(int id);
+        IEnumerable<FriendRequestResponse> GetFriends(int id);
         int GetClientIdByUsername(string username);
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
     };
@@ -116,6 +117,11 @@ namespace ASPNETCoreHeroku.Services
         public Client GetClientById(int id)
         {
             return _clientDAL.GetClientById(id);
+        }
+
+        public IEnumerable<FriendRequestResponse> GetFriends(int id)
+        {
+            return _clientDAL.GetFriends(id);
         }
 
         public int GetClientIdByUsername(string username)

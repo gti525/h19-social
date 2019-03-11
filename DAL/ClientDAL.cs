@@ -11,6 +11,7 @@ namespace ASPNETCoreHeroku.DAL
         void Register(Client client);
         void AddProfilePicture(int id, string picture);
         Client GetClientById(int id);
+        IEnumerable<FriendRequestResponse> GetFriends(int id);
         int GetClientIdByUsername(string username);
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
     };
@@ -69,6 +70,17 @@ namespace ASPNETCoreHeroku.DAL
             return _appDbContext.Client.Find(id);
         }
 
+        public IEnumerable<FriendRequestResponse> GetFriends(int id)
+        {
+            var friendsIds = _appDbContext.Client.Find(id).Friends;
+
+            foreach(var friendId in friendsIds)
+            {
+                var client = _appDbContext.Client.Where(c => c.Id == friendId).First();
+                yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
+            }
+        }
+
         public int GetClientIdByUsername(string username)
         {
             return _appDbContext.Client.Where(x => x.Email == username).Single().Id;
@@ -78,8 +90,7 @@ namespace ASPNETCoreHeroku.DAL
         {
             foreach (string username in usernamess) {
                 var client = _appDbContext.Client.Where(c => c.Email == username).First();
-                var temp = new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
-                yield return temp;
+                yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
             }
         }
     }

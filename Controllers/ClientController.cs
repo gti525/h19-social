@@ -14,6 +14,7 @@ using Imgur.API.Models;
 using Imgur.API.Models.Impl;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -103,6 +104,26 @@ namespace ASPNETCoreHeroku.Controllers
             try
             {
                 return _clientService.GetClientById(id);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("friend")]
+        public ActionResult<IEnumerable<FriendRequestResponse>> GetFriends()
+        {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+            try
+            {
+                return new ActionResult<IEnumerable<FriendRequestResponse>>(_clientService.GetFriends(id));
             }
             catch (Exception e)
             {

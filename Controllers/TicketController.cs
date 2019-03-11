@@ -41,6 +41,20 @@ namespace ASPNETCoreHeroku.Controllers
             return _ticketService.GetTicketsByClientId(id);
         }
 
+        [Route("friend")]
+        [HttpGet]
+        public IEnumerable<Ticket> GetTicketsByFriendId(int friendId)
+        {
+            /*string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }*/
+
+            return _ticketService.GetTicketsByClientId(friendId);
+        }
+
         [HttpGet("{id}", Name = "GetClient")]
         public ActionResult<Ticket> GetTicketByTicketId(int id)
         {
