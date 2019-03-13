@@ -16,10 +16,12 @@ namespace ASPNETCoreHeroku.Controllers
     public class FriendController : Controller
     {
         private readonly IFriendRequestService _friendRequestService;
+        private readonly IClientService _clientService;
 
-        public FriendController(IFriendRequestService friendRequestService)
+        public FriendController(IFriendRequestService friendRequestService, IClientService clientService)
         {
             _friendRequestService = friendRequestService;
+            _clientService = clientService;
         }
 
         // GET: api/Fiend
@@ -114,6 +116,31 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("search")]
+        [HttpGet]
+        public ActionResult<Client> SearchFriend(string friendUsername)
+        {
+            try
+            {
+                string token = Request.Headers["Authorization"];
+                int id = -1;
+                if (token != "" && token != null)
+                {
+                    id = TokenHelper.GetIdFromToken(token);
+                }
+
+                var clientId = _clientService.GetClientIdByUsername(friendUsername);
+                var client = _clientService.GetClientById(clientId);
+
+                return client;
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
     }

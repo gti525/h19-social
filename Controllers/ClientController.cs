@@ -50,7 +50,7 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 var client = _clientService.Login(credential.Email, credential.Password);
 
-                client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
+                //client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
 
                 return client;
             }
