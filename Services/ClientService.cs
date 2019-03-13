@@ -36,6 +36,7 @@ namespace ASPNETCoreHeroku.Services
         IEnumerable<FriendRequestResponse> GetFriends(int id);
         int GetClientIdByUsername(string username);
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
+        FriendRequestResponse GetClientByUsername(string username);
     };
 
     public class ClientService : IClientService
@@ -131,9 +132,12 @@ namespace ASPNETCoreHeroku.Services
 
         public IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames)
         {
-            var a = _clientDAL.GetClientsByUsername(usernames);
-            return a;
-            
+            return _clientDAL.GetClientsByUsername(usernames);
+        }
+
+        public FriendRequestResponse GetClientByUsername(string username)
+        {
+            return _clientDAL.GetClientByUsername(username);
         }
 
         private string GenerateToken (Client client)

@@ -122,7 +122,7 @@ namespace ASPNETCoreHeroku.Controllers
         [AllowAnonymous]
         [Route("search")]
         [HttpGet]
-        public ActionResult<Client> SearchFriend(string friendUsername)
+        public ActionResult<FriendRequestResponse> SearchFriend(string friendUsername)
         {
             try
             {
@@ -133,10 +133,7 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                var clientId = _clientService.GetClientIdByUsername(friendUsername);
-                var client = _clientService.GetClientById(clientId);
-
-                return client;
+                return _clientService.GetClientByUsername(friendUsername);
             }
             catch (Exception e)
             {
