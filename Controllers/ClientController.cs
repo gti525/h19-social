@@ -110,6 +110,30 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
+        // PUT: api/client/resetpassword/5
+        /// <summary>
+        /// Réinitialiser le mot de passe d'un client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("resetpassword/{id}")]
+        [HttpPut("{id}")]
+        public ActionResult<Client> ResetPassword(int id, [FromBody] NewPassword newPassword)
+        {
+            try
+            {
+                return _clientService.ChangePassword(id, newPassword.Password);
+            }
+            catch (Exception e)
+            {
+                Debug.Write("An error occurred while changing password.");
+                Debug.Write(e.Message);
+                throw;
+            }
+        }
+
         // DELETE: api/ApiWithActions/5
         /// <summary>
         /// Removes a customer 

@@ -11,6 +11,7 @@ namespace ASPNETCoreHeroku.DAL
         void AddProfilePicture(int id, string picture);
         Client GetClientById(int id);
         int GetClientIdByUsername(string username);
+        Client ChangePassword(int id, string newPassword);
     };
 
     public class ClientDAL : IClientDAL
@@ -62,6 +63,20 @@ namespace ASPNETCoreHeroku.DAL
             }
         }
 
+        public Client ChangePassword(int id, string newPassword)
+        {
+            try
+            {
+                var client = _appDbContext.Client.Find(id);
+                client.Password = newPassword;
+                _appDbContext.SaveChanges();
+                return client;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         public Client GetClientById(int id)
         {
             return _appDbContext.Client.Find(id);

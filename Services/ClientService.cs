@@ -34,6 +34,7 @@ namespace ASPNETCoreHeroku.Services
         void AddProfilePicture(int id, IFormFile file);
         Client GetClientById(int id);
         int GetClientIdByUsername(string username);
+        Client ChangePassword(int id, string newPassword);
     };
 
     public class ClientService : IClientService
@@ -111,6 +112,25 @@ namespace ASPNETCoreHeroku.Services
                 Debug.Write(imgurEx.Message);
             }
         }
+
+
+        public Client ChangePassword(int id, string newPassword)
+        {
+            try
+            {
+                var client = GetClientById(id);
+                if (client.Password != newPassword)
+                    return _clientDAL.ChangePassword(id, newPassword);
+                else
+                    return null;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+
 
         public Client GetClientById(int id)
         {
