@@ -23,6 +23,14 @@
             </summary>
             <param name="file"></param>
         </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.ResetPassword(System.Int32,ASPNETCoreHeroku.Models.NewPassword)">
+            <summary>
+            Réinitialiser le mot de passe d'un client
+            </summary>
+            <param name="id"></param>
+            <param name="newPassword"></param>
+            <returns></returns>
+        </member>
         <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Delete(System.Int32)">
             <summary>
             Removes a customer 
