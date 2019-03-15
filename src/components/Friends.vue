@@ -2,7 +2,7 @@
   <div  id="MyFriends">
     <h1 class="h1 mb-1 mt-3 font-weight-normal">{{this.pageTitle}}</h1>
     <b-list-group class="justify-content-between align-items-center mt-4">
-      <b-list-group-item class="friends" v-bind:id="index" button v-for="(friend,index) in myFriends" v-b-modal.modallg v-on:click="OpenFriendPage(index)">
+      <b-list-group-item class="friends" v-bind:id="index" button v-for="(friend,index) in myFriends" v-b-modal.modallg v-on:click="OpenFriendPage(friend.ClientId, friend.FirstName)">
         <div class="profile-image">
           <img v-bind:src="friend.ProfileImage" height="100%"></img>
         </div>
@@ -51,12 +51,28 @@
 
     methods:
       {
-        OpenFriendPage(index)
-        {
-          this.$router.push('FriendTickets')
-          this.ClientId = index;
+          getFriends()
+          {
+            var path = 'https://localhost:5001/api/Client/friend';
+              this.$http.get(path, {
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            }
+          ).then(response => {
+              this.myFriends = response.data;
+          });
         },
-      }
+        OpenFriendPage(id, name)
+        {
+          localStorage.setItem("FriendIdForTickets", id);
+          localStorage.setItem("FriendNameForTickets", name);
+          this.$router.push('FriendTickets');
+        },
+      },
+    beforeMount() {
+      this.getFriends();
+    }
   }
 </script>
 

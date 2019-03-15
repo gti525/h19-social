@@ -9,8 +9,8 @@
     </div>
     <div class="search-section">
       <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un(e) ami(e)" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+        <input class="form-control mr-sm-2" type="search" v-model="input.username" placeholder="Rechercher un(e) ami(e)" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" @click="getFriends" type="submit">Rechercher</button>
       </form>
     </div>
 
@@ -38,7 +38,52 @@
 <script>
     export default {
         name: "Header",
+      data() {
+        return {
+          input: {
+            username: ""
+          },
+      }
+        },
       methods: {
+        getFriends()
+        {
+          var path = 'https://localhost:5001/api/friend/search?friendUsername=' + this.input.username;
+          this.$http.get(path, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token")
+            }
+          }).then(response => {
+            var path2 = 'https://localhost:5001/api/Client/friend';
+            this.$http.get(path2, {
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("token")
+                }
+              }
+            ).then(response2 => {
+              var isFriend = false;
+              var i;
+              for (i = 0; i < response2.data.length; i++) {
+                if(response2.data[i].ClientId == response.data.ClientId)
+                {
+                  location.reload(true);
+                  isFriend = true;
+                  localStorage.setItem("FriendIdForTickets", response.data.ClientId.toString());
+                  localStorage.setItem("FriendNameForTickets", response.data.FirstName);
+                  this.$router.push('FriendTickets');
+                }
+              }
+              if(isFriend == false){
+                alert("lui, c pas mon ami");
+                location.reload(true);
+                localStorage.setItem("ClientUsernameForAdding", this.input.username);
+                this.$router.push('Client');
+              }
+            });
+
+            this.myFriends = response.data;
+          });
+        },
           Reload(){
               location.reload(true);
           },

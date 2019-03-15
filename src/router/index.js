@@ -11,6 +11,8 @@ import FriendRequests from '@/components/FriendRequests'
 import Parametres from '@/components/Parametres'
 import Friends from '@/components/Friends'
 import FriendTickets from '@/components/MyFriendsTickets'
+import Client from '@/components/Client'
+
 
 Vue.use(Router)
 Vue.use(BootstrapVue);
@@ -63,6 +65,11 @@ export default new Router({
       path: '/FriendTickets',
       name: 'FriendTickets',
       component: FriendTickets
+    },
+    {
+      path: '/Client',
+      name: 'Client',
+      component: Client
     }
   ]
 })

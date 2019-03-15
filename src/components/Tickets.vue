@@ -216,7 +216,6 @@
 
         },
     beforeMount() {
-      alert("Bienvenue");
       this.getTickets();
       this.getClient();
       if (this.$route.params.id != undefined) {

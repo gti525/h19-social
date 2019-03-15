@@ -72,7 +72,7 @@
               console.log(response);
             });
           },
-		  
+
           acceptFriendRequest(FriendId){
 		  var path = 'https://localhost:5001/api/friend/accept?FriendId=' + FriendId;
             this.$http.get(path,{

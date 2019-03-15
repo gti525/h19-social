@@ -23,8 +23,6 @@
       <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
       <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
       <div> <h3>Lieu: {{tickets[ticketId].Location}} </h3></div>
-      <div> <button class="btn btn-primary" @click="printPDF(ticketId)">Imprimer le billet</button> </div>
-      <img src="https://cdn.barcodesinc.com/themes/barcodesinc/images/upc.gif"></img>
     </b-modal>
   </div>
 </template>
@@ -36,53 +34,13 @@
       return {
         tickets: [
           {
-            TicketId:1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date:'2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId:1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date:'2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId:1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date:'2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId:1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date:'2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId:1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date:'2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId:1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date:'2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
+            TicketId: "",
+            EventName: '',
+            Artist: '',
+            Date:'',
+            Location: '',
+            ClientId: 0
+          }
         ],
         months: {
           1: "JAN",
@@ -114,12 +72,8 @@
         },
         getTickets ()
         {
-          alert("asdf");
-          var path = 'https://localhost:5001/api/ticket';
-          if(this.$route.params.id != undefined)
-          {
-            path + '/this.$route.params.id';
-          }
+          var path = 'https://localhost:5001/api/ticket/friend?friendId=' + localStorage.getItem("FriendIdForTickets");
+          this.pageTitle = "Les billets de: " + localStorage.getItem("FriendNameForTickets");
 
           this.$http.get(path, {
               headers: {
@@ -127,7 +81,6 @@
               }
             }
           ).then(response => {
-
             this.tickets = response.data;
 
           }, response => {
@@ -142,19 +95,6 @@
         getMonth(date)
         {
           return this.months[ parseInt(date.split("-")[1],10)];
-        },
-
-        getClient() {
-          this.$http.get('https://localhost:5001/api/client', {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token")
-            }
-          }).then(response => {
-            this.client = response.data;
-          }, response => {
-            // error callback
-            console.log(response);
-          });
         },
 
         printPDF(ticketId) {
@@ -172,11 +112,6 @@
       },
     beforeMount(){
       this.getTickets();
-      this.getClient();
-      if(this.$route.params.id != undefined)
-      {
-        this.pageTitle = "Billets de 'nom de l'ami'";
-      }
     },
   }
 </script>
