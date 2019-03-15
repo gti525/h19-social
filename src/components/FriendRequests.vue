@@ -11,8 +11,8 @@
             {{ friend.FirstName + " " + friend.LastName }}
           </div>
           <div class="friend-option">
-            <button type="button" class="btn btn-primary" variant="primary" v-on:click="acceptFriendRequest(index)">Accepter</button>
-            <button type="button" class="btn btn-danger" variant="primary" v-on:click="denyFriendRequest(index)">Refuser</button>
+            <button type="button" class="btn btn-primary" variant="primary" v-on:click="acceptFriendRequest(friend.ClientId)">Accepter</button>
+            <button type="button" class="btn btn-danger" variant="primary" v-on:click="denyFriendRequest(friend.ClientId)">Refuser</button>
           </div>
         </div>
       </b-list-group-item>
@@ -56,7 +56,7 @@
         {
           getFriendRequest ()
           {
-            var path = 'https://localhost:5001/api/friendRequests'; //TODO change this
+            var path = 'https://localhost:5001/api/friend/friendrequest';
 
             this.$http.get(path, {
                 headers: {
@@ -72,11 +72,41 @@
               console.log(response);
             });
           },
-          acceptFriendRequest(index){
+		  
+          acceptFriendRequest(FriendId){
+		  var path = 'https://localhost:5001/api/friend/accept?FriendId=' + FriendId;
+            this.$http.get(path,{
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("token")
+                }
+              }
+            ).then(response => {
+
+              this.friendRequests = response.data;
+
+            }, response => {
+              // error callback
+              console.log(response);
+            });
             alert("demande accepté");
             document.getElementById(index).remove();
           },
-          denyFriendRequest(index){
+          denyFriendRequest(FriendId){
+		  var path = 'https://localhost:5001/api/friend/accept?FriendId=' + FriendId;
+            this.$http.get(path,{
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("token")
+                }
+              }
+            ).then(response => {
+
+              this.friendRequests = response.data;
+
+            }, response => {
+              // error callback
+              console.log(response);
+            });
+
             alert("demande refusé");
             document.getElementById(index).remove();
           }

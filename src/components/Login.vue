@@ -59,12 +59,14 @@
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
 
-        this.$http.get('https://localhost:5001/api/client', {
-          params: {
-            username: this.input.email,
-            password: this.input.password
-          }
-        }).then(response => {
+		var data = {
+		"email": this.input.email,
+        "password": this.input.password
+      };
+		
+        this.$http.post('https://localhost:5001/api/client/login', data, {headers: {
+          'Content-Type': 'application/json'}}
+        ).then(response => {
 
           alert("Bienvenue " + this.input.email);
 		  localStorage.setItem("token", response.data.Token);
