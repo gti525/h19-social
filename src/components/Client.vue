@@ -50,7 +50,6 @@
               }
             }
           ).then(response => {
-            alert(response.data.ClientId);
             this.Client = response.data;
 
           }, response => {
@@ -71,7 +70,7 @@
             }
           ).then(response => {
 
-            alert(response);
+            alert("Demande envoyé!");
 
           }, response => {
             // error callback

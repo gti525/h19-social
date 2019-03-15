@@ -8,9 +8,9 @@
       </a>
     </div>
     <div class="search-section">
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0" v-on:submit.prevent="getFriends">
         <input class="form-control mr-sm-2" type="search" v-model="input.username" placeholder="Rechercher un(e) ami(e)" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" @click="getFriends" type="submit">Rechercher</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
       </form>
     </div>
 
@@ -20,13 +20,14 @@
 
 
          <b-dropdown-item v-on:click="Reload()"> <router-link to="/tickets">Mon profil</router-link> </b-dropdown-item>
-         <b-dropdown-item v-on:click="Deconnexion()"> <router-link to="/">Déconnexion </router-link></b-dropdown-item>
+         <b-dropdown-item v-on:click="Deconnexion()"> <router-link to="/login">Déconnexion </router-link></b-dropdown-item>
        </b-dropdown>
 
        <b-dropdown variant="link" right size="lg" no-caret>
          <template slot="button-content"><img width="30px" src="https://mdbootstrap.com/img/svg/hamburger3.svg?color=FFFFF"/> <span class="sr-only">Search</span></template>
 
          <b-dropdown-item v-on:click="Reload()"> <router-link to="/tickets">Accueil</router-link></b-dropdown-item>
+         <b-dropdown-item> <router-link to="/friends">Mes amis</router-link> </b-dropdown-item>
          <b-dropdown-item> <router-link to="/friendRequests">Invitations</router-link> </b-dropdown-item>
          <b-dropdown-item> <router-link to="/parametres">Paramètres</router-link> </b-dropdown-item>
        </b-dropdown>
@@ -56,6 +57,7 @@
               Authorization: "Bearer " + localStorage.getItem("token")
             }
           }).then(response => {
+
             var path2 = 'https://localhost:5001/api/Client/friend';
             this.$http.get(path2, {
                 headers: {
@@ -66,6 +68,7 @@
               var isFriend = false;
               var i;
               for (i = 0; i < response2.data.length; i++) {
+
                 if(response2.data[i].ClientId == response.data.ClientId)
                 {
                   location.reload(true);
@@ -90,7 +93,7 @@
               location.reload(true);
           },
           Deconnexion(){
-            //clearCache here
+            localStorage.clear();
           },
           getImg() {
             this.profileImage = localStorage.getItem("profileImage");
