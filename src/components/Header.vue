@@ -27,7 +27,7 @@
 
          <b-dropdown-item v-on:click="Reload()"> <router-link to="/tickets">Accueil</router-link></b-dropdown-item>
          <b-dropdown-item> <router-link to="/friendRequests">Invitations</router-link> </b-dropdown-item>
-         <b-dropdown-item href="#">Paramètres</b-dropdown-item>
+         <b-dropdown-item> <router-link to="/parametres">Paramètres</router-link> </b-dropdown-item>
        </b-dropdown>
      </div>
 

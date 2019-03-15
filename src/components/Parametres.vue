@@ -50,26 +50,13 @@
                 <div class="col-6">
                   <label for="mot de passe">Modifier le mot de passe:</label>
                   <div class="form-group">
-                    <input type="mot de passe" class="form-control" id="mot de passe" placeholder="entre le nouveau mot de passe" name="mot de passe">
+                    <input type="password" class="form-control" id="mot de passe" v-model="input.password" placeholder="entre le nouveau mot de passe" name="mot de passe">
                   </div>
-                  <div class="form-group">
-                    <input type="confirmer mot de passe" class="form-control" id="confirmer mot de passe" placeholder="entre encore le nouveau mot de passe" name="confirmer mot de passe">
-                  </div>
-                  <div class="form-group">
-                    <input type="ancien mot de passe" class="form-control" id="ancien mot de passe" placeholder="entre votre ancien mot de passe" name="ancien mot de passe">
-                  </div>
-                  <button type="Modifier" class="btn btn-primary" variant="primary">Modifier</button>
+                  <button type="Modifier" class="btn btn-primary" variant="primary" @click="changePassword">Modifier</button>
                 </div>
               </form>
               <!-- Fin modifier le mot de passe -->
-
-
-
-
-
-
             </div>
-
           </div>
         </div>
       </div>
@@ -83,7 +70,10 @@
     name: "Parametres",
     data() {
       return {
-        file: ''
+        file: '',
+		input: {
+		password: ""
+        }
       }
     },
     methods:
@@ -102,6 +92,21 @@
             })
             .then(response=> {
               alert("Enregistrement rĂ©ussi! \n " + this.file.name);
+            }).catch(response=> {
+            console.log(response);
+          });
+        },
+		changePassword: function() {
+          this.$http.patch('https://localhost:5001/api/Client/resetpassword',
+            this.input.password,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + localStorage.getItem("token")
+              }
+            })
+            .then(response=> {
+              alert("Mot de pass réinitialisé! \n ");
             }).catch(response=> {
             console.log(response);
           });

@@ -40,8 +40,6 @@
 </template>
 
 <script>
-  //import Login from '@/components/Login'
-
   export default {
     name: 'login',
     //components: { Login },
@@ -63,13 +61,14 @@
 		"email": this.input.email,
         "password": this.input.password
       };
-		
+
         this.$http.post('https://localhost:5001/api/client/login', data, {headers: {
           'Content-Type': 'application/json'}}
         ).then(response => {
 
           alert("Bienvenue " + this.input.email);
-		  localStorage.setItem("token", response.data.Token);
+		      localStorage.setItem("token", response.data.Token);
+          this.$router.push("tickets");
 
         }, response => {
           // error callback
@@ -92,21 +91,21 @@
     color: #2c3e50;
     margin-top: 55px;
   }
-  
+
   .btn-primary {
-	 background-color: #a133f8;	
-	 color: white;	
+	 background-color: #a133f8;
+	 color: white;
   }
-  
+
   .btn-primary:hover {
-	 background-color: white;;	
-	 color: #a133f8;	
+	 background-color: white;;
+	 color: #a133f8;
   }
-  
+
   .h2 {
 	color: #a133f8;
   }
-  
+
   a {
 	color: #007bff;
   }

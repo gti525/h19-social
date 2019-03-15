@@ -142,6 +142,7 @@
           });
         },
         getDay(date) {
+          console.alert
           return date.substring(8, 10);
         },
         getMonth(date) {
@@ -212,13 +213,15 @@
           */
 
         },
-        beforeMount() {
-          this.getTickets();
-          this.getClient();
-          if (this.$route.params.id != undefined) {
-            this.pageTitle = "Billets de 'nom de l'ami'";
-          }
+
         },
+    beforeMount() {
+      alert("Bienvenue");
+      this.getTickets();
+      this.getClient();
+      if (this.$route.params.id != undefined) {
+        this.pageTitle = "Billets de 'nom de l'ami'";
+      }
       }
   }
 </script>
@@ -243,7 +246,7 @@
     height: 100%;
     float: left;
   }
-  
+
   .day{
     margin:0;
     position:relative;
@@ -269,41 +272,41 @@
     position: relative;
     top:25%;
   }
-  
+
   .day, .month{
 	color: #495057;
   }
-  
+
   .show-date{
 	border-style: solid;
 	border-width: 0px 2px 0px 0px;
 	border-color: var(--primary-color);
 
   }
-  
+
   .show-info {
 	background-color: white;
    }
-   
+
    .list-group-item:hover .show-date {
 	background-color: var(--secondary-color);
    }
-   
+
    .list-group-item:hover .show-info{
      background-color: var(--secondary-color);
 
    }
-   
+
    .list-group-item {
 		border-style: solid;
 		border-width: 2px;
 		border-color: #a133f8;
 	}
-	
+
 	.h1 {
 	color: #495057;
     left:0;
   }
 
-  
+
 </style>

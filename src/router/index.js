@@ -9,6 +9,8 @@ import Register from '@/components/Register'
 import Tickets from '@/components/Tickets'
 import FriendRequests from '@/components/FriendRequests'
 import Parametres from '@/components/Parametres'
+import Friends from '@/components/Friends'
+import FriendTickets from '@/components/MyFriendsTickets'
 
 Vue.use(Router)
 Vue.use(BootstrapVue);
@@ -47,11 +49,20 @@ export default new Router({
       name: 'FriendRequests',
       component: FriendRequests,
     },
-
     {
       path: '/Parametres',
       name: 'Parametres',
       component: Parametres
+    },
+    {
+      path: '/Friends',
+      name: 'Friends',
+      component: Friends
+    },
+    {
+      path: '/FriendTickets',
+      name: 'FriendTickets',
+      component: FriendTickets
     }
   ]
 })
