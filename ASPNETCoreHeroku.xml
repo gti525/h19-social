@@ -4,12 +4,11 @@
         <name>ASPNETCoreHeroku</name>
     </assembly>
     <members>
-        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Login(System.String,System.String)">
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Login(ASPNETCoreHeroku.Models.Credential)">
             <summary>
             Recuperer les identifiants d'un client
             </summary>
-            <param name="username"></param>
-            <param name="password"></param>
+            <param name="credential"></param>
             <returns></returns>
         </member>
         <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Register(ASPNETCoreHeroku.Models.Client)">
@@ -18,21 +17,41 @@
             </summary>
             <param name="client"></param>
         </member>
-        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.UploadImage(System.Int32)">
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.UploadImageFromPost(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
             Modifier la photo de profil d'un client
             </summary>
+            <param name="file"></param>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.ResetPassword(System.String)">
+            <summary>
+            Réinitialiser le mot de passe d'un client
+            </summary>
             <param name="id"></param>
+            <param name="newPassword"></param>
+            <returns></returns>
         </member>
         <member name="M:ASPNETCoreHeroku.Controllers.ClientController.Delete(System.Int32)">
             <summary>
-            Removes the customer ApiWithActions
+            Removes a customer 
             </summary>
             <param name="id"></param>
         </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.FriendController.GetFriendRequests">
+            <summary>
+            Rechercher un ami
+            </summary>
+            <param name="friendUsername"></param>
+        </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.FriendController.CreateFriendRequest(ASPNETCoreHeroku.Models.FriendUsername)">
+            <summary>
+            ajouter un ami
+            </summary>
+            <param name="friendUsername"></param>
+        </member>
         <member name="M:ASPNETCoreHeroku.Controllers.TicketController.GetTicketsByClientId">
             <summary>
-            Recupere les tickets d'une client
+            Recuperer les tickets d'un client
             </summary>
             <returns></returns>
         </member>

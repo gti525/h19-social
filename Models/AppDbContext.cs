@@ -12,6 +12,7 @@ namespace ASPNETCoreHeroku.Models
         { }
         public DbSet<Client> Client { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
+        public DbSet<FriendRequest> FriendRequest { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.Services;
+using ASPNETCoreHeroku.DAL;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
-using Imgur.API;
-using Imgur.API.Authentication.Impl;
-using Imgur.API.Endpoints.Impl;
-using Imgur.API.Models;
-using Imgur.API.Models.Impl;
+using System.Linq;
+using ASPNETCoreHeroku.Helpers;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -18,27 +19,33 @@ namespace ASPNETCoreHeroku.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly IClientService _clientService;
+        //private readonly IClientService _clientService;
+        private IClientService _clientService;
+        private ITicketService _ticketService;
 
-        public ClientController (IClientService clientService)
+        public ClientController (IClientService clientService, ITicketService ticketService)
         {
             _clientService = clientService;
+            _ticketService = ticketService;
         }
 
-        // GET: api/Client
+        // POST: api/Client/login
         /// <summary>
         /// Recuperer les identifiants d'un client
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="credential"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet]
-        public ActionResult<Client> Login(string username, string password)
+        [Route("login")]
+        [HttpPost]
+        public ActionResult<Client> Login([FromBody] Credential credential)
         {
             try
             {
-                var client = _clientService.Login(username, password);
+                var client = _clientService.Login(credential.Email, credential.Password);
+
+                //client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
+
                 return client;
             }
             catch(Exception e)
@@ -46,7 +53,7 @@ namespace ASPNETCoreHeroku.Controllers
                 return NotFound();
             }
         }
-
+        
         // POST: api/Client
         /// <summary>
         /// Enregistrer un client
@@ -66,25 +73,35 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        // PUT: api/Client/5/photo
+        // POST: api/Client/uploadImage
         /// <summary>
         /// Modifier la photo de profil d'un client
         /// </summary>
-        /// <param name="id"></param>
-        [AllowAnonymous]
-        [HttpPut("{id}")]
+        /// <param name="file"></param>
         /*
          * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
          */
-        public void UploadImage(int id)
+        [HttpPost("uploadImage")]
+        public String UploadImageFromPost(IFormFile file)
         {
-            _clientService.AddProfilePicture(id);
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+            return _clientService.AddProfilePicture(id, file);
         }
 
-        [AllowAnonymous]
-        [HttpGet("{id}")]
-        public ActionResult<Client> GetImage(int id)
+        [HttpGet]
+        public ActionResult<Client> GetClientById()
         {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
             try
             {
                 return _clientService.GetClientById(id);
@@ -95,9 +112,57 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("friend")]
+        public ActionResult<IEnumerable<FriendRequestResponse>> GetFriends()
+        {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+            try
+            {
+                return new ActionResult<IEnumerable<FriendRequestResponse>>(_clientService.GetFriends(id));
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        // PUT: api/client/resetpassword/5
+        /// <summary>
+        /// Réinitialiser le mot de passe d'un client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
+        [Route("resetpassword")]
+        [HttpPatch]
+        public void ResetPassword([FromBody] string newPassword)
+        {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+
+            try
+            {
+                _clientService.ChangePassword(id, newPassword);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
         // DELETE: api/ApiWithActions/5
         /// <summary>
-        /// Removes the customer ApiWithActions
+        /// Removes a customer 
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]

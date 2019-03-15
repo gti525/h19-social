@@ -18,6 +18,8 @@ using ASPNETCoreHeroku.DAL;
 using ASPNETCoreHeroku.Helpers;
 using System.Text;
 using ASPNETCoreHeroku.Services;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
@@ -69,9 +71,13 @@ namespace ASPNETCoreHeroku
             services.AddScoped<IClientDAL, ClientDAL>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<ITicketDAL, TicketDAL>();
+            services.AddScoped<IFriendRequestService, FriendRequestService>();
+            services.AddScoped<IFriendRequestDAL, FriendRequestDAL>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             //Configure Swagger
             services.AddSwaggerGen(c =>
@@ -101,12 +107,12 @@ namespace ASPNETCoreHeroku
             }
 
 			app.UseCors(builder =>
-				builder.WithOrigins("http://localhost:8080").AllowAnyHeader());
-
-
-			//app.UseHttpsRedirection();
-   //         app.UseStaticFiles();
-   //         app.UseCookiePolicy();
+				builder
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
+                .WithOrigins("*")
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
 
@@ -117,7 +123,6 @@ namespace ASPNETCoreHeroku
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //app.UseSwagger()
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

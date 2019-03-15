@@ -3,15 +3,17 @@ using System;
 using ASPNETCoreHeroku.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ASPNETCoreHeroku.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190304221521_friends")]
+    partial class friends
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,8 +87,6 @@ namespace ASPNETCoreHeroku.Migrations
                     b.Property<string>("EventName");
 
                     b.Property<string>("Location");
-
-                    b.Property<long>("UUID");
 
                     b.HasKey("Id");
 

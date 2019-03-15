@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
-using Microsoft.EntityFrameworkCore;
 using ASPNETCoreHeroku.Services;
 using ASPNETCoreHeroku.Helpers;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using org.pdfclown.documents.interaction.actions;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -18,15 +15,17 @@ namespace ASPNETCoreHeroku.Controllers
     public class TicketController : Controller
     {
         private readonly ITicketService _ticketService;
+        private IConverter _converter;
 
-        public TicketController (ITicketService ticketService)
+        public TicketController (ITicketService ticketService, IConverter converter)
         {
             _ticketService = ticketService;
+            _converter = converter;
         }
 
         // GET: api/Ticket
         /// <summary>
-        /// Recupere les tickets d'une client
+        /// Recuperer les tickets d'un client
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -40,6 +39,20 @@ namespace ASPNETCoreHeroku.Controllers
             }
 
             return _ticketService.GetTicketsByClientId(id);
+        }
+
+        [Route("friend")]
+        [HttpGet]
+        public IEnumerable<Ticket> GetTicketsByFriendId(int friendId)
+        {
+            /*string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }*/
+
+            return _ticketService.GetTicketsByClientId(friendId);
         }
 
         [HttpGet("{id}", Name = "GetClient")]
@@ -56,7 +69,19 @@ namespace ASPNETCoreHeroku.Controllers
         [HttpPost]
         public void Post([FromBody] Ticket ticket)
         {
-            _ticketService.AddTicket(ticket);
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+            _ticketService.AddTicket(id, ticket);
+        }
+        
+        [HttpGet("{id}/printPDF")]
+        public void PrintTicket(int id)
+        {
+            _ticketService.printPDF(id);
         }
 
         // PUT: api/Ticket/5

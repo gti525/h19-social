@@ -23,6 +23,7 @@ using Imgur.API.Endpoints.Impl;
 using Imgur.API.Authentication.Impl;
 using System.Diagnostics;
 using Imgur.API;
+using Image = System.Drawing.Image;
 
 namespace ASPNETCoreHeroku.Services
 {
@@ -30,8 +31,13 @@ namespace ASPNETCoreHeroku.Services
     {
         Client Login(string username, string password);
         void Register(Client client);
-        void AddProfilePicture(int id);
+        String AddProfilePicture(int id, IFormFile file);
         Client GetClientById(int id);
+        IEnumerable<FriendRequestResponse> GetFriends(int id);
+        int GetClientIdByUsername(string username);
+        IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
+        FriendRequestResponse GetClientByUsername(string username);
+        void ChangePassword(int id, string newPassword);
     };
 
     public class ClientService : IClientService
@@ -74,36 +80,92 @@ namespace ASPNETCoreHeroku.Services
             }
         }
 
-        public void AddProfilePicture(int id)
+        public String AddProfilePicture(int id, IFormFile file)
         {
             try
             {
                 // Possibilité d'envoyer des images à Imgur dans les formats suivants : JPG/PNG, Base64 et fichier bin
-                var path = @"c:\users\jacobpc\pictures\base64_decrypt.bin";
-                //var path = @"c:\users\jacobpc\pictures\dino.jpg";
+                //var path = @"c:\users\jacobpc\pictures\base64_decrypt.bin";
+                var filePath = Path.GetTempFileName();
 
+                if (file.Length > 0)
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                        file.CopyTo(stream);
+
+                //var path = @"c:\users\jacobpc\pictures\dino.jpg";
                 var client = new ImgurClient("1573808507169ed", "64c55ef97e8bb9885002995e9247e4ffaa5b81e6");
                 var endpoint = new ImageEndpoint(client);
                 IImage image;
-                using (var fs = new FileStream(path, FileMode.Open))
+
+                //image = endpoint.UploadImageStreamAsync(filePath).GetAwaiter().GetResult();
+
+                using (var fs = new FileStream(filePath, FileMode.Open))
                 {
                     image = endpoint.UploadImageStreamAsync(fs).GetAwaiter().GetResult();
                 }
+
                 Debug.Write("Image uploaded. Image Url: " + image.Link);
 
                 _clientDAL.AddProfilePicture(id, image.Link);
+
+                return image.Link;
 
             }
             catch (ImgurException imgurEx)
             {
                 Debug.Write("An error occurred uploading an image to Imgur.");
                 Debug.Write(imgurEx.Message);
+
+                return "Imgur Error";
             }
         }
+
+
+        public void ChangePassword(int id, string newPassword)
+        {
+            try
+            {
+                var client = GetClientById(id);
+                if (client.Password != newPassword)
+                {
+                    _clientDAL.ChangePassword(id, newPassword);
+                }
+                else
+                {
+                    //Message
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+
 
         public Client GetClientById(int id)
         {
             return _clientDAL.GetClientById(id);
+        }
+
+        public IEnumerable<FriendRequestResponse> GetFriends(int id)
+        {
+            return _clientDAL.GetFriends(id);
+        }
+
+        public int GetClientIdByUsername(string username)
+        {
+            return _clientDAL.GetClientIdByUsername(username);
+        }
+
+        public IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames)
+        {
+            return _clientDAL.GetClientsByUsername(usernames);
+        }
+
+        public FriendRequestResponse GetClientByUsername(string username)
+        {
+            return _clientDAL.GetClientByUsername(username);
         }
 
         private string GenerateToken (Client client)

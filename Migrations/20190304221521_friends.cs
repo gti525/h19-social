@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ASPNETCoreHeroku.Migrations
 {
-    public partial class migration20 : Migration
+    public partial class friends : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,11 +25,27 @@ namespace ASPNETCoreHeroku.Migrations
                     Province = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
                     ProfileImage = table.Column<string>(nullable: true),
+                    PendingFriendRequests = table.Column<bool>(nullable: false),
+                    Friends = table.Column<int[]>(nullable: true),
                     Token = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Client", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FriendRequest",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    From = table.Column<string>(nullable: true),
+                    To = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendRequest", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,6 +79,9 @@ namespace ASPNETCoreHeroku.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FriendRequest");
+
             migrationBuilder.DropTable(
                 name: "Ticket");
 
