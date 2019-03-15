@@ -44,7 +44,7 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 var client = _clientService.Login(credential.Email, credential.Password);
 
-                client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
+                //client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
 
                 return client;
             }
@@ -128,6 +128,30 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
+                throw;
+            }
+        }
+
+        // PUT: api/client/resetpassword/5
+        /// <summary>
+        /// Réinitialiser le mot de passe d'un client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("resetpassword/{id}")]
+        [HttpPut("{id}")]
+        public ActionResult<Client> ResetPassword(int id, [FromBody] NewPassword newPassword)
+        {
+            try
+            {
+                return _clientService.ChangePassword(id, newPassword.Password);
+            }
+            catch (Exception e)
+            {
+                Debug.Write("An error occurred while changing password.");
+                Debug.Write(e.Message);
                 throw;
             }
         }

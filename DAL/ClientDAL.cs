@@ -14,6 +14,8 @@ namespace ASPNETCoreHeroku.DAL
         IEnumerable<FriendRequestResponse> GetFriends(int id);
         int GetClientIdByUsername(string username);
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
+        FriendRequestResponse GetClientByUsername(string username);
+        Client ChangePassword(int id, string newPassword);
     };
 
     public class ClientDAL : IClientDAL
@@ -65,6 +67,20 @@ namespace ASPNETCoreHeroku.DAL
             }
         }
 
+        public Client ChangePassword(int id, string newPassword)
+        {
+            try
+            {
+                var client = _appDbContext.Client.Find(id);
+                client.Password = newPassword;
+                _appDbContext.SaveChanges();
+                return client;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         public Client GetClientById(int id)
         {
             return _appDbContext.Client.Find(id);
@@ -86,12 +102,18 @@ namespace ASPNETCoreHeroku.DAL
             return _appDbContext.Client.Where(x => x.Email == username).Single().Id;
         }
 
-        public IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernamess)
+        public IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames)
         {
-            foreach (string username in usernamess) {
+            foreach (string username in usernames) {
                 var client = _appDbContext.Client.Where(c => c.Email == username).First();
                 yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
             }
+        }
+
+        public FriendRequestResponse GetClientByUsername(string username)
+        {
+                var client = _appDbContext.Client.Where(c => c.Email == username).First();
+                return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
         }
     }
 }
