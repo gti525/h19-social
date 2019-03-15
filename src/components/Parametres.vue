@@ -92,6 +92,8 @@
             })
             .then(response=> {
               alert("Enregistrement rĂ©ussi! \n " + this.file.name);
+              localStorage.setItem("profileImage", response.data);
+              location.reload();
             }).catch(response=> {
             console.log(response);
           });

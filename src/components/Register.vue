@@ -117,7 +117,8 @@
            "City": this.input.city,
            "PostalCode": this.input.postal,
            "Province": this.input.state,
-           "Country": this.input.country
+           "Country": this.input.country,
+           "ProfileImage": "https://i.imgur.com/3w7hkeo.jpg"
       };
 
         this.$http.post('https://localhost:5001/api/Client', data , {headers: {
@@ -146,14 +147,19 @@
     color: black;
     margin-top: 55px;
   }
-  
+
   .btn-primary {
-	 background-color: #a133f8;	
-	 color: white;	
+    background-color: var(--primary-color);
+    color: white;
   }
-  
+
+  .btn-primary:hover {
+    background-color: white;;
+    color: var(--primary-color);
+  }
+
   .h2 {
-	color: #a133f8;	
+    color:var(--secondary-color);
   }
   
   a {

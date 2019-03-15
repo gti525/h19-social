@@ -67,8 +67,9 @@
         ).then(response => {
 
           alert("Bienvenue " + this.input.email);
-		      localStorage.setItem("token", response.data.Token);
           this.$router.push("tickets");
+		      localStorage.setItem("token", response.data.Token);
+		      localStorage.setItem("profileImage", response.data.ProfileImage);
 
         }, response => {
           // error callback
@@ -93,17 +94,17 @@
   }
 
   .btn-primary {
-	 background-color: #a133f8;
+   background-color: var(--primary-color);
 	 color: white;
   }
 
   .btn-primary:hover {
 	 background-color: white;;
-	 color: #a133f8;
+	 color: var(--primary-color);
   }
 
   .h2 {
-	color: #a133f8;
+	color:var(--secondary-color);
   }
 
   a {
