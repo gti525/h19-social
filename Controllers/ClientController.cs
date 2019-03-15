@@ -124,7 +124,12 @@ namespace ASPNETCoreHeroku.Controllers
             }
             try
             {
-                return new ActionResult<IEnumerable<FriendRequestResponse>>(_clientService.GetFriends(id));
+                var friends = _clientService.GetFriends(id);
+                if (friends.First() == null)
+                {
+                    return null;
+                }
+                return new ActionResult<IEnumerable<FriendRequestResponse>>(friends);
             }
             catch (Exception e)
             {
