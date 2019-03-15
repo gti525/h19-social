@@ -157,8 +157,6 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
-                Debug.Write("An error occurred while changing password.");
-                Debug.Write(e.Message);
                 throw;
             }
         }
