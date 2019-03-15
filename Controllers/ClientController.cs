@@ -9,13 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using System.Linq;
 using ASPNETCoreHeroku.Helpers;
-using Imgur.API;
-using Imgur.API.Authentication.Impl;
-using Imgur.API.Endpoints.Impl;
-using Imgur.API.Models;
-using Imgur.API.Models.Impl;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace ASPNETCoreHeroku.Controllers
