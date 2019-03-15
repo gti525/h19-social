@@ -22,7 +22,8 @@
             <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
             <div> <h3>Date: {{tickets[ticketId].Date}} </h3></div>
             <div> <h3>Lieu: {{tickets[ticketId].Location}} </h3></div>
-            <div> <button class="btn btn-primary" @click="printPDF(ticketId, tickets[ticketId].EventName, tickets[ticketId].Artist, tickets[ticketId].Date, tickets[ticketId].Location)">Imprimer le billet</button> </div>
+            <div> <h3>UUID: {{tickets[ticketId].UUID}} </h3></div>
+            <div> <button class="btn btn-primary" @click="printPDF(tickets[ticketId].UUID, tickets[ticketId].EventName, tickets[ticketId].Artist, tickets[ticketId].Date, tickets[ticketId].Location)">Imprimer le billet</button> </div>
             <canvas id="canvas"></canvas>
       </b-modal>
     </div>
@@ -116,7 +117,7 @@
           this.ticketId = index;
           var canvas = document.getElementById('canvas')
 
-          QRCode.toCanvas(canvas, this.ticketId.toString(), function (error) {
+          QRCode.toCanvas(canvas, this.tickets[index].UUID.toString(), function (error) {
             if (error) console.error(error)
           })
         },
@@ -162,7 +163,6 @@
 
         getImg() {
           this.client.ProfileImage = localStorage.getItem("profileImage");
-          console.log("Getting img : " + this.client.ProfileImage);
         },
 
         printPDF: function (ticketId, eventName, artist, date, location) {
@@ -177,7 +177,7 @@
             }
           }
           var src
-          QRCode.toDataURL('text', opts, function (err, url) {
+          QRCode.toDataURL(ticketId.toString(), opts, function (err, url) {
             if (err) throw err
 
             src = url
