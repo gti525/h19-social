@@ -16,7 +16,8 @@
 
      <div>
        <b-dropdown variant="link" right size="lg" no-caret>
-         <template slot="button-content"><img :src=this.profileImage width="30px"/> <span class="sr-only">Search</span></template>
+         <template slot="button-content"><img :src="this.profileImage" width="30px"/> <span class="sr-only">Search</span></template>
+
 
          <b-dropdown-item v-on:click="Reload()"> <router-link to="/tickets">Mon profil</router-link> </b-dropdown-item>
          <b-dropdown-item v-on:click="Deconnexion()"> <router-link to="/">Déconnexion </router-link></b-dropdown-item>

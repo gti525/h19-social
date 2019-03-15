@@ -117,7 +117,8 @@
            "City": this.input.city,
            "PostalCode": this.input.postal,
            "Province": this.input.state,
-           "Country": this.input.country
+           "Country": this.input.country,
+           "ProfileImage": "https://i.imgur.com/3w7hkeo.jpg"
       };
 
         this.$http.post('https://localhost:5001/api/Client', data , {headers: {
