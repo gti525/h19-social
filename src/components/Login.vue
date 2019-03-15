@@ -70,6 +70,7 @@
 
           alert("Bienvenue " + this.input.email);
 		  localStorage.setItem("token", response.data.Token);
+		  localStorage.setItem("profileImage", response.data.ProfileImage);
 
         }, response => {
           // error callback
