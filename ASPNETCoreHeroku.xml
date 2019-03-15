@@ -23,7 +23,7 @@
             </summary>
             <param name="file"></param>
         </member>
-        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.ResetPassword(System.Int32,ASPNETCoreHeroku.Models.NewPassword)">
+        <member name="M:ASPNETCoreHeroku.Controllers.ClientController.ResetPassword(System.String)">
             <summary>
             Réinitialiser le mot de passe d'un client
             </summary>

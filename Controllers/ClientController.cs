@@ -140,13 +140,20 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="newPassword"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [Route("resetpassword/{id}")]
-        [HttpPut("{id}")]
-        public ActionResult<Client> ResetPassword(int id, [FromBody] NewPassword newPassword)
+        [Route("resetpassword")]
+        [HttpPatch]
+        public void ResetPassword([FromBody] string newPassword)
         {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+
             try
             {
-                return _clientService.ChangePassword(id, newPassword.Password);
+                _clientService.ChangePassword(id, newPassword);
             }
             catch (Exception e)
             {

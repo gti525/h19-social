@@ -15,7 +15,7 @@ namespace ASPNETCoreHeroku.DAL
         int GetClientIdByUsername(string username);
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
         FriendRequestResponse GetClientByUsername(string username);
-        Client ChangePassword(int id, string newPassword);
+        void ChangePassword(int id, string newPassword);
     };
 
     public class ClientDAL : IClientDAL
@@ -67,14 +67,13 @@ namespace ASPNETCoreHeroku.DAL
             }
         }
 
-        public Client ChangePassword(int id, string newPassword)
+        public void ChangePassword(int id, string newPassword)
         {
             try
             {
                 var client = _appDbContext.Client.Find(id);
                 client.Password = newPassword;
                 _appDbContext.SaveChanges();
-                return client;
             }
             catch (Exception e)
             {
