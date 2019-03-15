@@ -82,7 +82,7 @@ namespace ASPNETCoreHeroku.Controllers
          * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
          */
         [HttpPost("uploadImage")]
-        public void UploadImageFromPost(IFormFile file)
+        public String UploadImageFromPost(IFormFile file)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -90,7 +90,7 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 id = TokenHelper.GetIdFromToken(token);
             }
-            _clientService.AddProfilePicture(id, file);
+            return _clientService.AddProfilePicture(id, file);
         }
 
         [HttpGet]
