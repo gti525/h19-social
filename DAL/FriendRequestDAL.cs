@@ -55,7 +55,7 @@ namespace ASPNETCoreHeroku.DAL
                     To = friendUsername,
                 });
 
-                var friend = _appDbContext.Client.Where(x => x.Email == friendUsername).Single();
+                //var friend = _appDbContext.Client.Where(x => x.Email == friendUsername).Single();
 
                 //friend.PendingFriendRequests = true;
 
