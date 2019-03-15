@@ -288,7 +288,7 @@
    .list-group-item {
 		border-style: solid;
 		border-width: 2px;
-		border-color: #a133f8;
+		border-color:  var(--primary-color);
 	}
 	
 	.h1 {

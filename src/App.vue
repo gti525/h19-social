@@ -22,7 +22,7 @@ export default {
 <style>
 
   :root{
-    --primary-color:#2f2caf;
+    --primary-color:#086788;
     --secondary-color:#3db7cc;
     --tertiary-color:#3db7cc;
     --light-color: #f7f7f7
@@ -45,5 +45,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 
 </style>

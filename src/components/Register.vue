@@ -146,14 +146,19 @@
     color: black;
     margin-top: 55px;
   }
-  
+
   .btn-primary {
-	 background-color: #a133f8;	
-	 color: white;	
+    background-color: var(--primary-color);
+    color: white;
   }
-  
+
+  .btn-primary:hover {
+    background-color: white;;
+    color: var(--primary-color);
+  }
+
   .h2 {
-	color: #a133f8;	
+    color:var(--secondary-color);
   }
   
   a {
