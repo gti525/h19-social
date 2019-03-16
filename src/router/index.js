@@ -12,6 +12,7 @@ import Parametres from '@/components/Parametres'
 import Friends from '@/components/Friends'
 import FriendTickets from '@/components/MyFriendsTickets'
 import Client from '@/components/Client'
+import Home from '@/components/Home'
 
 
 Vue.use(Router)
@@ -23,6 +24,12 @@ export default new Router({
       path: '/HelloWorld',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/Home',
+      name: 'Home',
+      meta: { layout: "Home"},
+      component: Home
     },
     {
       path: '/',

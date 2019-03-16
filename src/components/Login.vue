@@ -71,11 +71,13 @@
 		      localStorage.setItem("token", response.data.Token);
 		      localStorage.setItem("profileImage", response.data.ProfileImage);
 
+          this.$router.push({ name: 'Tickets' });
         }, response => {
           // error callback
           this.validAuthentification = true;
           console.log(response);
         });
+
       }
     }
   }

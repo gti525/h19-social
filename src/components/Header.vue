@@ -90,7 +90,7 @@
               location.reload(true);
           },
           Deconnexion(){
-            //clearCache here
+            localStorage.clear();
           },
           getImg() {
             this.profileImage = localStorage.getItem("profileImage");
