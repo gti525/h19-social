@@ -79,7 +79,6 @@
                 }
               }
               if(isFriend == false){
-                alert("lui, c pas mon ami");
                 location.reload(true);
                 localStorage.setItem("ClientUsernameForAdding", this.input.username);
                 this.$router.push('Client');

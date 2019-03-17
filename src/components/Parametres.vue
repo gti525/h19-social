@@ -12,7 +12,7 @@
               <form class="row justify-content-center" action="" v-on:submit.prevent="Parametres" >
                 <div class="col-6">
                   <label for="image">Choisissez une nouvelle photo de profile:</label>
-                  
+
                   <div class="form-group">
                     <input id="image" type="file" name="profile_photo" placeholder="Photo" @change="imgSelected">
                   </div>
@@ -103,7 +103,6 @@
             this.input.password,
             {
               headers: {
-                'Content-Type': 'application/json',
                 Authorization: "Bearer " + localStorage.getItem("token")
               }
             })
