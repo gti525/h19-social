@@ -15,6 +15,7 @@ namespace ASPNETCoreHeroku.DAL
         int GetClientIdByUsername(string username);
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
         FriendRequestResponse GetClientByUsername(string username);
+        void ChangePassword(int id, string newPassword);
     };
 
     public class ClientDAL : IClientDAL
@@ -66,6 +67,19 @@ namespace ASPNETCoreHeroku.DAL
             }
         }
 
+        public void ChangePassword(int id, string newPassword)
+        {
+            try
+            {
+                var client = _appDbContext.Client.Find(id);
+                client.Password = newPassword;
+                _appDbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         public Client GetClientById(int id)
         {
             return _appDbContext.Client.Find(id);
@@ -75,10 +89,17 @@ namespace ASPNETCoreHeroku.DAL
         {
             var friendsIds = _appDbContext.Client.Find(id).Friends;
 
-            foreach(var friendId in friendsIds)
+            if(friendsIds != null)
             {
-                var client = _appDbContext.Client.Where(c => c.Id == friendId).First();
-                yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
+                foreach (var friendId in friendsIds)
+                {
+                    var client = _appDbContext.Client.Where(c => c.Id == friendId).First();
+                    yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
+                }
+            }
+            else
+            {
+                yield return null;
             }
         }
 

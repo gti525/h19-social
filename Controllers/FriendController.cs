@@ -29,7 +29,6 @@ namespace ASPNETCoreHeroku.Controllers
         /// Rechercher un ami
         /// </summary>
         /// <param name="friendUsername"></param>
-        [AllowAnonymous]
         [Route("friendrequest")]
         [HttpGet]
         public IEnumerable<FriendRequestResponse> GetFriendRequests()
@@ -55,10 +54,9 @@ namespace ASPNETCoreHeroku.Controllers
         /// ajouter un ami
         /// </summary>
         /// <param name="friendUsername"></param>
-        [AllowAnonymous]
         [Route("friendrequest")]
         [HttpPost]
-        public void CreateFriendRequest(string friendUsername)
+        public void CreateFriendRequest([FromBody] FriendUsername friendUsername)
         {
             try
             {
@@ -69,14 +67,13 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                _friendRequestService.CreateFriendRequests(id, friendUsername);
+                _friendRequestService.CreateFriendRequests(id, friendUsername.Username);
             }
             catch (Exception e)
             {
             }
         }
 
-        [AllowAnonymous]
         [Route("accept")]
         [HttpGet]
         public void AcceptFriendRequest(int FriendId)
@@ -98,7 +95,6 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        [AllowAnonymous]
         [Route("denie")]
         [HttpGet]
         public void DenieFriendRequest(int friendId)
@@ -119,7 +115,6 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        [AllowAnonymous]
         [Route("search")]
         [HttpGet]
         public ActionResult<FriendRequestResponse> SearchFriend(string friendUsername)

@@ -9,13 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using System.Linq;
 using ASPNETCoreHeroku.Helpers;
-using Imgur.API;
-using Imgur.API.Authentication.Impl;
-using Imgur.API.Endpoints.Impl;
-using Imgur.API.Models;
-using Imgur.API.Models.Impl;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace ASPNETCoreHeroku.Controllers
@@ -88,7 +82,7 @@ namespace ASPNETCoreHeroku.Controllers
          * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
          */
         [HttpPost("uploadImage")]
-        public void UploadImageFromPost(IFormFile file)
+        public String UploadImageFromPost(IFormFile file)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -96,7 +90,7 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 id = TokenHelper.GetIdFromToken(token);
             }
-            _clientService.AddProfilePicture(id, file);
+            return _clientService.AddProfilePicture(id, file);
         }
 
         [HttpGet]
@@ -131,6 +125,34 @@ namespace ASPNETCoreHeroku.Controllers
             try
             {
                 return new ActionResult<IEnumerable<FriendRequestResponse>>(_clientService.GetFriends(id));
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        // PUT: api/client/resetpassword/5
+        /// <summary>
+        /// Réinitialiser le mot de passe d'un client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
+        [Route("resetpassword")]
+        [HttpPatch]
+        public void ResetPassword([FromBody] string newPassword)
+        {
+            string token = Request.Headers["Authorization"];
+            int id = -1;
+            if (token != "" && token != null)
+            {
+                id = TokenHelper.GetIdFromToken(token);
+            }
+
+            try
+            {
+                _clientService.ChangePassword(id, newPassword);
             }
             catch (Exception e)
             {

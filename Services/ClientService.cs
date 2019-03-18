@@ -31,12 +31,13 @@ namespace ASPNETCoreHeroku.Services
     {
         Client Login(string username, string password);
         void Register(Client client);
-        void AddProfilePicture(int id, IFormFile file);
+        String AddProfilePicture(int id, IFormFile file);
         Client GetClientById(int id);
         IEnumerable<FriendRequestResponse> GetFriends(int id);
         int GetClientIdByUsername(string username);
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
         FriendRequestResponse GetClientByUsername(string username);
+        void ChangePassword(int id, string newPassword);
     };
 
     public class ClientService : IClientService
@@ -79,7 +80,7 @@ namespace ASPNETCoreHeroku.Services
             }
         }
 
-        public void AddProfilePicture(int id, IFormFile file)
+        public String AddProfilePicture(int id, IFormFile file)
         {
             try
             {
@@ -107,13 +108,40 @@ namespace ASPNETCoreHeroku.Services
 
                 _clientDAL.AddProfilePicture(id, image.Link);
 
+                return image.Link;
+
             }
             catch (ImgurException imgurEx)
             {
                 Debug.Write("An error occurred uploading an image to Imgur.");
                 Debug.Write(imgurEx.Message);
+
+                return "Imgur Error";
             }
         }
+
+
+        public void ChangePassword(int id, string newPassword)
+        {
+            try
+            {
+                var client = GetClientById(id);
+                if (client.Password != newPassword)
+                {
+                    _clientDAL.ChangePassword(id, newPassword);
+                }
+                else
+                {
+                    //Message
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+
 
         public Client GetClientById(int id)
         {
