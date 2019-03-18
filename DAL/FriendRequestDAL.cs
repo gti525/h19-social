@@ -32,7 +32,6 @@ namespace ASPNETCoreHeroku.DAL
             {
                 var currentClient = _clientService.GetClientById(currentUserId);
                 var friendRequestUsernames = _appDbContext.FriendRequest.Where(x => x.To == currentClient.Email).Select(t => t.From);
-                //currentClient.PendingFriendRequests = false;
 
                 var friendRequestClients = _clientService.GetClientsByUsername(friendRequestUsernames);
 
@@ -56,8 +55,6 @@ namespace ASPNETCoreHeroku.DAL
                 });
 
                 var friend = _appDbContext.Client.Where(x => x.Email == friendUsername).Single();
-
-                //friend.PendingFriendRequests = true;
 
                 _appDbContext.SaveChanges();
             }
