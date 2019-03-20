@@ -65,20 +65,26 @@
                 }
               }
             ).then(response2 => {
+			
               var isFriend = false;
               var i;
-              for (i = 0; i < response2.data.length; i++) {
-
-                if(response2.data[i].ClientId == response.data.ClientId)
-                {
-                  location.reload(true);
-                  isFriend = true;
-                  localStorage.setItem("FriendIdForTickets", response.data.ClientId.toString());
-                  localStorage.setItem("FriendNameForTickets", response.data.FirstName);
-                  this.$router.push('FriendTickets');
-                }
-              }
+		  
+			  if (response2.data == null) {
+				for (i = 0; i < response2.data.length; i++) {
+					if(response2.data[i].ClientId == response.data.ClientId)
+					{
+					  location.reload(true);
+					  isFriend = true;
+					  localStorage.setItem("FriendIdForTickets", response.data.ClientId.toString());
+					  localStorage.setItem("FriendNameForTickets", response.data.FirstName);
+					  this.$router.push('FriendTickets');
+					}
+				  }
+			  }
+              
+			  
               if(isFriend == false){
+			  
                 location.reload(true);
                 localStorage.setItem("ClientUsernameForAdding", this.input.username);
                 this.$router.push('Client');

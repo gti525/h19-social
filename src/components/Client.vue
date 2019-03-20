@@ -63,7 +63,7 @@
             "Username": localStorage.getItem("ClientUsernameForAdding")
           };
 
-          this.$http.post('https://localhost:5001/api/friend/friendrequest?friendUsername=', data , {
+          this.$http.post('https://localhost:5001/api/friend/friendrequest', data , {
               headers: {
                 Authorization: "Bearer " + localStorage.getItem("token")
               }

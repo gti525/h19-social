@@ -99,8 +99,12 @@
           });
         },
 		changePassword: function() {
+		var data = {
+            "Password": this.input.password
+          };
+		
           this.$http.patch('https://localhost:5001/api/Client/resetpassword',
-            this.input.password,
+            data,
             {
               headers: {
                 Authorization: "Bearer " + localStorage.getItem("token")
