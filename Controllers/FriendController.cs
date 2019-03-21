@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -117,7 +117,7 @@ namespace ASPNETCoreHeroku.Controllers
 
         [Route("search")]
         [HttpGet]
-        public ActionResult<FriendRequestResponse> SearchFriend(string friendUsername)
+        public FriendRequestResponse SearchFriend(string friendUsername)
         {
             try
             {
@@ -128,7 +128,8 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                return _clientService.GetClientByUsername(friendUsername);
+                var a = _clientService.GetClientByUsername(friendUsername);
+                return a;
             }
             catch (Exception e)
             {

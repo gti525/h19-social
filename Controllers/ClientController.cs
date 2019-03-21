@@ -44,7 +44,7 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 var client = _clientService.Login(credential.Email, credential.Password);
 
-                //client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
+                client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
 
                 return client;
             }
@@ -146,7 +146,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <returns></returns>
         [Route("resetpassword")]
         [HttpPatch]
-        public void ResetPassword([FromBody] FriendPassord newPassword)
+        public void ResetPassword([FromBody] ClientPassword newPassword)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
