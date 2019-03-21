@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -146,7 +146,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <returns></returns>
         [Route("resetpassword")]
         [HttpPatch]
-        public void ResetPassword([FromBody] string newPassword)
+        public void ResetPassword([FromBody] FriendPassord newPassword)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -157,7 +157,7 @@ namespace ASPNETCoreHeroku.Controllers
 
             try
             {
-                _clientService.ChangePassword(id, newPassword);
+                _clientService.ChangePassword(id, newPassword.Password);
             }
             catch (Exception e)
             {

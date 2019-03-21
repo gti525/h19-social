@@ -1,4 +1,4 @@
-﻿using ASPNETCoreHeroku.Models;
+using ASPNETCoreHeroku.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,7 +94,8 @@ namespace ASPNETCoreHeroku.DAL
                 foreach (var friendId in friendsIds)
                 {
                     var client = _appDbContext.Client.Where(c => c.Id == friendId).First();
-                    yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
+                    var a = client.Tickets;
+                    yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage, client.Tickets);
                 }
             }
             else
@@ -112,14 +113,14 @@ namespace ASPNETCoreHeroku.DAL
         {
             foreach (string username in usernames) {
                 var client = _appDbContext.Client.Where(c => c.Email == username).First();
-                yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
+                yield return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage, client.Tickets);
             }
         }
 
         public FriendRequestResponse GetClientByUsername(string username)
         {
                 var client = _appDbContext.Client.Where(c => c.Email == username).First();
-                return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage);
+                return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage, client.Tickets);
         }
     }
 }
