@@ -44,7 +44,15 @@ namespace ASPNETCoreHeroku.DAL
       }
       catch (Exception e)
       {
-        throw;
+        if (e.Message.Contains("String reference"))
+        {
+          throw new Exception("An error has occured. Please verify your request format to match : \n" +
+                              "{\n    \"email\": \"jaco@email.com\",\n    \"password\": \"jaco\"\n}");
+        }
+        else
+        {
+          throw new Exception("The email or password you entered is incorrect.");
+        }
       }
     }
 

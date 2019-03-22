@@ -50,14 +50,11 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch(Exception e)
             {
-              if (e.Data.Values.ToString().Contains("Dictionary"))
-              {
-                return BadRequest("An error has occured. Please verify your request format to match : \n" +
-                                  "{\n    \"email\": \"jaco@email.com\",\n    \"password\": \"jaco\"\n}");
-              }
+              if(e.Message.Contains("An error occured"))
+                return BadRequest(e.Message);
               else
               {
-                return NotFound();
+                return NotFound(e.Message);
               }
             }
         }
