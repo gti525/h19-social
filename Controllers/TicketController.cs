@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.Services;
@@ -67,7 +68,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// </summary>
         /// <param name="ticket"></param>
         [HttpPost]
-        public void Post([FromBody] Ticket ticket)
+        public ActionResult Post([FromBody] Ticket ticket)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -75,7 +76,16 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 id = TokenHelper.GetIdFromToken(token);
             }
-            _ticketService.AddTicket(id, ticket);
+
+            try
+            {
+              _ticketService.AddTicket(id, ticket);
+              return Ok("The ticket has been created successfully.\n" + ticket.ToString());
+            }
+            catch (Exception e)
+            {
+              return BadRequest(e.Message);
+            }
         }
         
         [HttpGet("{id}/printPDF")]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ASPNETCoreHeroku.DAL;
 using ASPNETCoreHeroku.Models;
 using System.Collections.Generic;
@@ -53,7 +53,17 @@ namespace ASPNETCoreHeroku.Services
 
         public void AddTicket(int id, Ticket ticket)
         {
+          if (ticket.UUID == null || ticket.Artist == null || ticket.EventName == null || ticket.Date == null ||
+              ticket.Location == null)
+          {
+            throw new Exception(
+              "One or more ticket information is missing. Please refer to this example to format your request : \n" +
+              "{\n        \"EventName\":\"ROUGE\",\n        \"Artist\":\"Barbe bleue\",\n        \"Date\":\"02-25-2019\",\n        \"Location\":\"Mtl\",\n        \"UUID\": \"134705\"\n}");
+          }
+          else
+          {
             _ticketDAL.AddTicket(id, ticket);
+          }
         }
 
         public void printPDF(int id)
