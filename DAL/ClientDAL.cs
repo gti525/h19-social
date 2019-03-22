@@ -20,6 +20,7 @@ namespace ASPNETCoreHeroku.DAL
     IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
     FriendRequestResponse GetClientByUsername(string username);
     void ChangePassword(int id, string newPassword);
+    string hash(string text);
   };
 
   public class ClientDAL : IClientDAL
@@ -96,6 +97,7 @@ namespace ASPNETCoreHeroku.DAL
         throw;
       }
     }
+
     public Client GetClientById(int id)
     {
       return _appDbContext.Client.Find(id);
@@ -140,7 +142,7 @@ namespace ASPNETCoreHeroku.DAL
       return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage, client.Tickets);
     }
 
-    private string hash(string text)
+    public string hash(string text)
     {
       using (var sha256 = SHA256.Create())
       {

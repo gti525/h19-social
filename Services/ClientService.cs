@@ -135,13 +135,14 @@
             try
             {
                 var client = GetClientById(id);
-                if (client.Password != newPassword)
+                var newPass = _clientDAL.hash(newPassword);
+                if (client.Password != newPass)
                 {
                     _clientDAL.ChangePassword(id, newPassword);
                 }
                 else
                 {
-                    //Message
+                    throw new Exception("An error has occured. Please check that the new password is not the same as the one you were using previously");
                 }
             }
             catch (Exception e)

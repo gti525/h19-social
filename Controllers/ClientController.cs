@@ -127,7 +127,7 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return BadRequest("The client does not exists");
             }
         }
 
@@ -152,7 +152,7 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return BadRequest("An error has occured");
             }
         }
 
@@ -165,7 +165,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <returns></returns>
         [Route("resetpassword")]
         [HttpPatch]
-        public void ResetPassword([FromBody] ClientPassword newPassword)
+        public ActionResult ResetPassword([FromBody] ClientPassword newPassword)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -177,10 +177,11 @@ namespace ASPNETCoreHeroku.Controllers
             try
             {
                 _clientService.ChangePassword(id, newPassword.Password);
+                return Ok("Your password has been changed successfully.");
             }
             catch (Exception e)
             {
-                throw;
+                return BadRequest(e.Message);
             }
         }
 
