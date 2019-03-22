@@ -46,11 +46,19 @@ namespace ASPNETCoreHeroku.Controllers
 
                 client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
 
-                return client;
+                return Ok(client);
             }
             catch(Exception e)
             {
+              if (e.Data.Values.ToString().Contains("Dictionary"))
+              {
+                return BadRequest("An error has occured. Please verify your request format to match : \n" +
+                                  "{\n    \"email\": \"jaco@email.com\",\n    \"password\": \"jaco\"\n}");
+              }
+              else
+              {
                 return NotFound();
+              }
             }
         }
         
@@ -61,7 +69,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="client"></param>
         [AllowAnonymous]
         [HttpPost]
-        public void Register([FromBody] Client client)
+        public ActionResult Register([FromBody] Client client)
         {
             try
             {
@@ -69,8 +77,10 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
-                throw;
+              return BadRequest(e.Message);
             }
+
+            return Ok(client);
         }
 
         // POST: api/Client/uploadImage
@@ -82,7 +92,7 @@ namespace ASPNETCoreHeroku.Controllers
          * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
          */
         [HttpPost("uploadImage")]
-        public String UploadImageFromPost(IFormFile file)
+        public ActionResult UploadImageFromPost(IFormFile file)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -90,7 +100,16 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 id = TokenHelper.GetIdFromToken(token);
             }
-            return _clientService.AddProfilePicture(id, file);
+
+            try
+            {
+              return Ok(_clientService.AddProfilePicture(id, file));
+            }
+            catch (Exception e)
+            {
+              return BadRequest(e.Message);
+            }
+
         }
 
         [HttpGet]
