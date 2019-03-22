@@ -1,32 +1,32 @@
 ﻿
-using ASPNETCoreHeroku.DAL;
-using ASPNETCoreHeroku.Models;
-using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using ASPNETCoreHeroku.Helpers;
-using Imgur.API.Models.Impl;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.IdentityModel.Logging;
-using Imgur.API.Models;
-using Imgur.API.Endpoints.Impl;
-using Imgur.API.Authentication.Impl;
-using System.Diagnostics;
-using Imgur.API;
-using Image = System.Drawing.Image;
+  using ASPNETCoreHeroku.DAL;
+  using ASPNETCoreHeroku.Models;
+  using System;
+  using System.Drawing;
+  using System.Collections.Generic;
+  using System.IdentityModel.Tokens.Jwt;
+  using System.IO;
+  using System.Linq;
+  using System.Net;
+  using System.Net.Mime;
+  using System.Security.Claims;
+  using System.Text;
+  using System.Threading.Tasks;
+  using ASPNETCoreHeroku.Helpers;
+  using Imgur.API.Models.Impl;
+  using Microsoft.AspNetCore.Http;
+  using Microsoft.Extensions.Options;
+  using Microsoft.IdentityModel.Tokens;
+  using Microsoft.IdentityModel.Logging;
+  using Imgur.API.Models;
+  using Imgur.API.Endpoints.Impl;
+  using Imgur.API.Authentication.Impl;
+  using System.Diagnostics;
+  using Imgur.API;
+  using Image = System.Drawing.Image;
 
-namespace ASPNETCoreHeroku.Services
-{
+  namespace ASPNETCoreHeroku.Services
+  {
     public interface IClientService
     {
         Client Login(string username, string password);
@@ -74,9 +74,18 @@ namespace ASPNETCoreHeroku.Services
             {
                  _clientDAL.Register(client);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+              if (e.Message != null)
+              {
                 throw;
+              }
+              else
+              {
+                throw new Exception("Error with registering request. Please look at the json format and be sure the client isn't already in the system" +
+                              "\nExample of a client object : " +
+                              "\n{\n    \"email\": \"mike@email.com\",\n    \"password\": \"mike\",\n    \"firstName\": \"Mike\",\n    \"lastName\": \"PC\",\n    \"birthDate\": \"1999-01-02T00:00:00\",\n    \"address\": \"123\",\n    \"city\": \"Villemar\",\n    \"postalCode\": \"d0d0d0\",\n    \"province\": \"QC\",\n    \"country\": \"CAN\"\n}");
+              }
             }
         }
 
@@ -116,7 +125,7 @@ namespace ASPNETCoreHeroku.Services
                 Debug.Write("An error occurred uploading an image to Imgur.");
                 Debug.Write(imgurEx.Message);
 
-                return "Imgur Error";
+                throw new Exception( "Imgur Error, image format must be JPG or PNG. \nMore details from Imgur's exception handler : " + imgurEx.Message);
             }
         }
 
@@ -189,4 +198,4 @@ namespace ASPNETCoreHeroku.Services
             return tokenHandler.WriteToken(token);
         }
     }
-}
+  }
