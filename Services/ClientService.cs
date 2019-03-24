@@ -1,4 +1,4 @@
-﻿
+
   using ASPNETCoreHeroku.DAL;
   using ASPNETCoreHeroku.Models;
   using System;
@@ -38,6 +38,7 @@
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
         FriendRequestResponse GetClientByUsername(string username);
         void ChangePassword(int id, string newPassword);
+        string SetClientToPremium(int id);
     };
 
     public class ClientService : IClientService
@@ -198,5 +199,17 @@
 
             return tokenHandler.WriteToken(token);
         }
-    }
+
+        public string SetClientToPremium(int id)
+        {
+          try
+          {
+            return _clientDAL.SetClientToPremium(id);
+          }
+          catch (Exception e)
+          {
+            throw;
+          }
+        }
+  }
   }

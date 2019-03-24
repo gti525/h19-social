@@ -21,6 +21,7 @@ namespace ASPNETCoreHeroku.DAL
     FriendRequestResponse GetClientByUsername(string username);
     void ChangePassword(int id, string newPassword);
     string hash(string text);
+    string SetClientToPremium(int id);
   };
 
   public class ClientDAL : IClientDAL
@@ -44,15 +45,9 @@ namespace ASPNETCoreHeroku.DAL
       }
       catch (Exception e)
       {
-        if (e.Message.Contains("String reference"))
-        {
-          throw new Exception("An error has occured. Please verify your request format to match : \n" +
-                              "{\n    \"email\": \"jaco@email.com\",\n    \"password\": \"jaco\"\n}");
-        }
-        else
-        {
+
           throw new Exception("The email or password you entered is incorrect.");
-        }
+        
       }
     }
 
@@ -62,7 +57,6 @@ namespace ASPNETCoreHeroku.DAL
       {
         if (!_appDbContext.Client.Any(c => c.Email == client.Email))
         {
-          client.ProfileImage = "https://i.imgur.com/3w7hkeo.jpg";
           client.Password = hash(client.Password);
           _appDbContext.Client.Add(entity: client);
           _appDbContext.SaveChanges();
@@ -150,12 +144,30 @@ namespace ASPNETCoreHeroku.DAL
       return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage, client.Tickets);
     }
 
+    /* *****************************
+     * Hashing method for passwords.
+     **************************** */
     public string hash(string text)
     {
       using (var sha256 = SHA256.Create())
       {
         var hashedPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
         return BitConverter.ToString(hashedPassword).Replace("-", "").ToLower();
+      }
+    }
+
+    public string SetClientToPremium(int id)
+    {
+      try
+      {
+        var cli = _appDbContext.Client.Find(id);
+        cli.IsPremium = true;
+        _appDbContext.SaveChanges();
+        return "The client " + cli.Email + " is now a premium client.";
+      }
+      catch (Exception e)
+      {
+        throw;
       }
     }
   }

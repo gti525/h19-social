@@ -1,4 +1,4 @@
-﻿using ASPNETCoreHeroku.Models;
+using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.Services;
 using System;
 using System.Collections.Generic;

@@ -42,20 +42,25 @@ namespace ASPNETCoreHeroku.Controllers
         {
             try
             {
+             if (credential.Email != null && credential.Password != null)
+              {
                 var client = _clientService.Login(credential.Email, credential.Password);
 
                 client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
 
                 return Ok(client);
+              }
+              else
+              {
+                return BadRequest("An error has occured. Please verify your request format to match : \n" +
+                                  "{\n    \"email\": \"jaco@email.com\",\n    \"password\": \"jaco\"\n}");
+              }
             }
             catch(Exception e)
             {
-              if(e.Message.Contains("An error occured"))
-                return BadRequest(e.Message);
-              else
-              {
+
                 return NotFound(e.Message);
-              }
+              
             }
         }
         
@@ -180,6 +185,27 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [Route("setToPremium")]
+        [HttpPost]
+        public ActionResult SetClientToPremium()
+        {
+          string token = Request.Headers["Authorization"];
+          int id = -1;
+          if (token != "" && token != null)
+          {
+            id = TokenHelper.GetIdFromToken(token);
+          }
+
+          try
+          {
+            return Ok(_clientService.SetClientToPremium(id));
+          }
+          catch (Exception e)
+          {
+            return BadRequest("An error has occured, please try again later.");
+          }
         }
 
         // DELETE: api/ApiWithActions/5

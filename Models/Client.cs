@@ -21,9 +21,10 @@ namespace ASPNETCoreHeroku.Models
         public string PostalCode { get; set; }
         public string Province { get; set; }
         public string Country { get; set; }
-        public string ProfileImage { get; set; }
+        public string ProfileImage { get; set; } = "https://i.imgur.com/3w7hkeo.jpg";
         public int[] Friends { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
         public string Token { get; set; }
+        public bool IsPremium { get; set; } = false;
     }
 }
