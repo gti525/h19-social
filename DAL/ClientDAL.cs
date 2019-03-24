@@ -21,7 +21,7 @@ namespace ASPNETCoreHeroku.DAL
     FriendRequestResponse GetClientByUsername(string username);
     void ChangePassword(int id, string newPassword);
     string hash(string text);
-    string SetClientToPremium(int id);
+    string ChangePremiumState(int id);
   };
 
   public class ClientDAL : IClientDAL
@@ -156,14 +156,14 @@ namespace ASPNETCoreHeroku.DAL
       }
     }
 
-    public string SetClientToPremium(int id)
+    public string ChangePremiumState(int id)
     {
       try
       {
         var cli = _appDbContext.Client.Find(id);
-        cli.IsPremium = true;
+        cli.IsPremium = !cli.IsPremium;
         _appDbContext.SaveChanges();
-        return "The client " + cli.Email + " is now a premium client.";
+        return "The Premium state of the client " + cli.Email + " is not set to : " + cli.IsPremium;
       }
       catch (Exception e)
       {

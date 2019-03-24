@@ -38,7 +38,7 @@
         IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
         FriendRequestResponse GetClientByUsername(string username);
         void ChangePassword(int id, string newPassword);
-        string SetClientToPremium(int id);
+        string ChangePremiumState(int id);
     };
 
     public class ClientService : IClientService
@@ -200,11 +200,11 @@
             return tokenHandler.WriteToken(token);
         }
 
-        public string SetClientToPremium(int id)
+        public string ChangePremiumState(int id)
         {
           try
           {
-            return _clientDAL.SetClientToPremium(id);
+            return _clientDAL.ChangePremiumState(id);
           }
           catch (Exception e)
           {

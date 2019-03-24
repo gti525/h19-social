@@ -187,9 +187,9 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        [Route("setToPremium")]
+        [Route("changePremiumState")]
         [HttpPost]
-        public ActionResult SetClientToPremium()
+        public ActionResult ChangePremiumState()
         {
           string token = Request.Headers["Authorization"];
           int id = -1;
@@ -200,7 +200,7 @@ namespace ASPNETCoreHeroku.Controllers
 
           try
           {
-            return Ok(_clientService.SetClientToPremium(id));
+            return Ok(_clientService.ChangePremiumState(id));
           }
           catch (Exception e)
           {
