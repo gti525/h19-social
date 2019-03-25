@@ -50,7 +50,9 @@
                 <div class="col-6">
                   <label for="mot de passe">Modifier le mot de passe:</label>
                   <div class="form-group">
-                    <input type="password" class="form-control" id="mot de passe" v-model="input.password" placeholder="entre le nouveau mot de passe" name="mot de passe">
+				    <input type="password" class="form-control" id="old mot de passe" v-model="input.oldPassword" placeholder="entrez votre ancien mot de passe" name="old mot de passe">
+					<input type="password" class="form-control" id="mot de passe" v-model="input.password" placeholder="entrez le nouveau mot de passe" name="mot de passe">
+                    <input type="password" class="form-control" id="mot de passe confirme" v-model="input.passwordConfirmed" placeholder="confirmez le nouveau mot de passe" name="mot de passe confirme">
                   </div>
                   <button type="Modifier" class="btn btn-primary" variant="primary" @click="changePassword">Modifier</button>
                 </div>
@@ -72,7 +74,9 @@
       return {
         file: '',
 		input: {
-		password: ""
+		oldPassword: "",
+		password: "",
+		passwordConfirmed: ""
         }
       }
     },
@@ -99,22 +103,29 @@
           });
         },
 		changePassword: function() {
-		var data = {
-            "Password": this.input.password
-          };
-		
-          this.$http.patch('https://localhost:5001/api/Client/resetpassword',
-            data,
-            {
-              headers: {
-                Authorization: "Bearer " + localStorage.getItem("token")
-              }
-            })
-            .then(response=> {
-              alert("Mot de pass réinitialisé! \n ");
-            }).catch(response=> {
-            console.log(response);
-          });
+		if (this.input.password == this.input.passwordConfirmed){
+			var data = {
+				"OldPassword" : this.input.oldPassword,
+				"Password": this.input.passwordConfirmed
+			  };
+			
+			  this.$http.patch('https://localhost:5001/api/Client/resetpassword',
+				data,
+				{
+				  headers: {
+					Authorization: "Bearer " + localStorage.getItem("token")
+				  }
+				})
+				.then(response=> {
+				  alert("Mot de pass réinitialisé! \n ");
+				}).catch(response=> {
+				alert("Ancien mot de passe invalide !\n ");
+				console.log(response);
+			  });
+			}	
+			else {
+				alert("Les nouveaux mots de passe ne sont pas identiques !\n ");
+			}
         },
         imgSelected: function($event) {
           this.file = $event.target.files[0];
