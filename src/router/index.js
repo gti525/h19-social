@@ -25,7 +25,7 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/',
+      path: '/Login',
       name: 'Login',
       meta: { layout: "credentials"},
       component: Login
