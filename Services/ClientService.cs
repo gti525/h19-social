@@ -126,7 +126,6 @@ namespace ASPNETCoreHeroku.Services
       try
       {
         var username = GetClientById(id).Email;
-
         var client = _clientDAL.Login(username, password.OldPassword);
 
         if (client.Password != password.Password)
