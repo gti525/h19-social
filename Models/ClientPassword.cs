@@ -8,5 +8,6 @@ namespace ASPNETCoreHeroku.Models
     public class ClientPassword
     {
         public string Password { get; set; }
-    }
+        public string OldPassword { get; set; }
+  }
 }

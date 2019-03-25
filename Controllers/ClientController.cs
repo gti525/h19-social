@@ -157,7 +157,7 @@ namespace ASPNETCoreHeroku.Controllers
 
             try
             {
-                _clientService.ChangePassword(id, newPassword.Password);
+                _clientService.ChangePassword(id, newPassword);
             }
             catch (Exception e)
             {
