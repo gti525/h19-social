@@ -38,11 +38,11 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<int[]>("Friends");
 
+                    b.Property<bool>("IsPremium");
+
                     b.Property<string>("LastName");
 
                     b.Property<string>("Password");
-
-                    b.Property<bool>("PendingFriendRequests");
 
                     b.Property<string>("PostalCode");
 
@@ -86,7 +86,7 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<string>("Location");
 
-                    b.Property<long>("UUID");
+                    b.Property<string>("UUID");
 
                     b.HasKey("Id");
 

@@ -2,7 +2,10 @@ using ASPNETCoreHeroku.Models;
 using ASPNETCoreHeroku.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ASPNETCoreHeroku.DAL
 {
@@ -17,6 +20,8 @@ namespace ASPNETCoreHeroku.DAL
     IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
     FriendRequestResponse GetClientByUsername(string username);
     void ChangePassword(int id, string newPassword);
+    string hash(string text);
+    string ChangePremiumState(int id);
   };
 
   public class ClientDAL : IClientDAL
@@ -34,12 +39,15 @@ namespace ASPNETCoreHeroku.DAL
     {
       try
       {
+        password = hash(password);
         var client = _appDbContext.Client.Where(x => x.Email == username && x.Password == password).First();
         return client;
       }
       catch (Exception e)
       {
-        throw;
+
+          throw new Exception("The email or password you entered is incorrect.");
+        
       }
     }
 
@@ -47,8 +55,16 @@ namespace ASPNETCoreHeroku.DAL
     {
       try
       {
-        _appDbContext.Client.Add(entity: client);
-        _appDbContext.SaveChanges();
+        if (!_appDbContext.Client.Any(c => c.Email == client.Email))
+        {
+          client.Password = hash(client.Password);
+          _appDbContext.Client.Add(entity: client);
+          _appDbContext.SaveChanges();
+        }
+        else
+        {
+          throw new Exception("Account already registered. Please use another email.");
+        }
       }
       catch (Exception e)
       {
@@ -75,7 +91,7 @@ namespace ASPNETCoreHeroku.DAL
       try
       {
         var client = _appDbContext.Client.Find(id);
-        client.Password = newPassword;
+        client.Password = hash(newPassword);
         _appDbContext.SaveChanges();
       }
       catch (Exception e)
@@ -83,6 +99,7 @@ namespace ASPNETCoreHeroku.DAL
         throw;
       }
     }
+
     public Client GetClientById(int id)
     {
       return _appDbContext.Client.Find(id);
@@ -125,6 +142,33 @@ namespace ASPNETCoreHeroku.DAL
     {
       var client = _appDbContext.Client.Where(c => c.Email == username).First();
       return new FriendRequestResponse(client.Id, client.FirstName, client.LastName, client.ProfileImage, client.Tickets);
+    }
+
+    /* *****************************
+     * Hashing method for passwords.
+     **************************** */
+    public string hash(string text)
+    {
+      using (var sha256 = SHA256.Create())
+      {
+        var hashedPassword = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
+        return BitConverter.ToString(hashedPassword).Replace("-", "").ToLower();
+      }
+    }
+
+    public string ChangePremiumState(int id)
+    {
+      try
+      {
+        var cli = _appDbContext.Client.Find(id);
+        cli.IsPremium = !cli.IsPremium;
+        _appDbContext.SaveChanges();
+        return "The Premium state of the client " + cli.Email + " is not set to : " + cli.IsPremium;
+      }
+      catch (Exception e)
+      {
+        throw;
+      }
     }
   }
 }

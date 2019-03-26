@@ -117,7 +117,7 @@ namespace ASPNETCoreHeroku.Controllers
 
         [Route("search")]
         [HttpGet]
-        public FriendRequestResponse SearchFriend(string friendUsername)
+        public ActionResult SearchFriend(string friendUsername)
         {
             try
             {
@@ -127,13 +127,13 @@ namespace ASPNETCoreHeroku.Controllers
                 {
                     id = TokenHelper.GetIdFromToken(token);
                 }
-
-                var a = _clientService.GetClientByUsername(friendUsername);
-                return a;
+                
+                FriendRequestResponse a = _clientService.GetClientByUsername(friendUsername);
+                return Ok(a);
             }
             catch (Exception e)
             {
-                throw;
+              return NotFound("The client requested is not a member of My Eventory");
             }
         }
     }

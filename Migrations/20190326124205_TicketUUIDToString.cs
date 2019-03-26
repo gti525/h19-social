@@ -2,22 +2,25 @@
 
 namespace ASPNETCoreHeroku.Migrations
 {
-    public partial class ajoutUUIDticket : Migration
+    public partial class TicketUUIDToString : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long>(
+            migrationBuilder.AlterColumn<string>(
                 name: "UUID",
                 table: "Ticket",
-                nullable: false,
-                defaultValue: 0L);
+                nullable: true,
+                oldClrType: typeof(long));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            migrationBuilder.AlterColumn<long>(
                 name: "UUID",
-                table: "Ticket");
+                table: "Ticket",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldNullable: true);
         }
     }
 }

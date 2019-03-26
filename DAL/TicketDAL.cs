@@ -1,4 +1,4 @@
-﻿using ASPNETCoreHeroku.Models;
+using ASPNETCoreHeroku.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,9 +47,16 @@ namespace ASPNETCoreHeroku.DAL
 
         public void AddTicket(int id, Ticket ticket)
         {
+          if (!_appDbContext.Ticket.Any(t => t.UUID == ticket.UUID))
+          {
             ticket.ClientId = id;
             _appDbContext.Ticket.Add(entity: ticket);
             _appDbContext.SaveChanges();
+          }
+          else
+          {
+            throw new Exception("This ticket UUID is already used");
+          }
         }
     }
 }

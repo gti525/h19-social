@@ -188,7 +188,19 @@ namespace ASPNETCoreHeroku.Services
 
       var token = tokenHandler.CreateToken(tokenDescriptor);
 
-      return tokenHandler.WriteToken(token);
-    }
+            return tokenHandler.WriteToken(token);
+        }
+
+        public string ChangePremiumState(int id)
+        {
+          try
+          {
+            return _clientDAL.ChangePremiumState(id);
+          }
+          catch (Exception e)
+          {
+            throw;
+          }
+        }
   }
-}
+  }

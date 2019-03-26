@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ASPNETCoreHeroku.Migrations
 {
-    public partial class MigrationProd : Migration
+    public partial class refactorDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,8 @@ namespace ASPNETCoreHeroku.Migrations
                     Country = table.Column<string>(nullable: true),
                     ProfileImage = table.Column<string>(nullable: true),
                     Friends = table.Column<int[]>(nullable: true),
-                    Token = table.Column<string>(nullable: true)
+                    Token = table.Column<string>(nullable: true),
+                    IsPremium = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,6 +54,7 @@ namespace ASPNETCoreHeroku.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    UUID = table.Column<long>(nullable: false),
                     EventName = table.Column<string>(nullable: true),
                     Artist = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
@@ -69,12 +71,6 @@ namespace ASPNETCoreHeroku.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.AddColumn<long>(
-                name: "UUID",
-                table: "Ticket",
-                nullable: false,
-                defaultValue: 0L);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ticket_ClientId",

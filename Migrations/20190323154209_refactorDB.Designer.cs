@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ASPNETCoreHeroku.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190309000331_ClientTable")]
-    partial class ClientTable
+    [Migration("20190323154209_refactorDB")]
+    partial class refactorDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,11 +40,11 @@ namespace ASPNETCoreHeroku.Migrations
 
                     b.Property<int[]>("Friends");
 
+                    b.Property<bool>("IsPremium");
+
                     b.Property<string>("LastName");
 
                     b.Property<string>("Password");
-
-                    b.Property<bool>("PendingFriendRequests");
 
                     b.Property<string>("PostalCode");
 
@@ -87,6 +87,8 @@ namespace ASPNETCoreHeroku.Migrations
                     b.Property<string>("EventName");
 
                     b.Property<string>("Location");
+
+                    b.Property<long>("UUID");
 
                     b.HasKey("Id");
 

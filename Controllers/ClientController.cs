@@ -42,15 +42,25 @@ namespace ASPNETCoreHeroku.Controllers
         {
             try
             {
+             if (credential.Email != null && credential.Password != null)
+              {
                 var client = _clientService.Login(credential.Email, credential.Password);
 
                 client.Tickets = _ticketService.GetTicketsByClientIdWithoutClientRelation(client.Id).ToList();
 
-                return client;
+                return Ok(client);
+              }
+              else
+              {
+                return BadRequest("An error has occured. Please verify your request format to match : \n" +
+                                  "{\n    \"email\": \"jaco@email.com\",\n    \"password\": \"jaco\"\n}");
+              }
             }
             catch(Exception e)
             {
-                return NotFound();
+
+                return NotFound(e.Message);
+              
             }
         }
         
@@ -61,7 +71,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="client"></param>
         [AllowAnonymous]
         [HttpPost]
-        public void Register([FromBody] Client client)
+        public ActionResult Register([FromBody] Client client)
         {
             try
             {
@@ -69,8 +79,10 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
-                throw;
+              return BadRequest(e.Message);
             }
+
+            return Ok(client);
         }
 
         // POST: api/Client/uploadImage
@@ -82,7 +94,7 @@ namespace ASPNETCoreHeroku.Controllers
          * https://imgurapi.readthedocs.io/en/latest/quick-start/#upload-image-synchronously-not-recommended
          */
         [HttpPost("uploadImage")]
-        public String UploadImageFromPost(IFormFile file)
+        public ActionResult UploadImageFromPost(IFormFile file)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -90,7 +102,16 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 id = TokenHelper.GetIdFromToken(token);
             }
-            return _clientService.AddProfilePicture(id, file);
+
+            try
+            {
+              return Ok(_clientService.AddProfilePicture(id, file));
+            }
+            catch (Exception e)
+            {
+              return BadRequest(e.Message);
+            }
+
         }
 
         [HttpGet]
@@ -108,7 +129,7 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return BadRequest("The client does not exists");
             }
         }
 
@@ -133,7 +154,7 @@ namespace ASPNETCoreHeroku.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                return BadRequest("An error has occured");
             }
         }
 
@@ -146,7 +167,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <returns></returns>
         [Route("resetpassword")]
         [HttpPatch]
-        public void ResetPassword([FromBody] ClientPassword newPassword)
+        public ActionResult ResetPassword([FromBody] ClientPassword newPassword)
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -157,12 +178,34 @@ namespace ASPNETCoreHeroku.Controllers
 
             try
             {
-                _clientService.ChangePassword(id, newPassword);
+                _clientService.ChangePassword(id, newPassword.Password);
+                return Ok("Your password has been changed successfully.");
             }
             catch (Exception e)
             {
-                throw;
+                return BadRequest(e.Message);
             }
+        }
+
+        [Route("changePremiumState")]
+        [HttpPost]
+        public ActionResult ChangePremiumState()
+        {
+          string token = Request.Headers["Authorization"];
+          int id = -1;
+          if (token != "" && token != null)
+          {
+            id = TokenHelper.GetIdFromToken(token);
+          }
+
+          try
+          {
+            return Ok(_clientService.ChangePremiumState(id));
+          }
+          catch (Exception e)
+          {
+            return BadRequest("An error has occured, please try again later.");
+          }
         }
 
         // DELETE: api/ApiWithActions/5
