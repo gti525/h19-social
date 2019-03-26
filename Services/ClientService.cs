@@ -74,9 +74,19 @@ namespace ASPNETCoreHeroku.Services
       {
         _clientDAL.Register(client);
       }
-      catch (Exception)
+      catch (Exception e)
       {
-        throw;
+        if (e.Message != null)
+        {
+          throw;
+        }
+        else
+        {
+          throw new Exception(
+            "Error with registering request. Please look at the json format and be sure the client isn't already in the system" +
+            "\nExample of a client object : " +
+            "\n{\n    \"email\": \"mike@email.com\",\n    \"password\": \"mike\",\n    \"firstName\": \"Mike\",\n    \"lastName\": \"PC\",\n    \"birthDate\": \"1999-01-02T00:00:00\",\n    \"address\": \"123\",\n    \"city\": \"Villemar\",\n    \"postalCode\": \"d0d0d0\",\n    \"province\": \"QC\",\n    \"country\": \"CAN\"\n}");
+        }
       }
     }
 
@@ -116,7 +126,7 @@ namespace ASPNETCoreHeroku.Services
         Debug.Write("An error occurred uploading an image to Imgur.");
         Debug.Write(imgurEx.Message);
 
-        return "Imgur Error";
+        throw new Exception("Imgur Error, image format must be JPG or PNG. \nMore details from Imgur's exception handler : " + imgurEx.Message);
       }
     }
 
@@ -134,7 +144,7 @@ namespace ASPNETCoreHeroku.Services
         }
         else
         {
-          //Message
+          throw new Exception("An error has occured. Please check that the new password is not the same as the one you were using previously");
         }
       }
       catch (Exception e)
