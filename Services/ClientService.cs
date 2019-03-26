@@ -38,6 +38,7 @@ namespace ASPNETCoreHeroku.Services
     IEnumerable<FriendRequestResponse> GetClientsByUsername(IEnumerable<string> usernames);
     FriendRequestResponse GetClientByUsername(string username);
     void ChangePassword(int id, ClientPassword password);
+    string ChangePremiumState(int id);
   };
 
   public class ClientService : IClientService
