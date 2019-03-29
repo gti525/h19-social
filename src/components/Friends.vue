@@ -23,27 +23,7 @@
     name: "MyFriends",
     data() {
       return {
-        myFriends: [
-          {
-            FirstName:"michaël",
-            LastName: 'bélanger',
-            ProfileImage: 'https://images.lpcdn.ca/924x615/201305/23/693504-michael-belanger-62-ans-accuse.jpg',
-            ClientId: 1
-          },
-          {
-            FirstName:"Ray",
-            LastName: 'Graham',
-            ProfileImage: 'https://i.ytimg.com/vi/WMGQ1XENI-8/hqdefault.jpg',
-            ClientId: 2
-          },
-          {
-            FirstName:"Kazoo",
-            LastName: 'Kid',
-            ProfileImage: 'https://i.ytimg.com/vi/cRpdIrq7Rbo/hqdefault.jpg',
-            ClientId: 3
-          },
-
-        ],
+        myFriends: [],
         ClientId :0,
         pageTitle: 'Mes ami(e)s'
       }

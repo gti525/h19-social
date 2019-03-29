@@ -27,27 +27,7 @@
         name: "FriendRequests",
       data() {
         return {
-          friendRequests: [
-            {
-              FirstName:"michaël",
-              LastName: 'bélanger',
-              ProfileImage: 'https://images.lpcdn.ca/924x615/201305/23/693504-michael-belanger-62-ans-accuse.jpg',
-              ClientId: 1
-            },
-            {
-              FirstName:"Ray",
-              LastName: 'Graham',
-              ProfileImage: 'https://i.ytimg.com/vi/WMGQ1XENI-8/hqdefault.jpg',
-              ClientId: 2
-            },
-            {
-              FirstName:"Kazoo",
-              LastName: 'Kid',
-              ProfileImage: 'https://i.ytimg.com/vi/cRpdIrq7Rbo/hqdefault.jpg',
-              ClientId: 3
-            },
-
-          ],
+          friendRequests: [],
           pageTitle: 'Invitations'
         }
       },
@@ -168,7 +148,7 @@
   .list-group-item {
     border-style: solid;
     border-width: 2px;
-    border-color: #a133f8;
+    border-color:var(--primary-color);
   }
 
   .h1 {

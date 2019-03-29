@@ -16,7 +16,7 @@
             </b-list-group-item>
           </b-list-group>
 
-      <b-modal id="modallg" size="lg" centered hide-footer hide-header>
+      <b-modal id="modallg" size="lg" centered hide-footer hide-header v-if="tickets.length > 0">
         <img src="../images/logo-primary.svg" class=" " alt="" width="455" height="210" id="logo">
         <div class="pt-3 font-weight-bold">  <h1 class="font-weight-bold">{{tickets[ticketId].EventName}} </h1></div>
             <div> <h2>{{tickets[ticketId].Artist}} </h2></div>
@@ -38,56 +38,7 @@
 
     data() {
       return {
-        tickets: [
-          {
-            TicketId: 1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date: '2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId: 1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date: '2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId: 1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date: '2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId: 1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date: '2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId: 1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date: '2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-          {
-            TicketId: 1,
-            EventName: 'Show must go on',
-            Artist: 'Céline Dion',
-            Date: '2019-01-19',
-            Location: 'Las Vegas',
-            ClientId: 2
-          },
-        ],
+        tickets: [],
         months: {
           1: "JAN",
           2: "FÉV",
@@ -114,12 +65,13 @@
     methods:
       {
         OpenModal(index) {
-          this.ticketId = index;
-          var canvas = document.getElementById('canvas')
 
-          QRCode.toCanvas(canvas, this.tickets[index].UUID.toString(), function (error) {
-            if (error) console.error(error)
-          })
+            this.ticketId = index;
+            var canvas = document.getElementById('canvas')
+
+            QRCode.toCanvas(canvas, this.tickets[index].UUID.toString(), function (error) {
+              if (error) console.error(error)
+            })
         },
         getTickets() {
           var path = 'https://localhost:5001/api/ticket';
