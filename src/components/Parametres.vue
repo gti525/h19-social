@@ -158,12 +158,7 @@
 
   .publicity-content{
     position:center;
-
-    border: 100 px;
-
-   
-   
-   
+    margin-block-start: 50px;
   }
 
 </style>

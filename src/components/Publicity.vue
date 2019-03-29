@@ -36,7 +36,7 @@
   .sidebar{
     position:sticky;
 
-    top: 200px;
+    top: 100px;
     width:20%;
     height: 575px;
   }
