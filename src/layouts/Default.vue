@@ -56,7 +56,7 @@
 
   #publicity-right{
     float:right;
-    right:5%;
+    right:-100%;
   }
 
   slot{
