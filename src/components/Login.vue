@@ -1,0 +1,97 @@
+<template>
+  <div id="login">
+
+    <h1 class="h3 mb-3 font-weight-normal">Connectez-Vous</h1>
+
+    <div class="container">
+      <div class="row justify-content-center align-items-center" >
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <form action="" v-on:submit.prevent="login" >
+                <div class="form-group">
+                  <input class="form-control" name="email" type="email" v-model="input.email" required autofocus placeholder="Adresse Courriel">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" name="password" type="password" v-model="input.password" required placeholder="Mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary" variant="primary">Se Connecter</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <b-alert variant="warning" :show="validAuthentification" class="mt-2">
+        Votre adresse courriel et/ou votre mot de passe est invalide
+      </b-alert>
+    </div>
+
+    <div class="pt-2">
+      Pas de compte?
+      <router-link to="/register">
+        <a>Enregistrez-vous</a>
+      </router-link>
+    </div>
+
+  </div>
+</template>
+
+<script>
+  //import Login from '@/components/Login'
+
+  export default {
+    name: 'login',
+    //components: { Login },
+    // template: '<Login/>',
+    data () {
+      return {
+        input: {
+          email: "",
+          password: ""
+        },
+        validAuthentification: false
+      }
+    },
+    methods: {
+      login () {
+        //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
+
+        this.$http.get('https://localhost:5001/api/client', {
+          params: {
+            username: this.input.email,
+            password: this.input.password
+          }
+        }).then(response => {
+
+          alert("Bienvenue " + this.input.email);
+          console.log(response);
+        }, response => {
+          // error callback
+          this.validAuthentification = true;
+          console.log(response);
+        });
+
+        /*  if (this.input.username == "username" && this.input.password == "password") {
+              alert("Connection réussi");
+          }*/
+      }
+    }
+  }
+
+</script>
+
+
+<style>
+  #Login {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
+</style>
+
