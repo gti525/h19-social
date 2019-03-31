@@ -11,6 +11,9 @@ using System.Linq;
 using ASPNETCoreHeroku.Helpers;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using Microsoft.Extensions.Logging;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -107,7 +110,16 @@ namespace ASPNETCoreHeroku.Controllers
 
             try
             {
-              return Ok(_clientService.AddProfilePicture(id, file));
+              if (file.FileName.Contains(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                  file.FileName.Contains(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                  file.FileName.Contains(".png", StringComparison.OrdinalIgnoreCase))
+              {
+                return Ok(_clientService.AddProfilePicture(id, file) + " File imported : " + file.FileName);
+              }
+              else
+              {
+                return BadRequest("Please enter a valid image (JPG or PNG)");
+              }
             }
             catch (Exception e)
             {
@@ -137,7 +149,7 @@ namespace ASPNETCoreHeroku.Controllers
 
         [HttpGet]
         [Route("friend")]
-        public ActionResult<IEnumerable<FriendRequestResponse>> GetFriends()
+        public ActionResult GetFriends()
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -150,9 +162,9 @@ namespace ASPNETCoreHeroku.Controllers
                 var friends = _clientService.GetFriends(id);
                 if (friends.First() == null)
                 {
-                    return null;
+                    return NoContent();
                 }
-                return new ActionResult<IEnumerable<FriendRequestResponse>>(friends);
+                return Ok(friends);
             }
             catch (Exception e)
             {
@@ -216,8 +228,9 @@ namespace ASPNETCoreHeroku.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+          return BadRequest("Nop nop nop. To delete anything in here, please make a cheque to mr. Jacob PC.");
         }
     }
 }
