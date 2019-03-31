@@ -161,9 +161,9 @@ namespace ASPNETCoreHeroku.DAL
       try
       {
         var cli = _appDbContext.Client.Find(id);
-        cli.IsPremium = !cli.IsPremium;
+        cli.IsPremium = true;
         _appDbContext.SaveChanges();
-        return "The Premium state of the client " + cli.Email + " is not set to : " + cli.IsPremium;
+        return "The Premium state of the client " + cli.Email + " is now set to : " + cli.IsPremium;
       }
       catch (Exception e)
       {
