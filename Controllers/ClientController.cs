@@ -42,7 +42,8 @@ namespace ASPNETCoreHeroku.Controllers
         {
             try
             {
-             if (credential.Email != null && credential.Password != null)
+             //if (credential.Email != null && credential.Password != null)
+             if(ModelState.IsValid)
               {
                 var client = _clientService.Login(credential.Email, credential.Password);
 
@@ -75,7 +76,8 @@ namespace ASPNETCoreHeroku.Controllers
         {
             try
             {
-                _clientService.Register(client);
+                if(ModelState.IsValid)
+                  _clientService.Register(client);
             }
             catch (Exception e)
             {
