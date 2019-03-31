@@ -102,7 +102,9 @@ namespace ASPNETCoreHeroku.DAL
 
     public Client GetClientById(int id)
     {
-      return _appDbContext.Client.Find(id);
+      Client cli = _appDbContext.Client.Find(id);
+      cli.Password = null;
+      return cli;
     }
 
     public IEnumerable<FriendRequestResponse> GetFriends(int id)
