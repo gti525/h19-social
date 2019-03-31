@@ -101,13 +101,15 @@ namespace ASPNETCoreHeroku.Controllers
 
             try
             {
-              _ticketService.AddTicket(id, ticket);
-              return Ok(ticket);
+              if (ModelState.IsValid)
+                _ticketService.AddTicket(id, ticket);
             }
             catch (Exception e)
             {
               return BadRequest(e.Message);
             }
+
+            return Ok(ticket);
         }
         
         [HttpGet("{id}/printPDF")]
