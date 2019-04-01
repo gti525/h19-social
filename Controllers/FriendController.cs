@@ -49,12 +49,37 @@ namespace ASPNETCoreHeroku.Controllers
             }
         }
 
-        // POST: api/Friend
-        /// <summary>
-        /// ajouter un ami
-        /// </summary>
-        /// <param name="friendUsername"></param>
-        [Route("friendrequest")]
+    // GET: api/friendrequested
+    /// <summary>
+    /// Rechercher un ami
+    /// </summary>
+    /// <param name="friendUsername"></param>
+    [Route("friendrequested")]
+    [HttpGet]
+    public IEnumerable<FriendRequestResponse> GetFriendRequested()
+    {
+      try
+      {
+        string token = Request.Headers["Authorization"];
+        int id = -1;
+        if (token != "" && token != null)
+        {
+          id = TokenHelper.GetIdFromToken(token);
+        }
+        return _friendRequestService.GetFriendRequested(id);
+      }
+      catch (Exception e)
+      {
+        throw;
+      }
+    }
+
+    // POST: api/Friend
+    /// <summary>
+    /// ajouter un ami
+    /// </summary>
+    /// <param name="friendUsername"></param>
+    [Route("friendrequest")]
         [HttpPost]
         public void CreateFriendRequest([FromBody] FriendUsername friendUsername)
         {

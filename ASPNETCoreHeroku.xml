@@ -43,6 +43,12 @@
             </summary>
             <param name="friendUsername"></param>
         </member>
+        <member name="M:ASPNETCoreHeroku.Controllers.FriendController.GetFriendRequested">
+            <summary>
+            Rechercher un ami
+            </summary>
+            <param name="friendUsername"></param>
+        </member>
         <member name="M:ASPNETCoreHeroku.Controllers.FriendController.CreateFriendRequest(ASPNETCoreHeroku.Models.FriendUsername)">
             <summary>
             ajouter un ami

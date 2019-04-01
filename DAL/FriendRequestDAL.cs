@@ -9,7 +9,8 @@ namespace ASPNETCoreHeroku.DAL
 {
     public interface IFriendRequestDAL
     {
-        IEnumerable<FriendRequestResponse> GetFriendRequests(int currentUserId);
+        IEnumerable<FriendRequestResponse> GetFriendRequests(int currentUserId); 
+        IEnumerable<FriendRequestResponse> GetFriendRequested(int currentUserId); 
         void CreateFriendRequests(int currentUserId, string friendUsername);
         void AcceptFriend(int currentUserId, int friendId);
         void DeleteFriendRequest(int currentUserId, int friendId);
@@ -43,7 +44,24 @@ namespace ASPNETCoreHeroku.DAL
             }
         }
 
-        public void CreateFriendRequests(int currentUserId, string friendUsername)
+    public IEnumerable<FriendRequestResponse> GetFriendRequested(int currentUserId)
+    {
+      try
+      {
+        var currentClient = _clientService.GetClientById(currentUserId);
+        var friendRequestUsernames = _appDbContext.FriendRequest.Where(x => x.From == currentClient.Email).Select(t => t.To);
+
+        var friendRequestClients = _clientService.GetClientsByUsername(friendRequestUsernames);
+
+        return friendRequestClients;
+      }
+      catch (Exception e)
+      {
+        throw;
+      }
+    }
+
+    public void CreateFriendRequests(int currentUserId, string friendUsername)
         {
             try
             {

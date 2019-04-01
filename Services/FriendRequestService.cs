@@ -9,7 +9,8 @@ namespace ASPNETCoreHeroku.Services
 {
     public interface IFriendRequestService
     {
-        IEnumerable<FriendRequestResponse> GetFriendRequests(int currentUserId);
+        IEnumerable<FriendRequestResponse> GetFriendRequests(int currentUserId); 
+        IEnumerable<FriendRequestResponse> GetFriendRequested(int currentUserId); 
         void CreateFriendRequests(int currentUserId, string friendUsername);
         void AcceptFriendRequests(int currentUserId, int friendId, bool accepted);
     };
@@ -37,7 +38,21 @@ namespace ASPNETCoreHeroku.Services
             }
         }
 
-        public void CreateFriendRequests(int currentUserId, string friendUsername)
+    public IEnumerable<FriendRequestResponse> GetFriendRequested(int currentUserId)
+    {
+      try
+      {
+        var friendRequested = _friendRequestDAL.GetFriendRequested(currentUserId);
+
+        return friendRequested;
+      }
+      catch (Exception e)
+      {
+        throw;
+      }
+    }
+
+    public void CreateFriendRequests(int currentUserId, string friendUsername)
         {
             try
             {
