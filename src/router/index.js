@@ -12,6 +12,7 @@ import Parametres from '@/components/Parametres'
 import Friends from '@/components/Friends'
 import FriendTickets from '@/components/MyFriendsTickets'
 import Client from '@/components/Client'
+import Temp from '@/components/Temp'
 
 
 Vue.use(Router)
@@ -70,6 +71,12 @@ export default new Router({
       path: '/Client',
       name: 'Client',
       component: Client
+    },
+    {
+      path: '/Temp',
+      name: 'Temp',
+      meta: { layout: "empty"},
+      component: Temp
     }
   ]
 })

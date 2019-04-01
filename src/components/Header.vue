@@ -15,6 +15,8 @@
     </div>
 
      <div>
+       <div class="my-name">Bienvenue {{this.myName}}</div>
+
        <b-dropdown variant="link" right size="lg" no-caret>
          <template slot="button-content"><img :src="this.profileImage" width="30px"/> <span class="sr-only">Search</span></template>
 
@@ -44,8 +46,9 @@
       data() {
         return {
           input: {
-            username: ""
+            username: "",
           },
+          myName: ""
       }
         },
       methods: {
@@ -58,39 +61,45 @@
             }
           }).then(response => {
 
-            var path2 = 'https://localhost:5001/api/Client/friend';
-            this.$http.get(path2, {
-                headers: {
-                  Authorization: "Bearer " + localStorage.getItem("token")
+            if (response.data.ClientId != localStorage.getItem("userId")){
+              var path2 = 'https://localhost:5001/api/Client/friend';
+              this.$http.get(path2, {
+                  headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                  }
                 }
-              }
-            ).then(response2 => {
-			
+              ).then(response2 => {
+
               var isFriend = false;
               var i;
-			  if (response2.data == null) {
-				for (i = 0; i < response2.data.length; i++) {
-					if(response2.data[i].ClientId == response.data.ClientId)
-					{
-					 // location.reload(true);
-					  isFriend = true;
-					  localStorage.setItem("FriendIdForTickets", response.data.ClientId.toString());
-					  localStorage.setItem("FriendNameForTickets", response.data.FirstName);
-					  this.$router.push('FriendTickets');
-					}
-				  }
-			  }
-              
-			  
-              if(isFriend == false){
-			  
-            //    location.reload(true);
+              if (response2.data != null) {
+                for (i = 0; i < response2.data.length; i++) {
+                  if (response2.data[i].ClientId == response.data.ClientId) {
+                    // location.reload(true);
+                    isFriend = true;
+                    localStorage.setItem("FriendIdForTickets", response.data.ClientId.toString());
+                    localStorage.setItem("FriendNameForTickets", response.data.FirstName);
+                    //this.$router.push('FriendTickets');
+                    localStorage.setItem("redirectPage", 'FriendTickets')
+                    this.$router.push('Temp');
+                  }
+                }
+              }
+
+
+              if (isFriend == false) {
                 localStorage.setItem("ClientUsernameForAdding", this.input.username);
-                this.$router.push('Client');
+                localStorage.setItem("redirectPage", 'Client')
+                this.$router.push('Temp');
               }
             });
 
             this.myFriends = response.data;
+          }
+          else
+          {
+            this.$router.push('Tickets');
+          }
           });
         },
           Deconnexion(){
@@ -98,10 +107,14 @@
           },
           getImg() {
             this.profileImage = localStorage.getItem("profileImage");
+          },
+          getFullName(){
+            this.myName = localStorage.getItem("userFullName");
           }
       },
       beforeMount() {
           this.getImg();
+          this.getFullName();
       }
     }
 </script>
@@ -114,5 +127,10 @@
   }
   .form-control{
     width:500px;
+  }
+
+  .my-name{
+    float:left;
+    padding-top: 10px;
   }
 </style>

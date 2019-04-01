@@ -16,7 +16,7 @@
       </b-list-group-item>
     </b-list-group>
 
-    <b-modal id="modallg" size="lg"  centered hide-footer hide-header>
+    <b-modal id="modallg" size="lg"  centered hide-footer hide-header v-if="tickets.length > 0">
       <img src="../images/logo-primary.svg" class=" " alt="" width="455" height="210" id="logo">
 
       <div class="pt-3 font-weight-bold">  <h1 class="font-weight-bold">{{tickets[ticketId].EventName}} </h1></div>
@@ -33,14 +33,7 @@
     data() {
       return {
         tickets: [
-          {
-            TicketId: "",
-            EventName: '',
-            Artist: '',
-            Date:'',
-            Location: '',
-            ClientId: 0
-          }
+
         ],
         months: {
           1: "JAN",

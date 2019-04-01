@@ -105,10 +105,13 @@
               }
             })
             .then(response=> {
-              alert("Enregistrement rĂ©ussi! \n " + this.file.name);
+              //alert("Enregistrement réussi! \n " + this.file.name);
               localStorage.setItem("profileImage", response.data);
-              location.reload();
+             // location.reload();
+              localStorage.setItem("redirectPage", 'Parametres')
+              this.$router.push('Temp');
             }).catch(response=> {
+              alert("Échec lors de l'enregistrement de la photo")
             console.log(response);
           });
         },

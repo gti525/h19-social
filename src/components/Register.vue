@@ -70,7 +70,7 @@
 
     <div class="pt-3 mb-4">
       Vous avez déjà un compte?
-      <router-link to="/">
+      <router-link to="/login">
         <a>Connectez-vous</a>
       </router-link>
     </div>

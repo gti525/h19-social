@@ -72,7 +72,7 @@
             document.getElementById(index).remove();
           },
           denyFriendRequest(FriendId){
-		  var path = 'https://localhost:5001/api/friend/accept?FriendId=' + FriendId;
+		  var path = 'https://localhost:5001/api/friend/denie?FriendId=' + FriendId;
             this.$http.get(path,{
                 headers: {
                   Authorization: "Bearer " + localStorage.getItem("token")

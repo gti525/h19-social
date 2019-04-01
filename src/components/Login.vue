@@ -70,6 +70,8 @@
           this.$router.push("tickets");
 		      localStorage.setItem("token", response.data.Token);
 		      localStorage.setItem("profileImage", response.data.ProfileImage);
+          localStorage.setItem("userFullName", response.data.FirstName + " " + response.data.LastName);
+          localStorage.setItem("userId", response.data.Id);
 
         }, response => {
           // error callback
