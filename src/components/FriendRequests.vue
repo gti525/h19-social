@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import api from '../App'
+
     export default {
         name: "FriendRequests",
       data() {
@@ -36,7 +38,7 @@
         {
           getFriendRequest ()
           {
-            var path = 'https://localhost:5001/api/friend/friendrequest';
+            var path = api.data().url + 'api/friend/friendrequest';
 
             this.$http.get(path, {
                 headers: {
@@ -54,7 +56,7 @@
           },
 
           acceptFriendRequest(FriendId){
-		  var path = 'https://localhost:5001/api/friend/accept?FriendId=' + FriendId;
+		  var path = api.data().url + 'api/friend/accept?FriendId=' + FriendId;
             this.$http.get(path,{
                 headers: {
                   Authorization: "Bearer " + localStorage.getItem("token")
@@ -72,7 +74,7 @@
             document.getElementById(index).remove();
           },
           denyFriendRequest(FriendId){
-		  var path = 'https://localhost:5001/api/friend/denie?FriendId=' + FriendId;
+		  var path = api.data().url + 'api/friend/denie?FriendId=' + FriendId;
             this.$http.get(path,{
                 headers: {
                   Authorization: "Bearer " + localStorage.getItem("token")

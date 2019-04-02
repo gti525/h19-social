@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import api from '../App'
+
   export default {
     name: "MyFriends",
     data() {
@@ -33,7 +35,7 @@
       {
           getFriends()
           {
-            var path = 'https://localhost:5001/api/Client/friend';
+            var path = api.data().url + 'api/Client/friend';
               this.$http.get(path, {
                 headers: {
                   Authorization: "Bearer " + localStorage.getItem("token")

@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import api from '../App'
 
   export default {
     name: 'register',
@@ -121,7 +122,7 @@
            "ProfileImage": "https://i.imgur.com/3w7hkeo.jpg"
       };
 
-        this.$http.post('https://localhost:5001/api/Client', data , {headers: {
+        this.$http.post(api.data().url + 'api/Client', data , {headers: {
           'Content-Type': 'application/json'}}
         ).then(response => {
 

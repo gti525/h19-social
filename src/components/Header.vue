@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import api from '../App'
+
     export default {
       profileImage: "../images/defaultAvatar.svg",
         name: "Header",
@@ -54,7 +56,7 @@
       methods: {
         getFriends()
         {
-          var path = 'https://localhost:5001/api/friend/search?friendUsername=' + this.input.username;
+          var path = api.data().url + 'api/friend/search?friendUsername=' + this.input.username;
           this.$http.get(path, {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token")
@@ -62,7 +64,7 @@
           }).then(response => {
 
             if (response.data.ClientId != localStorage.getItem("userId")){
-              var path2 = 'https://localhost:5001/api/Client/friend';
+              var path2 = api.data().url + 'api/Client/friend';
               this.$http.get(path2, {
                   headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")

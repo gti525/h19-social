@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import api from '../App'
+
   export default {
     name: 'login',
     //components: { Login },
@@ -56,13 +58,15 @@
     methods: {
       login () {
         //VERIFICATION DU USERNAME ET PASSWORD (HTTP GET)
+		
+		console.log(api.data().url);
 
 		var data = {
 		"email": this.input.email,
         "password": this.input.password
       };
 
-        this.$http.post('https://localhost:5001/api/client/login', data, {headers: {
+        this.$http.post(api.data().url + 'api/client/login', data, {headers: {
           'Content-Type': 'application/json'}}
         ).then(response => {
 

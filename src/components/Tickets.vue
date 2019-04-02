@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import api from '../App'
+
   import * as jsPDF from 'jspdf'
   import QRCode from 'qrcode'
 
@@ -74,7 +76,7 @@
             })
         },
         getTickets() {
-          var path = 'https://localhost:5001/api/ticket';
+          var path = api.data().url + 'api/ticket';
           if (this.$route.params.id != undefined) {
             path + '/this.$route.params.id';
           }
@@ -102,7 +104,7 @@
         },
 
         getClient() {
-          this.$http.get('https://localhost:5001/api/client', {
+          this.$http.get(api.data().url + 'api/client', {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token")
             }

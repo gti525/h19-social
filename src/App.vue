@@ -15,8 +15,14 @@ export default {
     layout(){
       return (this.$route.meta.layout || default_layout) + '-layout';
     }
-  }
+  },
+  data: function() {
+    return {
+		url: "https://localhost:5001/"
+	}
+ }
 }
+
 </script>
 
 <style>

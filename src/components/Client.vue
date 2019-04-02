@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import api from '../App'
+
   export default {
     name: "Client",
     data() {
@@ -68,7 +70,7 @@
 
         getFriendRequested()
         {
-          var path = 'https://localhost:5001/api/friend/friendrequested';
+          var path = api.data().url + 'api/friend/friendrequested';
           this.$http.get(path, {
               headers: {
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -85,7 +87,7 @@
 
         getFriendRequest ()
         {
-          var path = 'https://localhost:5001/api/friend/friendrequest';
+          var path = api.data().url + 'api/friend/friendrequest';
 
           this.$http.get(path, {
               headers: {
@@ -114,7 +116,7 @@
           /*console.log("etape 3");
           console.log(this.myFriendRequests);*/
 
-          var path = 'https://localhost:5001/api/friend/search?friendUsername=' + localStorage.getItem("ClientUsernameForAdding");
+          var path = api.data().url + 'api/friend/search?friendUsername=' + localStorage.getItem("ClientUsernameForAdding");
 
           this.$http.get(path, {
               headers: {
@@ -127,7 +129,7 @@
             console.log(response.data)
 
 
-            var path = 'https://localhost:5001/api/friend/friendrequest';
+            var path = api.data().url + 'api/friend/friendrequest';
 
             this.$http.get(path, {
                 headers: {
@@ -160,7 +162,7 @@
             "Username": localStorage.getItem("ClientUsernameForAdding")
           };
 
-          this.$http.post('https://localhost:5001/api/friend/friendrequest', data , {
+          this.$http.post(api.data().url + 'api/friend/friendrequest', data , {
               headers: {
                 Authorization: "Bearer " + localStorage.getItem("token")
               }

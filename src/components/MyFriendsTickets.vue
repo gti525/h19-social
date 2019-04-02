@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import api from '../App'
+
   export default {
     name: "FriendTickets",
     data() {
@@ -65,7 +67,7 @@
         },
         getTickets ()
         {
-          var path = 'https://localhost:5001/api/ticket/friend?friendId=' + localStorage.getItem("FriendIdForTickets");
+          var path = api.data().url + 'api/ticket/friend?friendId=' + localStorage.getItem("FriendIdForTickets");
           this.pageTitle = "Les billets de: " + localStorage.getItem("FriendNameForTickets");
 
           this.$http.get(path, {
@@ -91,7 +93,7 @@
         },
 
         printPDF(ticketId) {
-          this.$http.get('https://localhost:5001/api/ticket/' + ticketId+1 + '/printPDF', {
+          this.$http.get(api.data().url + 'api/ticket/' + ticketId+1 + '/printPDF', {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token")
             }
