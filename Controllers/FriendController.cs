@@ -31,7 +31,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// <param name="friendUsername"></param>
         [Route("friendrequest")]
         [HttpGet]
-        public IEnumerable<FriendRequestResponse> GetFriendRequests()
+        public ActionResult GetFriendRequests()
         {
             try
             {
@@ -41,11 +41,11 @@ namespace ASPNETCoreHeroku.Controllers
                 {
                     id = TokenHelper.GetIdFromToken(token);
                 }
-                return _friendRequestService.GetFriendRequests(id);
+                return Ok(_friendRequestService.GetFriendRequests(id));
             }
             catch (Exception e)
             {
-                throw;
+                return BadRequest("An error occured while retrieving your friend requests");
             }
         }
 
@@ -81,7 +81,7 @@ namespace ASPNETCoreHeroku.Controllers
     /// <param name="friendUsername"></param>
     [Route("friendrequest")]
         [HttpPost]
-        public void CreateFriendRequest([FromBody] FriendUsername friendUsername)
+        public ActionResult CreateFriendRequest([FromBody] FriendUsername friendUsername)
         {
             try
             {
@@ -92,18 +92,21 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                _friendRequestService.CreateFriendRequests(id, friendUsername.Username);
+                if (ModelState.IsValid)
+                  _friendRequestService.CreateFriendRequests(id, friendUsername.Username);
             }
             catch (Exception e)
             {
+              return BadRequest("An error has occured. Please verify the user's email");
             }
-        }
+
+            return Ok("An invitation has been sent to " + friendUsername.Username);
+    }
 
         [Route("accept")]
         [HttpGet]
-        public void AcceptFriendRequest(int FriendId)
+        public ActionResult AcceptFriendRequest(int FriendId)
         {
-            var a = "asdf";
             try
             {
                 string token = Request.Headers["Authorization"];
@@ -113,16 +116,25 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                _friendRequestService.AcceptFriendRequests(id, FriendId, true);
+                if(FriendId != 0)
+                  _friendRequestService.AcceptFriendRequests(id, FriendId, true);
+                else
+                {
+                  return NotFound("User with Id " + FriendId +
+                                  " is not registered. You might want to annoy him to sign up to our awesome social network!");
+                }
             }
             catch (Exception e)
             {
+              return BadRequest("An error has occured. Please verify the user's id");
             }
+
+            return Ok("The friend request with " + FriendId + " has been accepted");
         }
 
         [Route("denie")]
         [HttpGet]
-        public void DenieFriendRequest(int friendId)
+        public ActionResult DenieFriendRequest(int friendId)
         {
             try
             {
@@ -133,11 +145,15 @@ namespace ASPNETCoreHeroku.Controllers
                     id = TokenHelper.GetIdFromToken(token);
                 }
 
-                _friendRequestService.AcceptFriendRequests(id, friendId, false);
+                if(friendId != 0) 
+                  _friendRequestService.AcceptFriendRequests(id, friendId, false);
             }
             catch (Exception e)
             {
+              return BadRequest("An error has occured. Please verify the user's id");
             }
+
+            return Ok("The friend request with " + friendId + " has been denied");
         }
 
         [Route("search")]

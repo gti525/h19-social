@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,7 +10,9 @@ namespace ASPNETCoreHeroku.Models
     {
         [Key]
         public int Id { get; set; }
+        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
         public string From { get; set; }
+        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
         public string To { get; set; }
     }
 }

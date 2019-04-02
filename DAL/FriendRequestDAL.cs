@@ -65,11 +65,12 @@ namespace ASPNETCoreHeroku.DAL
         {
             try
             {
+                var friend = _appDbContext.Client.Where(x => x.Email == friendUsername).Single();
                 var currentClient = _clientService.GetClientById(currentUserId);
 
                 _appDbContext.FriendRequest.Add(new FriendRequest() {
                     From = currentClient.Email,
-                    To = friendUsername,
+                    To = friend.Email,
                 });
 
                 //var friend = _appDbContext.Client.Where(x => x.Email == friendUsername).Single();

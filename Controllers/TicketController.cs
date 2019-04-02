@@ -7,6 +7,7 @@ using ASPNETCoreHeroku.Helpers;
 using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using org.pdfclown.documents.interaction.actions;
+using Action = System.Action;
 
 namespace ASPNETCoreHeroku.Controllers
 {
@@ -30,7 +31,7 @@ namespace ASPNETCoreHeroku.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<Ticket> GetTicketsByClientId()
+        public ActionResult GetTicketsByClientId()
         {
             string token = Request.Headers["Authorization"];
             int id = -1;
@@ -39,12 +40,19 @@ namespace ASPNETCoreHeroku.Controllers
                 id = TokenHelper.GetIdFromToken(token);
             }
 
-            return _ticketService.GetTicketsByClientId(id);
+            try
+            {
+              return Ok(_ticketService.GetTicketsByClientId(id));
+            }
+            catch (Exception e)
+            {
+              return BadRequest("An error has occured while retrieving the tickets. Please verify the user's id.");
+            }
         }
 
         [Route("friend")]
         [HttpGet]
-        public IEnumerable<Ticket> GetTicketsByFriendId(int friendId)
+        public ActionResult GetTicketsByFriendId(int friendId)
         {
             /*string token = Request.Headers["Authorization"];
             int id = -1;
@@ -52,14 +60,28 @@ namespace ASPNETCoreHeroku.Controllers
             {
                 id = TokenHelper.GetIdFromToken(token);
             }*/
-
-            return _ticketService.GetTicketsByClientId(friendId);
+            try
+            {
+              return Ok(_ticketService.GetTicketsByClientId(friendId));
+            }
+            catch (Exception e)
+            {
+              return BadRequest("An error has occured. Please verify your friend's id");
+            }
         }
 
         [HttpGet("{id}", Name = "GetClient")]
-        public ActionResult<Ticket> GetTicketByTicketId(int id)
+        public ActionResult GetTicketByTicketId(int id)
         {
-            return new ActionResult<Ticket>(_ticketService.GetTicketByTicketId(id));
+          try
+          {
+            return Ok(_ticketService.GetTicketByTicketId(id));
+          }
+          catch (Exception e)
+          {
+            return BadRequest("An error has occured while retrieving the ticket. Please verify your ticket id");
+          }
+            
         }
 
         // POST: api/Ticket
@@ -79,19 +101,23 @@ namespace ASPNETCoreHeroku.Controllers
 
             try
             {
-              _ticketService.AddTicket(id, ticket);
-              return Ok("The ticket has been created successfully.\n" + ticket.ToString());
+              if (ModelState.IsValid)
+                _ticketService.AddTicket(id, ticket);
             }
             catch (Exception e)
             {
               return BadRequest(e.Message);
             }
+
+            return Ok(ticket);
         }
         
         [HttpGet("{id}/printPDF")]
-        public void PrintTicket(int id)
+        public ActionResult PrintTicket(int id)
         {
-            _ticketService.printPDF(id);
+            //_ticketService.printPDF(id);
+            return Conflict(
+              "A call has been made to printTicket. The current version of the application should not call this endpoint. Please fix this.");
         }
 
         // PUT: api/Ticket/5
@@ -111,14 +137,9 @@ namespace ASPNETCoreHeroku.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            /*var item = _context.Ticket.Find(id);
-            if (item != null)
-            {
-                _context.Ticket.Remove(item);
-                _context.SaveChanges();
-            }*/
+          return BadRequest("Nop nop nop. To delete anything in here, please make a cheque to mr. Jacob PC.");
         }
     }
 }
