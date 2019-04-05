@@ -71,6 +71,7 @@ namespace ASPNETCoreHeroku.Services
                 if(accepted)
                 {
                     _friendRequestDAL.AcceptFriend(currentUserId, friendId);
+                    _friendRequestDAL.DeleteFriendRequest(currentUserId, friendId);
                     _friendRequestDAL.AcceptFriend(friendId, currentUserId);
                 }
                 else
