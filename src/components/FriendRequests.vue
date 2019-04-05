@@ -2,7 +2,7 @@
   <div  id="FriendRequests">
     <h1 class="h1 mb-1 mt-3 font-weight-normal">{{this.pageTitle}}</h1>
     <b-list-group class="justify-content-between align-items-center mt-4">
-      <b-list-group-item class="friends" v-bind:id="index" button v-for="(friend,index) in friendRequests" v-b-modal.modallg>
+      <b-list-group-item class="friends" v-bind:id="friend.ClientId" button v-for="(friend,index) in friendRequests" v-b-modal.modallg>
         <div class="profile-image">
           <img v-bind:src="friend.ProfileImage" height="100%"></img>
         </div>
@@ -64,14 +64,15 @@ import api from '../App'
               }
             ).then(response => {
 
-              this.friendRequests = response.data;
+            //  this.friendRequests = response.data;
+
 
             }, response => {
               // error callback
               console.log(response);
             });
             alert("demande accepté");
-            document.getElementById(index).remove();
+            document.getElementById(FriendId).remove();
           },
           denyFriendRequest(FriendId){
 		  var path = api.data().url + 'api/friend/denie?FriendId=' + FriendId;
@@ -82,15 +83,15 @@ import api from '../App'
               }
             ).then(response => {
 
-              this.friendRequests = response.data;
+             // this.friendRequests = response.data;
+              alert("demande refusé");
 
             }, response => {
               // error callback
               console.log(response);
             });
 
-            alert("demande refusé");
-            document.getElementById(index).remove();
+            document.getElementById(FriendId).remove();
           }
         },
       beforeMount(){
