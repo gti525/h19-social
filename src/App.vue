@@ -18,7 +18,8 @@ export default {
   },
   data: function() {
     return {
-		url: "https://localhost:5001/"
+		//url: "https://localhost:5001/"
+      url: "https://core-api-525.herokuapp.com/"
 	}
  }
 }

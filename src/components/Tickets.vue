@@ -146,11 +146,10 @@ import api from '../App'
 
           doc.addImage(imgData, 'JPEG', 5, 0, 45, 45)
 
-          doc.setTextColor(138,43,226)
+          doc.setTextColor(0,0,0)
           doc.setFontSize(12)
           doc.text('Événement : ' + eventName + ' //', 55, 15)
           doc.text(artist, 80, 20)
-          doc.text('Numéro de billet : ' + ticketId, 55, 28)
           doc.text('Le ' + date + ' situé ' + location, 55, 38)
 
           doc.addImage(src, 'JPEG', 138, -5, 55, 55)
